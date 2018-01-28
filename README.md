@@ -1,6 +1,6 @@
-# Listing table of contents Extension/Plugin for [Parsedown](http://parsedown.org/)
+# Listing Table of Contents Extension/Plugin for [Parsedown](http://parsedown.org/)
 
-This simple PHP file extends [Parsedown (vanilla)](https://github.com/erusev/parsedown) to generate a list of table of contents from a markdown text given.
+This simple PHP file extends [Parsedown (vanilla)](https://github.com/erusev/parsedown) to generate a list of table of contents, aka ToC, from a markdown text given.
 
 ## Install
 
