@@ -7,7 +7,7 @@ https://paiza.io/projects/0TghplxParLqyrP1tjAg6g
 
 ## Install
 
-1. Download the 'Extension.php' script and place it anywere you like.
+1. Download the '[Extension.php](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php)' script and place it anywere you like.
 2. Then include it after including the 'Parsedown.php' vanilla.
 
 ## Usage
