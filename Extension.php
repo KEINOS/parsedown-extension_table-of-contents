@@ -50,11 +50,23 @@ class Extension extends Parsedown
         $text   = $this->fetchText($Content['text']);
         $link   = "[${text}](#${id})";
         $level  = (integer) trim($Content['level'],'h');
+
+        if ($this->firstHeadLevel === 0) {
+            $this->firstHeadLevel = $level;
+        }
+        $cutIndent = $this->firstHeadLevel - 1;
+        if ($cutIndent > $level) {
+            $level = 1;
+        } else {
+            $level = $level - $cutIndent;
+        }
+
         $indent = str_repeat('  ', $level);
 
         $this->contentsListString .= "${indent}- ${link}\n";
     }
     protected $contentsListString = '';
+    protected $firstHeadLevel = 0;
 
     #
     # Header
