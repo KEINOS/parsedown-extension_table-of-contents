@@ -10,14 +10,14 @@ https://paiza.io/projects/0TghplxParLqyrP1tjAg6g
 
 1. Download the '[Extension.php](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php)' script and place it anywere you like.
 
-  Via `curl`
-  ```shell
-  curl -O https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php
-  ```
-  or via PHP
-  ```shell
-  php -r "copy('https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php', './Extension.php');"
-  ```
+    Via `curl -O`
+    ```shell
+    curl -O https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php
+    ```
+    or via `php -r`
+    ```shell
+    php -r "copy('https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php', './Extension.php');"
+    ```
 2. Then include it after including the 'Parsedown.php' vanilla.
 
 - Tested with Parsedown 1.7.1
