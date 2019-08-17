@@ -4,7 +4,7 @@ This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-co
 
 ## Online Demo
 
-https://paiza.io/projects/0TghplxParLqyrP1tjAg6g
+https://paiza.io/projects/0TghplxParLqyrP1tjAg6g?locale=en-us
 
 ## Install
 
