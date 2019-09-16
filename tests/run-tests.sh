@@ -18,6 +18,12 @@ NO=1
 echo '- INFO: OS'
 cat /etc/os-release
 
+which apt-get > /dev/null 2>&1 || {
+    echo '- ERROR: This script requires apt-get'
+    echo 'Please run on Debian-like OS'
+    exit 1
+}
+
 which php > /dev/null 2>&1 || {
     echo '- ERROR: PHP not found.'
     exit 1
@@ -28,7 +34,7 @@ which php > /dev/null 2>&1 || {
 
 which jq > /dev/null 2>&1 || {
     echo '- WARNING: jq command missing'
-    echo -n '- INSTALL: Installing jq command ... '
+    echo -n '- INSTALL: Installing jq ... '
     apt-get -y update > /dev/null 2>&1 && \
     apt-get -y -q install jq --force-yes > /dev/null 2>&1 && {
         echo 'OK'
@@ -36,6 +42,21 @@ which jq > /dev/null 2>&1 || {
         echo 'NG'
     }
 }
+echo '- INFO: jq'
+jq --version
+
+which curl > /dev/null 2>&1 || {
+    echo '- WARNING: curl command missing'
+    echo -n '- INSTALL: Installing curl ... '
+    apt-get -y update > /dev/null 2>&1 && \
+    apt-get -y -q install curl --force-yes > /dev/null 2>&1 && {
+        echo 'OK'
+    } || {
+        echo 'NG'
+    }
+}
+echo '- INFO: curl'
+curl --version
 
 # -----------------------------------------------------------------------------
 #  Download Latest Parsedown from releases page
@@ -46,11 +67,10 @@ which jq > /dev/null 2>&1 || {
     do
         sleep $[ ( $RANDOM % 10 )  + 1 ]s
         url_download_tarboll=$(curl -s https://api.github.com/repos/erusev/parsedown/releases/latest | jq -r '.tarball_url')
-        [ -z "${url_download_tarboll}" ] || {
-            echo '- URL of tarball:' $url_download_tarboll
-            break
-        }
+        [ -z "$url_download_tarboll" ] && continue || break
     done
+
+    echo '- URL of tarball:' $url_download_tarboll
 
     # Get Name of the archive
     #name_file_archive=$(basename "$url_download_tarboll")
