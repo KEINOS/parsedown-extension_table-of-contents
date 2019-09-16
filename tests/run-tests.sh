@@ -71,7 +71,10 @@ curl --version
         echo -n '.'
         sleep $[ ( $RANDOM % 10 )  + 1 ]s
 
-        curl --silent --head $URL_API_GITHUB | grep Status | grep 200 > /dev/null 2>&1 && \
+        curl --silent --head $URL_API_GITHUB | grep Status | grep 200 > /dev/null 2>&1 || {
+            continue
+        }
+
         url_download_tarboll=$(curl -s $URL_API_GITHUB | jq -r '.tarball_url')
 
         if [ -z "${url_download_tarboll}" ]; then
