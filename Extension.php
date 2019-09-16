@@ -10,7 +10,7 @@
  * @see Howto: https://github.com/KEINOS/parsedown-extension_table-of-contents/
  * @license https://github.com/KEINOS/parsedown-extension_table-of-contents/LICENSE
  */
-class Extension extends Parsedown
+class ParsedownToc extends \Parsedown
 {
     protected function fetchText($Text)
     {
@@ -25,7 +25,7 @@ class Extension extends Parsedown
     #
     # contents list
     #
-    function contentsList($Return_as = 'string')
+    public function contentsList($Return_as = 'string')
     {
         if ('string' === strtolower($Return_as)) {
             $result = '';
@@ -85,23 +85,31 @@ class Extension extends Parsedown
     protected function blockHeader($Line)
     {
         if (isset($Line['text'][1])) {
-            $Block = Parsedown::blockHeader($Line);
+            $Block = \Parsedown::blockHeader($Line);
 
-            $text  = $Block['element']['handler']['argument'];
-            $level = $Block['element']['name'];    //h1,h2..h6
+            // Compatibility with old Parsedown Version
+            if (isset($Block['element']['handler']['argument'])) {
+                $text  = $Block['element']['handler']['argument'];
+            }
+
+            if (isset($Block['element']['text'])) {
+                $text  = $Block['element']['text'];
+            }
+
+            $level = $Block['element']['name'];    //levels are h1, h2, ..., h6
             $id    = $this->createAnchorID($text);
 
             //Set attributes to head tags
-            $Block['element']['attributes'] = [
+            $Block['element']['attributes'] = array(
                 'id'   => $id,
                 'name' => $id,
-            ];
+            );
 
-            $this->setContentsList([
+            $this->setContentsList(array(
                 'text'  => $text,
                 'id'    => $id,
                 'level' => $level
-            ]);
+            ));
 
             return $Block;
         }
