@@ -1,0 +1,29 @@
+{
+    "name": "keinos/parsedown-toc",
+    "description": "Table of Contents Extension for Parsedown, the Parser for Markdown.",
+    "keywords": ["markdown", "parser", "extension"],
+    "homepage": "https://github.com/KEINOS/parsedown-extension_table-of-contents/",
+    "authors": [
+        {
+            "name": "KEINOS",
+            "homepage": "https://github.com/KEINOS",
+            "role": "Maintainer"
+        },
+        {
+            "name": "CONTRIBUTORS",
+            "homepage": "https://github.com/KEINOS/parsedown-extension_table-of-contents/graphs/contributors",
+            "role": "Contributor"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "ext-mbstring": "*",
+        "erusev/parsedown": "^1.7"
+    },
+    "autoload": {
+        "files": ["Extension.php"]
+    },
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable"
+}
