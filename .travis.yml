@@ -4,6 +4,7 @@ php:
   # Oldest version for PHP v5 on Docker Hub
   #   https://hub.docker.com/_/php?tab=tags&page=1&name=5.3.
   - 5.3.29
+    dist: precise
   # Latest Stable of PHP v5.0
   - 5.6.40
   # Latest Stable of PHP v7.0

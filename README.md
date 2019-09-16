@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/KEINOS/parsedown-extension_table-of-contents.svg?branch=master)](https://travis-ci.org/KEINOS/parsedown-extension_table-of-contents)
+
 # Listing Table of Contents Extension/Plugin for [Parsedown](http://parsedown.org/)
 
 This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown (vanilla)](https://github.com/erusev/parsedown) to generate a list of table of contents, aka ToC, from a markdown text given.
@@ -71,4 +73,3 @@ echo $body . PHP_EOL;
 <h2 id="%E8%A6%8B%E5%87%BA%E3%81%972-1" name="%E8%A6%8B%E5%87%BA%E3%81%972-1">見出し2-1</h2>
 <p>Sample text of head2-1.</p>
 ```
-
