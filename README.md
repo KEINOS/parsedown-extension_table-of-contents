@@ -28,7 +28,7 @@ composer require keinos/parsedown-toc:dev-master
 
 - Usage: [See sample project](https://github.com/KEINOS/parsedown-extension_table-of-contents/tree/master/samples/composer)
 
-### Manual Install(Download script)
+### Manual Install (Download the script)
 
 You can download the '[Extension.php](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php)' file from the below URL. Place it anywhere you like to include.
 
