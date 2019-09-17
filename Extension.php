@@ -1,15 +1,16 @@
 <?php
 /**
  * ToC Extension/Plugin for Parsedown.
- *
+ * ============================================================================
  * It creates a list of contents table from headings.
  *
- * @version 20180407-2203
+ * @version 1.0.0
  * @author  KEINOS (https://github.com/KEINOS/)
- * @package Parsedown 1.7.1 (https://github.com/erusev/parsedown)
+ * @package Parsedown ^1.7 (https://github.com/erusev/parsedown)
  * @see Howto: https://github.com/KEINOS/parsedown-extension_table-of-contents/
  * @license https://github.com/KEINOS/parsedown-extension_table-of-contents/LICENSE
- */
+*/
+
 class ParsedownToc extends \Parsedown
 {
     protected function fetchText($Text)
