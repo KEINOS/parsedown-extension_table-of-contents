@@ -19,8 +19,12 @@ https://paiza.io/projects/0TghplxParLqyrP1tjAg6g?locale=en-us
 If you are familiar to [composer](https://en.wikipedia.org/wiki/Composer_(software)), the package manager for PHP, then install it as below:
 
 ```bash
-composer require keinos/parsedown-toc
+# Current stable
+composer require keinos/parsedown-toc:1.0.0
+# Latest
+composer require keinos/parsedown-toc:dev-master
 ```
+
 
 - Usage: [See sample project](https://github.com/KEINOS/parsedown-extension_table-of-contents/tree/master/samples/composer)
 
