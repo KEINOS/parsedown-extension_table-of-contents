@@ -150,7 +150,7 @@ $ # Create main program
 $ vi main.php
 ...(edit your code here)...
 $
-$ # View sample program
+$ # View main program
 $ cat main.php
 <?php
 
@@ -175,7 +175,7 @@ echo $ToC . PHP_EOL;
 echo '<hr>' . PHP_EOL;
 echo $body . PHP_EOL;
 
-$ # Run the program
+$ # Run the main program
 $ php main.php
 <ul>
 <li><a href="#Head1">Head1</a><ul>
