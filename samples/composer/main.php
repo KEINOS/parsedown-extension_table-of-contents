@@ -3,8 +3,7 @@
 ===============================================================================
  Sample script to use Parsedown ToC Extension.
 ===============================================================================
- This sample uses composer. Run:
-   composer require keinos/parsedown-toc
+ This sample requires composer and keinos/parsedown-toc.
 */
 
 const DIR_SEP=DIRECTORY_SEPARATOR;

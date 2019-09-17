@@ -1,0 +1,16 @@
+{
+    "name": "yourname/yourapp",
+    "description": "sample project",
+    "type": "project",
+    "require": {
+        "keinos/parsedown-toc": "dev-master"
+    },
+    "license": "WTFPL",
+    "authors": [
+        {
+            "name": "YourName",
+            "email": "your@emailaddress.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
