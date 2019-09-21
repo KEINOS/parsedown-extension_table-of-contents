@@ -8,6 +8,16 @@ Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
 This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown (vanilla)](https://github.com/erusev/parsedown) to generate a list of table of contents, aka ToC, from a markdown text given.
 
+- Main Class Name: `ParsedownToc(string $Text)`
+  - Arguments:
+    - `$Text`: Markdown text string to be parsed.
+  - Methods:
+    - `text()`: Returns the Body. (Returns a string of the parsed HTML of the main contents.)
+    - `contentsList(string $Return_as)`: Returns the ToC. (Returns a string of the table of contents in HTML or JSON.)
+      - `$Return_as`: `string` or `json` can be specified. (`string`=HTML(default), `json`=JSON)
+  - Other Methods:
+    - All the methods of `Parsedown` are available to use.
+
 ## Online Demo
 
 https://paiza.io/projects/0TghplxParLqyrP1tjAg6g?locale=en-us
@@ -20,7 +30,7 @@ If you are familiar to [composer](https://en.wikipedia.org/wiki/Composer_(softwa
 
 ```bash
 # Current stable
-composer require keinos/parsedown-toc:1.0.0
+composer require keinos/parsedown-toc:1.0.1
 # Latest
 composer require keinos/parsedown-toc:dev-master
 ```
@@ -49,6 +59,8 @@ php -r "copy('https://KEINOS.github.io/parsedown-extension_table-of-contents/Ext
 ```
 
 ## Usage
+
+### Sample script(`Main.php`)
 
 ```php
 <?php
@@ -98,6 +110,26 @@ echo $Body . PHP_EOL;
 <p>Sample text of head 2.</p>
 <h2 id="%E8%A6%8B%E5%87%BA%E3%81%972-1" name="%E8%A6%8B%E5%87%BA%E3%81%972-1">見出し2-1</h2>
 <p>Sample text of head2-1.</p>
+```
+
+
+### Run/Sample of the steps to take
+
+This is a log of whow-to on `bash`.
+
+```shellsession
+$ # Create and move to the project directory.
+$ mkdir my_sample && cd $_
+
+$ # Install dependencies of the project
+$ composer require keinos/parsedown-toc
+...
+
+$ # Create the main script.
+$ vi Main.php
+...(paste the script here)...
+
+
 ```
 
 ## Upcoming feature
