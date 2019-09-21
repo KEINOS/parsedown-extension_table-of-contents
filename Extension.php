@@ -23,7 +23,7 @@ class ParsedownToC extends \Parsedown
     ======================================================================== */
 
     // Overriding parent method: \Parsedown::blockHeader()
-    protected function blockHeader(array $Line)
+    protected function blockHeader($Line)
     {
         if (isset($Line['text'][1])) {
             $Block = \Parsedown::blockHeader($Line);
