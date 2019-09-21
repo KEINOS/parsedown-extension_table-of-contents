@@ -33,11 +33,13 @@ class ParsedownToc extends \Parsedown
                 $result = $this->text($this->contentsListString);
             }
             return $result;
-        } elseif ('json' === strtolower($Return_as)) {
-            return json_encode($this->contentsListArray);
-        } else {
-            return $this->contentsListArray;
         }
+        if ('json' === strtolower($Return_as)) {
+            return json_encode($this->contentsListArray);
+        }
+
+        error_log('Unknown return type given while parsing ToC. In line:' . __LINE__ . '(Using default)');
+        return $this->contentsList('string');
     }
 
     #
