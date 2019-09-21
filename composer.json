@@ -25,5 +25,8 @@
     },
     "type": "library",
     "license": "MIT",
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "archive": {
+        "exclude": ["/samples", "/tests", "/.travis.yml"]
+    }
 }
