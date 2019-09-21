@@ -38,7 +38,7 @@ class ParsedownToc extends \Parsedown
             return json_encode($this->contentsListArray);
         }
 
-        error_log('Unknown return type given while parsing ToC. In line:' . __LINE__ . '(Using default)');
+        error_log('Unknown return type given while parsing ToC. At: ' . __FUNCTION__ . '() in Line:' . __LINE__ . ' (Using default type)');
         return $this->contentsList('string');
     }
 
