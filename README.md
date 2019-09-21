@@ -8,6 +8,35 @@ Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
 This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown (vanilla)](https://github.com/erusev/parsedown) to generate a list of table of contents, aka ToC, from a markdown text given.
 
+```bash
+composer require keinos/parsedown-toc
+```
+
+```php
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+$TextMarkdown = file_get_contents('SAMPLE.md');
+
+$Parsedown = new ParsedownToc();
+
+$Body = $Parsedown->text($TextMarkdown);
+$ToC  = $Parsedown->contentsList();
+
+echo $ToC . PHP_EOL;
+echo $Body . PHP_EOL;
+```
+
+- Main Class: `ParsedownToc(string $Text)`
+  - Arguments:
+    - `$Text`: String of the Markdown text to be parsed.
+  - Methods:
+    - `text()`: Returns the Body. (Returns a string of the parsed HTML of the main contents.)
+    - `contentsList(string $Return_as)`: Returns the ToC. (Returns a string of the table of contents in HTML or JSON.)
+      - `$Return_as`: `string` or `json` can be specified. (`string`=HTML(default), `json`=JSON)
+  - Other Methods:
+    - All the methods of `Parsedown` are available to use.
+
 ## Online Demo
 
 https://paiza.io/projects/0TghplxParLqyrP1tjAg6g?locale=en-us
@@ -20,7 +49,7 @@ If you are familiar to [composer](https://en.wikipedia.org/wiki/Composer_(softwa
 
 ```bash
 # Current stable
-composer require keinos/parsedown-toc:1.0.0
+composer require keinos/parsedown-toc:1.0.1
 # Latest
 composer require keinos/parsedown-toc:dev-master
 ```
@@ -50,10 +79,15 @@ php -r "copy('https://KEINOS.github.io/parsedown-extension_table-of-contents/Ext
 
 ## Usage
 
+### Sample scripts(`Main.php`)
+
+<details><summary>Sample Script Without Using Composer</summary><div><br>
+
 ```php
 <?php
-include_once('Pasedown.php');
-include_once('Extension.php');
+/* Sample script of Parsedown-ToC without using composer */
+require_once('Pasedown.php');
+require_once('Extension.php');
 
 $textMarkdown =<<<EOL
 # Head1
@@ -75,6 +109,38 @@ echo $ToC . PHP_EOL;
 echo '<hr>' . PHP_EOL;
 echo $Body . PHP_EOL;
 ```
+
+</div></details>
+
+<details><summary>Sample Script Using Composer</summary><div><br>
+
+```php
+<?php
+/* Sample script of Parsedown-ToC using composer */
+require_once __DIR__ . '/vendor/autoload.php';
+
+$textMarkdown =<<<EOL
+# Head1
+Sample text of head 1.
+## Head1-1
+Sample text of head 1-1.
+# Head2
+Sample text of head 2.
+## 見出し2-1
+Sample text of head2-1.
+EOL;
+
+$Parsedown = new ParsedownToc();
+
+$Body = $Parsedown->text($textMarkdown);
+$ToC  = $Parsedown->contentsList();
+
+echo $ToC . PHP_EOL;
+echo '<hr>' . PHP_EOL;
+echo $Body . PHP_EOL;
+```
+
+</div></details>
 
 ### Result
 
@@ -100,12 +166,87 @@ echo $Body . PHP_EOL;
 <p>Sample text of head2-1.</p>
 ```
 
-## Upcoming feature
+### Run(Sample of the steps to take)
 
-- [ ] `[toc]` markdown tag/element replacing it to the table of contents. ([Issue #2](https://github.com/KEINOS/parsedown-extension_table-of-contents/issues/2))
+This is a log of "how-to" using composer on `bash`.
+
+```shellsession
+$ # Create and move to the project directory.
+$ mkdir my_sample && cd $_
+
+$ # Create the main script.
+$ vi Main.php
+...(paste the sample script here)...
+
+$ # Current directory structure
+$ tree
+.
+└── main.php
+
+0 directories, 1 files
+
+$ # Require package that depends the project.
+$ # (This will install the "erusev/parsedown", which "keinos/parsedown-toc" depends, too)
+$ composer require keinos/parsedown-toc
+Using version ^1.0 for keinos/parsedown-toc
+./composer.json has been created
+Loading composer repositories with package information
+Updating dependencies (including require-dev)
+Package operations: 2 installs, 0 updates, 0 removals
+  - Installing erusev/parsedown (1.7.3): Downloading (100%)
+  - Installing keinos/parsedown-toc (1.0.1): Downloading (100%)
+Writing lock file
+Generating autoload files
+
+$ # Current directory structure
+$ tree
+.
+├── composer.json
+├── composer.lock
+├── Main.php
+└── vendor
+    ├── autoload.php
+    ├── composer
+    │   ├── ClassLoader.php
+    │   ├── LICENSE
+    │   ├── autoload_classmap.php
+    │   ├── autoload_files.php
+    │   ├── autoload_namespaces.php
+    │   ├── autoload_psr4.php
+    │   ├── autoload_real.php
+    │   ├── autoload_static.php
+    │   └── installed.json
+    ├── erusev
+    │   └── parsedown
+    │       ├── LICENSE.txt
+    │       ├── Parsedown.php
+    │       ├── README.md
+    │       └── composer.json
+    └── keinos
+        └── parsedown-toc
+            ├── Extension.php
+            ├── LICENSE
+            ├── README.md
+            └── composer.json
+
+6 directories, 21 files
+
+$ # Run
+$ php ./Main.php
+... See the Result section above ...
+
+```
 
 ## References
 
-- [Parsedown's Wiki](https://github.com/erusev/parsedown/wiki) @ GitHub
-- [Issues of this extension](https://github.com/KEINOS/parsedown-extension_table-of-contents/issues) @ GitHub
-- [Issues of Parsedown](https://github.com/erusev/parsedown/issues) @ GitHub
+- Repo:
+  - Source Code: https://github.com/KEINOS/parsedown-extension_table-of-contents @ GitHub
+  - Archived Package: https://packagist.org/packages/keinos/parsedown-toc @ Packagist
+- Support:
+  - [Parsedown's Wiki](https://github.com/erusev/parsedown/wiki) @ GitHub
+  - [Issues of this extension](https://github.com/KEINOS/parsedown-extension_table-of-contents/issues) @ GitHub
+  - [Issues of Parsedown](https://github.com/erusev/parsedown/issues) @ GitHub
+
+## Upcoming feature
+
+- [ ] `[toc]` markdown tag/element replacing it to the table of contents. ([Issue #2](https://github.com/KEINOS/parsedown-extension_table-of-contents/issues/2))
