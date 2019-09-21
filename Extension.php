@@ -12,19 +12,44 @@
 
 class ParsedownToc extends \Parsedown
 {
-    protected function fetchText($Text)
-    {
-        return trim(strip_tags($this->line($Text)));
-    }
-
-    protected function createAnchorID($Text)
-    {
-        return  urlencode($this->fetchText($Text));
-    }
+    /* Methods/Functions (in ABC order) */
 
     #
-    # contents list
+    # Block
     #
+    protected function blockHeader($Line)
+    {
+        if (isset($Line['text'][1])) {
+            $Block = \Parsedown::blockHeader($Line);
+
+            // Compatibility with old Parsedown Version
+            if (isset($Block['element']['handler']['argument'])) {
+                $text  = $Block['element']['handler']['argument'];
+            }
+
+            if (isset($Block['element']['text'])) {
+                $text  = $Block['element']['text'];
+            }
+
+            $level = $Block['element']['name'];    //levels are h1, h2, ..., h6
+            $id    = $this->createAnchorID($text);
+
+            //Set attributes to head tags
+            $Block['element']['attributes'] = array(
+                'id'   => $id,
+                'name' => $id,
+            );
+
+            $this->setContentsList(array(
+                'text'  => $text,
+                'id'    => $id,
+                'level' => $level
+            ));
+
+            return $Block;
+        }
+    }
+
     public function contentsList($Return_as = 'string')
     {
         if ('string' === strtolower($Return_as)) {
@@ -40,6 +65,16 @@ class ParsedownToc extends \Parsedown
 
         error_log('Unknown return type given while parsing ToC. At: ' . __FUNCTION__ . '() in Line:' . __LINE__ . ' (Using default type)');
         return $this->contentsList('string');
+    }
+
+    protected function createAnchorID($Text)
+    {
+        return  urlencode($this->fetchText($Text));
+    }
+
+    protected function fetchText($Text)
+    {
+        return trim(strip_tags($this->line($Text)));
     }
 
     #
@@ -81,39 +116,4 @@ class ParsedownToc extends \Parsedown
     protected $contentsListString = '';
     protected $firstHeadLevel = 0;
 
-    #
-    # Header
-    #
-    protected function blockHeader($Line)
-    {
-        if (isset($Line['text'][1])) {
-            $Block = \Parsedown::blockHeader($Line);
-
-            // Compatibility with old Parsedown Version
-            if (isset($Block['element']['handler']['argument'])) {
-                $text  = $Block['element']['handler']['argument'];
-            }
-
-            if (isset($Block['element']['text'])) {
-                $text  = $Block['element']['text'];
-            }
-
-            $level = $Block['element']['name'];    //levels are h1, h2, ..., h6
-            $id    = $this->createAnchorID($text);
-
-            //Set attributes to head tags
-            $Block['element']['attributes'] = array(
-                'id'   => $id,
-                'name' => $id,
-            );
-
-            $this->setContentsList(array(
-                'text'  => $text,
-                'id'    => $id,
-                'level' => $level
-            ));
-
-            return $Block;
-        }
-    }
 }
