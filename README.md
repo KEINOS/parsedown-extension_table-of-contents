@@ -4,7 +4,7 @@
 
 # Parsedown ToC
 
-Listing Table of Contents Extension/Plugin for [Parsedown](http://parsedown.org/).
+Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
 This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown (vanilla)](https://github.com/erusev/parsedown) to generate a list of table of contents, aka ToC, from a markdown text given.
 
@@ -24,7 +24,6 @@ composer require keinos/parsedown-toc:1.0.0
 # Latest
 composer require keinos/parsedown-toc:dev-master
 ```
-
 
 - Usage: [See sample project](https://github.com/KEINOS/parsedown-extension_table-of-contents/tree/master/samples/composer)
 
@@ -68,12 +67,13 @@ Sample text of head2-1.
 EOL;
 
 $Parsedown = new ParsedownToc();
-$body = $Parsedown->text($textMarkdown);
+
+$Body = $Parsedown->text($textMarkdown);
 $ToC  = $Parsedown->contentsList();
 
 echo $ToC . PHP_EOL;
 echo '<hr>' . PHP_EOL;
-echo $body . PHP_EOL;
+echo $Body . PHP_EOL;
 ```
 
 ### Result
@@ -102,7 +102,7 @@ echo $body . PHP_EOL;
 
 ## Upcoming feature
 
-- [ ] `[toc]` markdown tag to insert the table of contents. ([Issue #2](https://github.com/KEINOS/parsedown-extension_table-of-contents/issues/2))
+- [ ] `[toc]` markdown tag/element replacing it to the table of contents. ([Issue #2](https://github.com/KEINOS/parsedown-extension_table-of-contents/issues/2))
 
 ## References
 
