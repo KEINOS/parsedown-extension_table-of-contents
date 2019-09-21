@@ -4,7 +4,6 @@
  * ============================================================================
  * It creates a list of contents table from headings.
  *
- * @version 1.0.0
  * @author  KEINOS (https://github.com/KEINOS/)
  * @package Parsedown ^1.7 (https://github.com/erusev/parsedown)
  * @see Howto: https://github.com/KEINOS/parsedown-extension_table-of-contents/
