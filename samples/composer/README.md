@@ -1,5 +1,11 @@
 # Sample Project of Parsedown ToC Extension Using Composer
 
+1. Create and Move to you project directory.
+2. Install dependencies of your project by: `composer require keinos/parsedown-toc`
+3. Create and Edit the main script. (Copy and paste the sample script below)
+4. Create and Edit a Markdown file. (`SAMPLE.md`)
+5. Run the program: `php main.php`
+
 ```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
@@ -14,105 +20,36 @@ echo $ToC . PHP_EOL;
 echo $body . PHP_EOL;
 ```
 
-1. Copy the files in this directory to your project directory.
-    - composer.json
-    - main.php
-2. In your project directory run: `composer install`
-3. Run the program: `php main.php`
-
 ## Detailed usage
 
-Here are the full log sample of how to use it for a brand new project.
+Here's the full log sample of how to use it for a brand new project.
 
 ```shellsession
 $ # Be sure you have composer installed
 $ composer --version
 Composer version 1.9.0 2019-08-02 20:55:32
-$
+
 $ # Create a directory of your project and move
 $ mkdir my_project && cd $_
-$
-$ # Initialize your project with composer
-$ composer init --require keinos/parsedown-toc
 
-
-  Welcome to the Composer config generator
-
-
-
-This command will guide you through creating your composer.json config.
-
-Package name (<vendor>/<name>) [admin/composer]: yourname/yourapp
-Description []: sample project
-Author [KEINOS <github@keinos.com>, n to skip]: YourName <your@emailaddress.com>
-Minimum Stability []: dev
-Package Type (e.g. library, project, metapackage, composer-plugin) []: project
-License []: WTFPL
-
-Define your dependencies.
-
-Using version dev-master for keinos/parsedown-toc
-Would you like to define your dev dependencies (require-dev) interactively [yes]? no
-
-{
-    "name": "yourname/yourapp",
-    "description": "sample project",
-    "type": "project",
-    "require": {
-        "keinos/parsedown-toc": "dev-master"
-    },
-    "license": "WTFPL",
-    "authors": [
-        {
-            "name": "YourName",
-            "email": "your@emailaddress.com"
-        }
-    ],
-    "minimum-stability": "dev"
-}
-
-Do you confirm generation [yes]? yes
-Would you like to install dependencies now [yes]? yes
-Loading composer repositories with package information
-Updating dependencies (including require-dev)
-Nothing to install or update
-Generating autoload files
-$
-$ # Current directory state
-$ tree
-.
-├── README.md
-├── composer.json
-├── main.php
-└── vendor
-    ├── autoload.php
-    └── composer
-        ├── ClassLoader.php
-        ├── LICENSE
-        ├── autoload_classmap.php
-        ├── autoload_namespaces.php
-        ├── autoload_psr4.php
-        ├── autoload_real.php
-        ├── autoload_static.php
-        └── installed.json
-$
-$ # Install dependencies
-$ composer install
+$ # Require packages to be uses in your project.
+$ # (In this case "keinos/parsedown-toc". This will install other related dependencies also.)
+$ composer require keinos/parsedown-toc
+Using version ^1.0 for keinos/parsedown-toc
+./composer.json has been created
 Loading composer repositories with package information
 Updating dependencies (including require-dev)
 Package operations: 2 installs, 0 updates, 0 removals
-  - Installing erusev/parsedown (1.8.0-beta-7): Loading from cache
-  - Installing keinos/parsedown-toc (dev-master cd90c3f): Cloning cd90c3fd0a from cache
+  - Installing erusev/parsedown (1.7.3): Downloading (100%)
+  - Installing keinos/parsedown-toc (1.0.1): Downloading (100%)
 Writing lock file
 Generating autoload files
-$
+
 $ # Current directory state
 $ tree
 .
-├── README.md
 ├── composer.json
 ├── composer.lock
-├── main.php
 └── vendor
     ├── autoload.php
     ├── composer
@@ -136,20 +73,14 @@ $ tree
             ├── Extension.php
             ├── LICENSE
             ├── README.md
-            ├── composer.json
-            ├── sample-composer.php
-            └── tests
-                ├── parser.php
-                ├── run-tests.sh
-                ├── test_1.sh
-                └── test_2.sh
+            └── composer.json
 
-7 directories, 27 files
-$
+6 directories, 20 files
+
 $ # Create main program
 $ vi main.php
-...(edit your code here)...
-$
+...(edit/copy/paste your code here)...
+
 $ # View main program
 $ cat main.php
 <?php
