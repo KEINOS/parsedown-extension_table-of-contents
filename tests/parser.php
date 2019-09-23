@@ -1,18 +1,26 @@
 <?php
+//error_reporting(E_ALL);
 
 require_once('Parsedown.php');
 require_once('../Extension.php');
 
 function getMarkdownFromStdIn()
 {
-    $array = array_map('trim', file('php://stdin'));
-    return implode(PHP_EOL, $array);
+    $Array = array_map('trim', file('php://stdin'));
+    return implode(PHP_EOL, $Array);
 }
 
-$textMarkdown = getMarkdownFromStdIn();
-$Parsedown    = new ParsedownToc();
+$text_md   = getMarkdownFromStdIn();
+$Parsedown = new ParsedownToC();
 
-$body = $Parsedown->text($textMarkdown);
-$ToC  = $Parsedown->contentsList();
+$body = $Parsedown->text($text_md);
+$toc  = $Parsedown->contentsList();
 
-echo $ToC;
+echo $toc;
+
+/*
+echo 'ToC:', PHP_EOL;
+echo $toc, PHP_EOL;
+echo 'Body:', PHP_EOL;
+echo $body;
+*/

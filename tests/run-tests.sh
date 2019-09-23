@@ -16,25 +16,33 @@ URL_API_GITHUB='https://api.github.com/repos/erusev/parsedown/releases/latest'
 # -----------------------------------------------------------------------------
 #  Check Basic requirements
 # -----------------------------------------------------------------------------
-echo '- INFO: OS'
+echo '================================'
+echo ' Env checks before testing'
+echo '================================'
+
+echo '- Info: OS ...'
 cat /etc/os-release
 
+echo '- Checking: php ...'
+which php > /dev/null 2>&1 || {
+    echo '- ERROR: PHP not found.'
+    exit 1
+}
+echo -n 'php installed: '
+php --version
+
+echo '- Checkging: apt-get ...'
 which apt-get > /dev/null 2>&1 || {
     echo '- ERROR: This script requires apt-get'
     echo 'Please run on Debian-like OS'
     exit 1
 }
+echo -n 'apt-get installed: '
+apt-get --version | head -1
 
-which php > /dev/null 2>&1 || {
-    echo '- ERROR: PHP not found.'
-    exit 1
-} && {
-    echo '- INFO: PHP'
-    php --version
-}
-
+echo '- Checking: jq ...'
 which jq > /dev/null 2>&1 || {
-    echo '- WARNING: jq command missing'
+    echo '* WARNING: jq command missing'
     echo -n '- INSTALL: Installing jq ... '
     apt-get -y update > /dev/null 2>&1 && \
     apt-get -y -q install jq --force-yes > /dev/null 2>&1 && {
@@ -43,9 +51,10 @@ which jq > /dev/null 2>&1 || {
         echo 'NG'
     }
 }
-echo '- INFO: jq'
+echo -n 'jq installed: '
 jq --version
 
+echo '- Checking: curl ...'
 which curl > /dev/null 2>&1 || {
     echo '- WARNING: curl command missing'
     echo -n '- INSTALL: Installing curl ... '
@@ -56,8 +65,14 @@ which curl > /dev/null 2>&1 || {
         echo 'NG'
     }
 }
-echo '- INFO: curl'
-curl --version
+echo -n 'curl installed: '
+curl --version | head -1
+
+# -----------------------------------------------------------------------------
+#  Lint check of Extension.php
+# -----------------------------------------------------------------------------
+echo '- Lint Check: Extension.php ...'
+php -l ../Extension.php
 
 # -----------------------------------------------------------------------------
 #  Download Latest Parsedown from releases page
@@ -118,17 +133,21 @@ for file in $(ls test_*.sh); do
     source $file
 
     echo -n "- TESTING: ${file} ... "
+
     RESULT=$(echo "${SOURCE}" | php ./parser.php)
+
     [ "${RESULT}" = "${EXPECT}" ] && [ $EXPECT_EQUAL -eq $YES ] && {
         echo 'OK'
         continue
     }
+
     [ "${RESULT}" != "${EXPECT}" ] && [ $EXPECT_EQUAL -eq $NO ] && {
         echo 'OK'
         continue
     }
-
     echo 'NG'
+
+    echo '[LOG]:'
     echo '- SOURCE:'
     echo "${SOURCE}"
     echo '- RESULT:'

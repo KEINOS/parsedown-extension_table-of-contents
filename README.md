@@ -6,7 +6,7 @@
 
 Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
-This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown (vanilla)](https://github.com/erusev/parsedown) to generate a list of table of contents, aka ToC, from a markdown text given.
+This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown (vanilla)](https://github.com/erusev/parsedown) to generate a list of header index/table of contents, aka ToC, from a markdown text given.
 
 ```bash
 composer require keinos/parsedown-toc
@@ -16,26 +16,45 @@ composer require keinos/parsedown-toc
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-$TextMarkdown = file_get_contents('SAMPLE.md');
+$Parsedown = new \ParsedownToC();
 
-$Parsedown = new ParsedownToc();
+$text_markdown = file_get_contents('SAMPLE.md');
+$body = $Parsedown->body($text_markdown);
+$toc  = $Parsedown->contentsList();
 
-$Body = $Parsedown->text($TextMarkdown);
-$ToC  = $Parsedown->contentsList();
+echo $toc . PHP_EOL;  // Table of Contents in <ul> list
+echo $body . PHP_EOL; // Main body
 
-echo $ToC . PHP_EOL;
-echo $Body . PHP_EOL;
+// With the `text()` method, `[toc]` tag in the source Markdown
+// will be replaced to the table of contents.
+
+$text_markdown = <<< "HEREDOC"
+[toc]
+
+---
+
+${text_markdown}
+
+HEREDOC;
+
+$text = $Parsedown->text($text_markdown);
+
+echo $text . PHP_EOL;
+
 ```
 
-- Main Class: `ParsedownToc(string $Text)`
-  - Arguments:
-    - `$Text`: String of the Markdown text to be parsed.
+- Main Class: `ParsedownToC()` (Old and alias class: `Extension()`)
+  - Arguments: none
   - Methods:
-    - `text()`: Returns the Body. (Returns a string of the parsed HTML of the main contents.)
-    - `contentsList(string $Return_as)`: Returns the ToC. (Returns a string of the table of contents in HTML or JSON.)
-      - `$Return_as`: `string` or `json` can be specified. (`string`=HTML(default), `json`=JSON)
+    - `text(string $text)`: Returns the parsed content with `[toc]` tag(s) parsed too.
+      - Required argument `$text`: Markdown string to be parsed.
+    - `body(string $text)`: Returns the parsed content without parsing `[toc]` tag.
+      - Required argument `$text`: Markdown string to be parsed.
+    - `toc([string $type_return='string'])`: Returns the ToC, the table of contents, in HTML or JSON.
+      - Option argument `$type_return`: `string` or `json` can be specified. (`string`=HTML(default), `json`=JSON)
+      - Alias method: `contentsList(string $type_return)`
   - Other Methods:
-    - All the methods of `Parsedown` are available to use.
+    - All the public methods of `Parsedown` are available to use.
 
 ## Online Demo
 
