@@ -16,30 +16,38 @@ composer require keinos/parsedown-toc
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-$Parsedown = new \ParsedownToC();
-
+// Parse body and ToC separately
 $text_markdown = file_get_contents('SAMPLE.md');
+$Parsedown = new \ParsedownToC();
 $body = $Parsedown->body($text_markdown);
-$toc  = $Parsedown->contentsList();
+$toc  = $Parsedown->toc();
 
 echo $toc . PHP_EOL;  // Table of Contents in <ul> list
 echo $body . PHP_EOL; // Main body
 
-// With the `text()` method, `[toc]` tag in the source Markdown
-// will be replaced to the table of contents.
-
+// Parses `[toc]` tag in MarkDown to ToC.
 $text_markdown = <<< "HEREDOC"
+
 [toc]
 
 ---
 
-${text_markdown}
+# Head1
+Something about Head1.
+
+## Head1-1
+Something about Head1-1.
+
+# Head2
+Something about Head2.
+
+More about Head2.
 
 HEREDOC;
 
-$text = $Parsedown->text($text_markdown);
-
-echo $text . PHP_EOL;
+$Parsedown = new \ParsedownToC();
+$html = $Parsedown->text($text_markdown);
+echo $html . PHP_EOL;
 
 ```
 
