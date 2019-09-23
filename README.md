@@ -276,4 +276,4 @@ $ php ./Main.php
 
 ## Upcoming feature
 
-- [*] `[toc]` markdown tag/element replacing it to the table of contents. ([Issue #2](https://github.com/KEINOS/parsedown-extension_table-of-contents/issues/2))
+- [x] ~~`[toc]` markdown tag/element replacing it to the table of contents~~. ([Issue #2](https://github.com/KEINOS/parsedown-extension_table-of-contents/issues/2)) Now available!
