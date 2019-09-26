@@ -65,7 +65,7 @@ If you are familiar to [composer](https://en.wikipedia.org/wiki/Composer_(softwa
 
 ```bash
 # Current stable
-composer require keinos/parsedown-toc:1.0.1
+composer require keinos/parsedown-toc:^1.0
 # Latest
 composer require keinos/parsedown-toc:dev-master
 ```
