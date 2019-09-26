@@ -16,39 +16,28 @@ composer require keinos/parsedown-toc
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Parse body and ToC separately
 $text_markdown = file_get_contents('SAMPLE.md');
-$Parsedown = new \ParsedownToC();
+$Parsedown     = new \ParsedownToC();
+
+$html = $Parsedown->text($text_markdown);
+
+echo $html . PHP_EOL;
+```
+
+```php
+<?php
+// Parse body and ToC separately
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$text_markdown = file_get_contents('SAMPLE.md');
+$Parsedown     = new \ParsedownToC();
+
 $body = $Parsedown->body($text_markdown);
 $toc  = $Parsedown->toc();
 
 echo $toc . PHP_EOL;  // Table of Contents in <ul> list
 echo $body . PHP_EOL; // Main body
-
-// Parses `[toc]` tag in MarkDown to ToC.
-$text_markdown = <<< "HEREDOC"
-
-[toc]
-
----
-
-# Head1
-Something about Head1.
-
-## Head1-1
-Something about Head1-1.
-
-# Head2
-Something about Head2.
-
-More about Head2.
-
-HEREDOC;
-
-$Parsedown = new \ParsedownToC();
-$html = $Parsedown->text($text_markdown);
-echo $html . PHP_EOL;
-
 ```
 
 - Main Class: `ParsedownToC()` (Old and alias class: `Extension()`)
