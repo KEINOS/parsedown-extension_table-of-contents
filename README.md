@@ -13,16 +13,55 @@ composer require keinos/parsedown-toc
 ```
 
 ```php
+$ cat ./parse_sample.php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
+// Sample Markdown with '[toc]' tag included
 $text_markdown = file_get_contents('SAMPLE.md');
-$Parsedown     = new \ParsedownToC();
 
+$Parsedown = new \ParsedownToC();
+
+// Parses '[toc]' tag to ToC if exists
 $html = $Parsedown->text($text_markdown);
 
 echo $html . PHP_EOL;
+
 ```
+```shellsession
+$ cat ./SAMPLE.md
+[toc]
+
+---
+
+# One
+Something about One
+
+## Two
+Something about Two
+
+# One2
+Something about One2
+```
+```bash
+$ php ./parse_sample.php
+<div id="toc"><ul>
+<li><a href="#One">One</a><ul>
+<li><a href="#Two">Two</a></li>
+</ul>
+</li>
+<li><a href="#One2">One2</a></li>
+</ul></div>
+<hr />
+<h1 id="One" name="One">One</h1>
+<p>Something about One</p>
+<h2 id="Two" name="Two">Two</h2>
+<p>Something about Two</p>
+<h1 id="One2" name="One2">One2</h1>
+<p>Something about One2</p>
+```
+
+You can get the ToC only with the `toc()` method.
 
 ```php
 <?php
