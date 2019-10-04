@@ -61,7 +61,7 @@ $ php ./parse_sample.php
 <p>Something about One2</p>
 ```
 
-You can get the ToC only with the `toc()` method.
+With the `toc()` method, you can get just the "ToC".
 
 ```php
 <?php
