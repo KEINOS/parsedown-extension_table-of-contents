@@ -6,7 +6,7 @@
 
 Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
-This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown (vanilla)](https://github.com/erusev/parsedown) to generate a list of header index/table of contents, aka ToC, from a markdown text given.
+This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown (vanilla)](https://github.com/erusev/parsedown) to generate a list of header index, table of contents(aka ToC), from a markdown text given.
 
 ```bash
 composer require keinos/parsedown-toc
@@ -119,7 +119,7 @@ You can download the '[Extension.php](https://github.com/KEINOS/parsedown-extens
 https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php
 ```
 
-- **NOTE:** Since this is an extension of [Parsedown](https://parsedown.org/), you need to download and include `Parsedown.php` too.
+- **NOTE:** Since this is an extension of [Parsedown](https://parsedown.org/), you need to download and include `Parsedown.php` as well.
 - Usage: [See sample project](https://github.com/KEINOS/parsedown-extension_table-of-contents/tree/master/samples/download)
 
 ```bash
