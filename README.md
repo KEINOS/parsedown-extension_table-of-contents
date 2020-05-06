@@ -3,11 +3,11 @@
 [![](https://img.shields.io/badge/Parsedown-%3E%3D1.7-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version")
 [![](https://img.shields.io/packagist/v/keinos/parsedown-toc)](https://packagist.org/packages/keinos/parsedown-toc "View in Packagist")
 
-# Parsedown ToC
+# Parsedown ToC Extension
 
 Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
-This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown (Vanilla)](https://github.com/erusev/parsedown)/[ParsedownExtra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
+This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown Vanilla](https://github.com/erusev/parsedown)/[ParsedownExtra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
 
 ```bash
 composer require keinos/parsedown-toc
@@ -82,10 +82,10 @@ echo $toc . PHP_EOL;  // Table of Contents in <ul> list
 echo $body . PHP_EOL; // Main body
 ```
 
-- Main Class: `ParsedownToC()` (Old and alias class: `Extension()`)
+- Main Class: `ParsedownToC()`
   - Arguments: none
   - Methods:
-    - `text(string $text)`: Returns the parsed content with `[toc]` tag(s) parsed too.
+    - `text(string $text)`: Returns the parsed content and `[toc]` tag(s) parsed as well.
       - Required argument `$text`: Markdown string to be parsed.
     - `body(string $text)`: Returns the parsed content without parsing `[toc]` tag.
       - Required argument `$text`: Markdown string to be parsed.
@@ -93,7 +93,8 @@ echo $body . PHP_EOL; // Main body
       - Option argument `$type_return`: `string` or `json` can be specified. (`string`=HTML(default), `json`=JSON)
       - Alias method: `contentsList(string $type_return)`
   - Other Methods:
-    - All the public methods of `Parsedown` are available to use.
+    - All the public methods of `Parsedown` and/or `Parsedown Extend` are available to use.
+  - Note: As of v1.1.0 the old alias class: `Extension()` is deprecated.
 
 ## Online Demo
 
