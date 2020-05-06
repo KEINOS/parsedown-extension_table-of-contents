@@ -28,5 +28,9 @@
     "minimum-stability": "stable",
     "archive": {
         "exclude": ["/samples", "/tests", "/.travis.yml"]
+    },
+    "scripts": {
+        "test": "./tests/run-tests-in-linux.sh",
+        "test-docker": "docker run --rm --user root -v $(pwd):/app php:cli /app/tests/run-tests-in-linux.sh"
     }
 }

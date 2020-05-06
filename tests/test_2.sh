@@ -1,18 +1,18 @@
 #!/bin/bash
 # =============================================================================
-#  Test of the tests. Checks if the $EXPECT_EQUAL bool is working.
+#  Test: Basic parsing
 # =============================================================================
 
-EXPECT_EQUAL=$NO
+EXPECT_EQUAL=$YES
 
 SOURCE=$(cat << HEREDOC
-# WrongHead 1
+# Head1
 Sample text of head 1.
-## WrongHead 1-1
+## Head1-1
 Sample text of head 1-1.
-# WrongHead 2
+# Head2
 Sample text of head 2.
-## WrongHead 2-1
+## 見出し2-1
 Sample text of head2-1.
 HEREDOC
 )

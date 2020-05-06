@@ -1,26 +1,30 @@
 language: php
 
-php:
-  # Latest Stable of PHP v5.0
-  - 5.6.40
-  # Latest Stable of PHP v7.0
-  - 7.0.33
-  # Default PHP version in macOS HighSierra(10.13.6) and Mojave(10.14.4)
-  - 7.1.23
-  # Latest Stable of PHP v7.1
-  - 7.1.32
-  # Latest Stable of PHP v7.2
-  - 7.2.22
-  # Current Stable 2019.09.16
-  #   https://www.php.net/downloads.php
-  - 7.3.9
-  # latest version of PHP
-  - nightly
-
+# Test each latest stable PHP versions at: https://www.php.net/downloads.php
 matrix:
   include:
-    # https://docs.travis-ci.com/user/reference/trusty#PHP-images
     - php: 5.3
       dist: precise
+    - php: 5.4
+      dist: trusty
+    - php: 5.5
+      dist: trusty
+    - php: 5.6
+      dist: xenial
+    - php: 7.0
+      dist: xenial
+    - php: 7.1
+      dist: bionic
+   # Default PHP version in macOS HighSierra(10.13.6) and Mojave(10.14.4)
+    - php: 7.1.23
+      dist: bionic
+    - php: 7.2
+      dist: bionic
+    - php: 7.3
+      dist: bionic
+    - php: 7.4
+      dist: bionic
+    - php: nightly
+      dist: bionic
 
-script: tests/run-tests.sh
+script: tests/run-tests-in-linux.sh

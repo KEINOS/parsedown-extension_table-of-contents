@@ -4,21 +4,68 @@
  * ============================================================================
  * It creates a list of contents table from headings.
  *
- * @author    KEINOS (https://github.com/KEINOS/)
+ * @author      KEINOS (https://github.com/KEINOS/)
  * @package   Parsedown ^1.7 (https://github.com/erusev/parsedown)
- * @php       ^5.6.40
- * @see       Howto: https://github.com/KEINOS/parsedown-extension_table-of-contents/
- * @license   https://github.com/KEINOS/parsedown-extension_table-of-contents/LICENSE
+ * @php          ^5.6.40
+ * @see          HowTo: https://github.com/KEINOS/parsedown-extension_table-of-contents/
+ * @license     MIT: https://github.com/KEINOS/parsedown-extension_table-of-contents/LICENSE
 */
 
-// Old version compatibility
-class Extension extends ParsedownToC{}
+// Make it compatible with ParsedownExtra
+//   - Feature Implementation from Issue #13 by @qwertygc
+//     https://github.com/KEINOS/parsedown-extension_table-of-contents/issues/13
+if (class_exists('ParsedownExtra')) {
+    class DynamicParent extends \ParsedownExtra
+    {
+        public function __construct()
+        {
+            parent::__construct();
+        }
+    }
+} else {
+    class DynamicParent extends \Parsedown
+    {
+        public function __construct()
+        {
+            //
+        }
+    }
+}
 
-class ParsedownToC extends \Parsedown
+// Old version compatibility (Deprecated since v1.1.0 and will be removed in v1.2.0)
+/*
+class Extension extends ParsedownToC
 {
+}
+*/
+
+class ParsedownToC extends DynamicParent
+{
+    /* ======================================================================
+      Constants
+    ======================================================================== */
+    const version = '1.1.0'; // Available since v1.1.0
+    const VERSION_PARSEDOWN_REQUIRED = '1.7';
     const TAG_TOC = '[toc]';
 
-    /* ========================================================================
+    /* ======================================================================
+        Requirement check
+    ======================================================================== */
+
+    public function __construct()
+    {
+        if (version_compare(\Parsedown::version, self::VERSION_PARSEDOWN_REQUIRED) < 0) {
+            $msg_error  = 'Version Error.' . PHP_EOL;
+            $msg_error .= '  Parsedown ToC Extension requires a later version of Parsedown.' . PHP_EOL;
+            $msg_error .= '  - Current version : ' . \Parsedown::version . PHP_EOL;
+            $msg_error .= '  - Required version: ' . self::VERSION_PARSEDOWN_REQUIRED . PHP_EOL;
+            throw new Exception($msg_error);
+        }
+
+        parent::__construct();
+    }
+
+    /* ======================================================================
       Methods/Functions (in ABC order)
     ======================================================================== */
 
@@ -93,7 +140,8 @@ class ParsedownToC extends \Parsedown
         return trim(strip_tags($this->line($text)));
     }
 
-    protected function replaceTagToC($html){
+    protected function replaceTagToC($html)
+    {
         $toc     = $this->contentsList();
         $needle  = '<p>' . self::TAG_TOC . '</p>';
         $replace = '<div id="toc">' . $toc . '</div>';
@@ -142,11 +190,10 @@ class ParsedownToC extends \Parsedown
     {
         $body = $this->body($text);
 
-        if( strpos($text, self::TAG_TOC) === false ){
+        if (strpos($text, self::TAG_TOC) === false) {
             return $body;
         }
 
         return $this->replaceTagToC($body);
     }
-
 }
