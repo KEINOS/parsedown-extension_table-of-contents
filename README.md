@@ -1,6 +1,7 @@
 [![](https://travis-ci.org/KEINOS/parsedown-extension_table-of-contents.svg?branch=master)](https://travis-ci.org/KEINOS/parsedown-extension_table-of-contents "Travis CI Build Status")
-[![](https://img.shields.io/packagist/php-v/keinos/parsedown-toc)](https://packagist.org/packages/keinos/parsedown-toc "Supported PHP Version")
+[![](https://img.shields.io/packagist/php-v/keinos/parsedown-toc)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/.travis.yml "Supported PHP Version")
 [![](https://img.shields.io/badge/Parsedown-%3E%3D1.7-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version")
+[![](https://img.shields.io/packagist/v/keinos/parsedown-toc)](https://packagist.org/packages/keinos/parsedown-toc "View in Packagist")
 
 # Parsedown ToC
 
