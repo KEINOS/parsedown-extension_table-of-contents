@@ -6,7 +6,7 @@
 
 Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
-This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown (vanilla)](https://github.com/erusev/parsedown) to generate a list of header index, table of contents(aka ToC), from a markdown text given.
+This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown (Vanilla)](https://github.com/erusev/parsedown)/[ParsedownExtra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
 
 ```bash
 composer require keinos/parsedown-toc
@@ -28,6 +28,7 @@ $html = $Parsedown->text($text_markdown);
 echo $html . PHP_EOL;
 
 ```
+
 ```shellsession
 $ cat ./SAMPLE.md
 [toc]
@@ -43,6 +44,7 @@ Something about Two
 # One2
 Something about One2
 ```
+
 ```bash
 $ php ./parse_sample.php
 <div id="toc"><ul>
@@ -94,7 +96,7 @@ echo $body . PHP_EOL; // Main body
 
 ## Online Demo
 
-https://paiza.io/projects/0TghplxParLqyrP1tjAg6g?locale=en-us
+https://paiza.io/projects/0TghplxParLqyrP1tjAg6g?locale=en-us @ paiza.IO
 
 ## Install
 
@@ -221,7 +223,7 @@ echo $Body . PHP_EOL;
 <p>Sample text of head2-1.</p>
 ```
 
-### Run(Sample of the steps to take)
+### Run (Sample of the steps to take)
 
 This is a log of "how-to" using composer on `bash`.
 
