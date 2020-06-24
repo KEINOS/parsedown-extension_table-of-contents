@@ -73,7 +73,7 @@ class ParsedownToC extends DynamicParent
     protected function blockHeader($Line)
     {
         if (isset($Line['text'][1])) {
-            $Block = \Parsedown::blockHeader($Line);
+            $Block = DynamicParent::blockHeader($Line);
 
             // Compatibility with old Parsedown Version
             if (isset($Block['element']['handler']['argument'])) {
@@ -85,7 +85,7 @@ class ParsedownToC extends DynamicParent
             }
 
             $level = $Block['element']['name'];    //levels are h1, h2, ..., h6
-            $id    = $this->createAnchorID($text);
+            $id    = $Block['element']['attributes']['id'] ?? $this->createAnchorID($text);
 
             //Set attributes to head tags
             $Block['element']['attributes'] = array(
@@ -106,7 +106,7 @@ class ParsedownToC extends DynamicParent
     // Alias of parent method: \Parsedown::text()
     public function body($text)
     {
-        return \Parsedown::text($text);
+        return DynamicParent::text($text);
     }
 
     public function contentsList($type_return = 'string')
