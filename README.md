@@ -296,6 +296,25 @@ $ php ./Main.php
 
 ```
 
+## Advanced Usage (Using Parsedown Extra)
+
+As of Parsedown ToC Extension v1.1.1, you can use the [anchor identifiers](https://michelf.ca/projects/php-markdown/extra/#header-id) of [Parsedown Extra](https://github.com/erusev/parsedown-extra).
+
+```markdown
+# SampleHead1 {#self-defined-head1}
+Sample text of head 1
+```
+
+The above markdown will be parsed as below.
+
+```html
+<ul>
+<li><a href="#self-defined-head1">SampleHead1</a></li>
+</ul>
+```
+
+- Note that you need to require/include the Parsedown Extra as well.
+
 ## References
 
 - Repo:
@@ -305,7 +324,8 @@ $ php ./Main.php
   - [Parsedown's Wiki](https://github.com/erusev/parsedown/wiki) @ GitHub
   - [Issues of this extension](https://github.com/KEINOS/parsedown-extension_table-of-contents/issues) @ GitHub
   - [Issues of Parsedown](https://github.com/erusev/parsedown/issues) @ GitHub
-
-## Upcoming feature
-
-- [x] ~~`[toc]` markdown tag/element replacing it to the table of contents~~. ([Issue #2](https://github.com/KEINOS/parsedown-extension_table-of-contents/issues/2)) Now available!
+  - [Issues of Parsedown Extra](https://github.com/erusev/parsedown-extra/issues) @ GitHub
+- Authors:
+  - [KEINOS and the contributors](https://github.com/KEINOS/parsedown-extension_table-of-contents/graphs/contributors) @ GitHub
+- Licence:
+  - [MIT](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/LICENSE)
