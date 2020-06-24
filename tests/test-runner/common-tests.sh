@@ -246,6 +246,6 @@ done
 
 echo 'Parsedown Extra'
 
-for file in $(ls test_*.sh); do
+for file in $(ls {test_,test-parsedownextra_}*.sh); do
     runTest "${file}" './parser-extra.php'
 done
