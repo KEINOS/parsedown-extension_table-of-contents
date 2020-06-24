@@ -34,7 +34,7 @@ echo '- Checking: jq ...'
 which jq > /dev/null 2>&1 || {
     echo '* WARNING: jq command missing'
     echo '- "jq" command is required for testing. Try: $ brew install jq'
-    exiit 1
+    exit 1
 }
 echo -n '  jq installed: '
 jq --version
@@ -43,7 +43,7 @@ echo '- Checking: curl ...'
 which curl > /dev/null 2>&1 || {
     echo '* WARNING: curl command missing'
     echo '- "curl" command is required for testing. Try: $ brew install curl'
-    exiit 1
+    exit 1
 }
 echo -n '  curl installed: '
 curl --version | head -1
@@ -52,7 +52,7 @@ echo '- Checking: tar ...'
 which tar > /dev/null 2>&1 || {
     echo '* WARNING: tar command missing'
     echo '- "tar" command is required for testing. Try: $ brew install tar'
-    exiit 1
+    exit 1
 }
 echo -n '  tar installed: '
 tar --version
