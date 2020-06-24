@@ -85,7 +85,8 @@ class ParsedownToC extends DynamicParent
             }
 
             $level = $Block['element']['name'];    //levels are h1, h2, ..., h6
-            $id    = $Block['element']['attributes']['id'] ?? $this->createAnchorID($text);
+            $id    = isset($Block['element']['attributes']['id']) ?
+                $Block['element']['attributes']['id'] : $this->createAnchorID($text);
 
             //Set attributes to head tags
             $Block['element']['attributes'] = array(
