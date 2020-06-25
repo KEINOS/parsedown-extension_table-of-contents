@@ -1,15 +1,14 @@
 <?php
 /**
- * Simple script that uses Parsedown/ParsedownExtra and the ToC (Table of Contents) extension.
+ * Simple script that uses Parsedown and the ToC (Table of Contents) extension.
  *
  * This script receives Markdown text from STDIN and prints out the ToC result.
  */
 
 //error_reporting(E_ALL);
 
-require_once('../Parsedown.php');
-require_once('../ParsedownExtra.php');
-require_once('../Extension.php');
+require_once(__DIR__ . '/../../Parsedown.php');
+require_once(__DIR__ . '/../../Extension.php');
 
 function getMarkdownFromStdIn()
 {

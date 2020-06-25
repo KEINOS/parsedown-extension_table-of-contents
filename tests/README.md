@@ -1,20 +1,38 @@
-# Test Script to check basic function
+# Test Scripts to check the basic function
 
-In order to test in PHP5 as well, we decided not use PHPUnit and do the foolishly naive tests instead.
+In order to run the tests in PHP5 as well, we decided NOT to use PHPUnit and do the foolishly naive tests instead.
 
-- Run this test in Alpine Linux OS as below:
+- To run the tests locally on Linux/macOS:
 
   ```bash
   $ composer test
+  ...
   ```
 
-- Or, if you have Docker installed then run:
+- To run the tests on Docker:
 
   ```bash
+  $ # For those who want to run the tests in PHP ^7.4 (Debian)
   $ composer test-docker
+  ...
   ```
+
+  ```bash
+  $ # For those who want to run the tests in PHP ^5.6 (Alpine)
+  $ composer test-docker-php5
+  ...
+  ```
+
+  ```bash
+  $ # For those who want to run the tests in PHP 8.0-dev (Alpine)
+  $ composer test-docker-php8
+  ...
+  ```
+
+- To run the tests on Windows 10:
+  - Currently we DO NOT support tests that run on Windows10 locally. Please consider testing on Docker.
 
 ---
 
-**NOTE:** These tests won't be published in Packagist. Reason and details see:
- - https://github.com/KEINOS/parsedown-extension_table-of-contents/issues/9
+- **NOTE:** These tests won't be included to the [Packagist](https://packagist.org/packages/keinos/parsedown-toc) archive.
+  - For the reason see: https://github.com/KEINOS/parsedown-extension_table-of-contents/issues/9

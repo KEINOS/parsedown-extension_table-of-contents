@@ -5,9 +5,9 @@
  * It creates a list of contents table from headings.
  *
  * @author      KEINOS (https://github.com/KEINOS/)
- * @package   Parsedown ^1.7 (https://github.com/erusev/parsedown)
- * @php          ^5.6.40
- * @see          HowTo: https://github.com/KEINOS/parsedown-extension_table-of-contents/
+ * @package     Parsedown ^1.7 (https://github.com/erusev/parsedown)
+ * @php         ^5.6.40
+ * @see         HowTo: https://github.com/KEINOS/parsedown-extension_table-of-contents/
  * @license     MIT: https://github.com/KEINOS/parsedown-extension_table-of-contents/LICENSE
 */
 
@@ -44,7 +44,7 @@ class ParsedownToC extends DynamicParent
     /* ======================================================================
       Constants
     ======================================================================== */
-    const version = '1.1.0'; // Available since v1.1.0
+    const version = '1.1.1'; // Version is available since v1.1.0
     const VERSION_PARSEDOWN_REQUIRED = '1.7';
     const TAG_TOC = '[toc]';
 
