@@ -1,24 +1,25 @@
 #!/bin/bash
 # =============================================================================
-#  Test of the tests. ;-p
-#  It checks if the $EXPECT_EQUAL bool is working.
+#  Test: Anchor ID of Parsedown Extra (See PR #16)
 # =============================================================================
 
-EXPECT_EQUAL=$NO
+EXPECT_EQUAL=$YES # Use $NO or $YES
 
-SOURCE=$(cat << HEREDOC
-# WrongHead 1
+SOURCE=$(cat << 'HEREDOC'
+# Head1
 Sample text of head 1.
-## WrongHead 1-1
+## Head1-1
 Sample text of head 1-1.
-# WrongHead 2
+# Head2
 Sample text of head 2.
-## WrongHead 2-1
+## 見出し2-1
 Sample text of head2-1.
+# Head3 {#self-defined-head3}
+Sample text of head 3
 HEREDOC
 )
 
-EXPECT=$(cat << HEREDOC
+EXPECT=$(cat << 'HEREDOC'
 <ul>
 <li><a href="#Head1">Head1</a>
 <ul>
@@ -28,6 +29,7 @@ EXPECT=$(cat << HEREDOC
 <ul>
 <li><a href="#%E8%A6%8B%E5%87%BA%E3%81%972-1">見出し2-1</a></li>
 </ul></li>
+<li><a href="#self-defined-head3">Head3</a></li>
 </ul>
 HEREDOC
 )

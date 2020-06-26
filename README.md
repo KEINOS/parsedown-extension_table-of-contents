@@ -98,7 +98,7 @@ echo $body . PHP_EOL; // Main body
 
 ## Online Demo
 
-https://paiza.io/projects/0TghplxParLqyrP1tjAg6g?locale=en-us @ paiza.IO
+- [https://paiza.io/projects/0TghplxParLqyrP1tjAg6g?locale=en-us](https://paiza.io/projects/0TghplxParLqyrP1tjAg6g?locale=en-us) @ paiza.IO
 
 ## Install
 
@@ -108,7 +108,8 @@ If you are familiar to [composer](https://en.wikipedia.org/wiki/Composer_(softwa
 
 ```bash
 # Current stable
-composer require keinos/parsedown-toc:^1.0
+composer require keinos/parsedown-toc
+
 # Latest
 composer require keinos/parsedown-toc:dev-master
 ```
@@ -136,176 +137,26 @@ curl -O https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension
 php -r "copy('https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php', './Extension.php');"
 ```
 
-## Usage
+## Sample Usage
 
-### Sample scripts(`Main.php`)
-
-<details><summary>Sample Script Without Using Composer</summary><div><br>
-
-```php
-<?php
-/* Sample script of Parsedown-ToC without using composer */
-require_once('Pasedown.php');
-require_once('Extension.php');
-
-$textMarkdown =<<<EOL
-# Head1
-Sample text of head 1.
-## Head1-1
-Sample text of head 1-1.
-# Head2
-Sample text of head 2.
-## 見出し2-1
-Sample text of head2-1.
-EOL;
-
-$Parsedown = new ParsedownToc();
-
-$Body = $Parsedown->text($textMarkdown);
-$ToC  = $Parsedown->contentsList();
-
-echo $ToC . PHP_EOL;
-echo '<hr>' . PHP_EOL;
-echo $Body . PHP_EOL;
-```
-
-</div></details>
-
-<details><summary>Sample Script Using Composer</summary><div><br>
-
-```php
-<?php
-/* Sample script of Parsedown-ToC using composer */
-require_once __DIR__ . '/vendor/autoload.php';
-
-$textMarkdown =<<<EOL
-# Head1
-Sample text of head 1.
-## Head1-1
-Sample text of head 1-1.
-# Head2
-Sample text of head 2.
-## 見出し2-1
-Sample text of head2-1.
-EOL;
-
-$Parsedown = new ParsedownToc();
-
-$Body = $Parsedown->text($textMarkdown);
-$ToC  = $Parsedown->contentsList();
-
-echo $ToC . PHP_EOL;
-echo '<hr>' . PHP_EOL;
-echo $Body . PHP_EOL;
-```
-
-</div></details>
-
-### Result
-
-```html
-<ul>
-<li><a href="#Head1">Head1</a>
-<ul>
-<li><a href="#Head1-1">Head1-1</a></li>
-</ul></li>
-<li><a href="#Head2">Head2</a>
-<ul>
-<li><a href="#%E8%A6%8B%E5%87%BA%E3%81%972-1">見出し2-1</a></li>
-</ul></li>
-</ul>
-<hr>
-<h1 id="Head1" name="Head1">Head1</h1>
-<p>Sample text of head 1.</p>
-<h2 id="Head1-1" name="Head1-1">Head1-1</h2>
-<p>Sample text of head 1-1.</p>
-<h1 id="Head2" name="Head2">Head2</h1>
-<p>Sample text of head 2.</p>
-<h2 id="%E8%A6%8B%E5%87%BA%E3%81%972-1" name="%E8%A6%8B%E5%87%BA%E3%81%972-1">見出し2-1</h2>
-<p>Sample text of head2-1.</p>
-```
-
-### Run (Sample of the steps to take)
-
-This is a log of "how-to" using composer on `bash`.
-
-```shellsession
-$ # Create and move to the project directory.
-$ mkdir my_sample && cd $_
-
-$ # Create the main script.
-$ vi Main.php
-...(paste the sample script here)...
-
-$ # Current directory structure
-$ tree
-.
-└── main.php
-
-0 directories, 1 files
-
-$ # Require package that depends the project.
-$ # (This will install the "erusev/parsedown", which "keinos/parsedown-toc" depends, too)
-$ composer require keinos/parsedown-toc
-Using version ^1.0 for keinos/parsedown-toc
-./composer.json has been created
-Loading composer repositories with package information
-Updating dependencies (including require-dev)
-Package operations: 2 installs, 0 updates, 0 removals
-  - Installing erusev/parsedown (1.7.3): Downloading (100%)
-  - Installing keinos/parsedown-toc (1.0.1): Downloading (100%)
-Writing lock file
-Generating autoload files
-
-$ # Current directory structure
-$ tree
-.
-├── composer.json
-├── composer.lock
-├── Main.php
-└── vendor
-    ├── autoload.php
-    ├── composer
-    │   ├── ClassLoader.php
-    │   ├── LICENSE
-    │   ├── autoload_classmap.php
-    │   ├── autoload_files.php
-    │   ├── autoload_namespaces.php
-    │   ├── autoload_psr4.php
-    │   ├── autoload_real.php
-    │   ├── autoload_static.php
-    │   └── installed.json
-    ├── erusev
-    │   └── parsedown
-    │       ├── LICENSE.txt
-    │       ├── Parsedown.php
-    │       ├── README.md
-    │       └── composer.json
-    └── keinos
-        └── parsedown-toc
-            ├── Extension.php
-            ├── LICENSE
-            ├── README.md
-            └── composer.json
-
-6 directories, 21 files
-
-$ # Run
-$ php ./Main.php
-... See the Result section above ...
-
-```
+- See: [./samples/](./samples/)
 
 ## Advanced Usage (Using Parsedown Extra)
 
-As of Parsedown ToC Extension v1.1.1, you can use the [anchor identifiers](https://michelf.ca/projects/php-markdown/extra/#header-id) of [Parsedown Extra](https://github.com/erusev/parsedown-extra).
+As of Parsedown ToC Extension v1.1.1, you can use the [anchor identifiers](https://michelf.ca/projects/php-markdown/extra/#header-id) for [Parsedown Extra](https://github.com/erusev/parsedown-extra).
+
+With this feature, you can specify the anchor name you like. Useful if the headings are in UTF-8 (not in ASCII) and/or placing "go back" links in page.
 
 ```markdown
 # SampleHead1 {#self-defined-head1}
 Sample text of head 1
+
+---
+
+[Link back to header 1](#self-defined-head1)
 ```
 
-The above markdown will be parsed as below.
+With the above markdown the generated ToC will be as below. Note that the anchor is changed to the specified one.
 
 ```html
 <ul>

@@ -13,6 +13,19 @@ cd $PATH_DIR_PARENT
 set -eu
 
 # -----------------------------------------------------------------------------
+#  Functions
+# -----------------------------------------------------------------------------
+
+INDENT='  ' # Indentation depth for multiline output
+
+function indentStdin() {
+    while read line; do
+        echo "${INDENT}${line}"
+    done
+    echo
+}
+
+# -----------------------------------------------------------------------------
 #  Check Basic requirements
 # -----------------------------------------------------------------------------
 echo '================================'
@@ -20,7 +33,7 @@ echo ' Env checks before testing'
 echo '================================'
 
 echo '- Info: OS ...'
-cat /etc/os-release
+cat /etc/os-release | indentStdin
 
 echo '- Checking: php ...'
 which php > /dev/null 2>&1 || {
@@ -28,7 +41,7 @@ which php > /dev/null 2>&1 || {
     exit 1
 }
 printf "%s" '  php installed: '
-php --version
+php --version | indentStdin
 
 echo '- Checkging: apk ...'
 which apk> /dev/null 2>&1 || {

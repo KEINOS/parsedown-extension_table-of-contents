@@ -15,7 +15,7 @@ matrix:
       dist: xenial
     - php: 7.1
       dist: bionic
-   # Default PHP version in macOS HighSierra(10.13.6) and Mojave(10.14.4)
+    # Default PHP version in macOS HighSierra(10.13.6) and Mojave(10.14.4)
     - php: 7.1.23
       dist: xenial
     - php: 7.2
@@ -27,4 +27,4 @@ matrix:
     - php: nightly
       dist: bionic
 
-script: tests/run-tests-in-linux.sh
+script: tests/run-tests.sh

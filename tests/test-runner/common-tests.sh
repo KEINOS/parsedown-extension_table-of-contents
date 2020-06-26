@@ -17,18 +17,25 @@ cd "$PATH_DIR_PARENT"
 # -------------------------------------------------------------------------------
 #  Functions
 # -------------------------------------------------------------------------------
-function getUrlTarbollFromEndpoint () {
+
+# Echoes the URL to download the tarball of the latest release from GitHub.
+#
+# @param  string $1  GitHub API endpoint URL of the target repository.
+# @return string     Echoes the URL of the latest tarball to download.
+# @execption         On error exits the script as 1.
+function getUrlTarbollFromEndpoint() {
     url_api_to_request="${1}"
 
-    # Loop until getting the tarball URL.
-    # Since Travis CI requests many times at once, the GitHub API sometimes
-    # returns 503 status error.
-    # Also DO NOT "echo" anything here exept the URL. Otherwise "exit 1" after echo.
+    # Loop until it gets the tarball URL.
+    # Since we run several PHP versions in Travis CI, many requests will be sent
+    # at once. Therefore the GitHub API sometimes returns the 503 status error.
+    #
+    # Note: DO NOT "echo" anything here exept the URL. In case you need to echo
+    #       something for debugging then "exit 1" after that echo.
     count_iterate_max=3
     count_iterate_cur=0
-    while :
-    do
-        count_iterate_cur=$((count_iterate_cur+1))
+    while :; do
+        count_iterate_cur=$((count_iterate_cur + 1))
         [ $count_iterate_cur -eq $count_iterate_max ] && {
             echo ' NG'
             echo '- Max retry exceeded. Plese check your internet connection or the destination URL below.'
@@ -37,11 +44,12 @@ function getUrlTarbollFromEndpoint () {
         }
 
         # Sleep random seconds before request (Avoid 503 server error)
-        time_sleep=$(( $RANDOM % 10 + 1 ))
+        time_sleep=$(($RANDOM % 10 + 1))
         sleep "${time_sleep}s"
 
+        # Check if HTTP status code is 200
         header_result=$(curl --silent --head $url_api_to_request)
-        echo "${header_result}" | grep HTTP | grep 200 > /dev/null 2>&1 || {
+        echo "${header_result}" | grep HTTP | grep 200 >/dev/null 2>&1 || {
             continue
         }
 
@@ -57,30 +65,91 @@ function getUrlTarbollFromEndpoint () {
         }
 
         echo $url_download_tarboll
-        break;
+        break
     done
 }
 
-function isAvailableGitHubAPI () {
+# Checks if the GitHub API request quota is not exceeded.
+#
+# @param  string $1  GitHub API Endpoint URL of the target repository.
+# @return int        Returns 0 if the request quota is not exceeded.
+# @execption         If exceeded or any error exits the script as 1.
+function isAvailableGitHubAPI() {
     echo -n '- Checking if GitHub API is available ... '
-    # Exit when GitHub API  returns 403 status error.
-    # Once this error is shown, you need a cool down time about an hour.
     url_api_to_request="${1}"
     header_result=$(curl --silent --head $url_api_to_request)
-    echo "${header_result}" | grep HTTP | grep 403 > /dev/null 2>&1 && {
+    echo "${header_result}" | grep HTTP | grep 403 >/dev/null 2>&1 && {
+        # Exit as 1 when GitHub API returns 403 status error.
+        #   GitHub API has a quota/limitation rate of access per IP address.
+        #   Once this error is shown, you need an hour or more of cool down time.
         echo 'ERROR'
         time_reset_ratelimit=$(echo "$header_result" | grep X-Ratelimit-Reset | awk '{print $2}' | sed -e 's/[^0-9]//g')
         time_current=$(date +%s)
-        time_diff_secs=$((time_reset_ratelimit-time_current))
+        time_diff_secs=$((time_reset_ratelimit - time_current))
         time_remain=$(date -d@$time_diff_secs -u +%H:%M:%S)
 
         echo '- Request rate limit exceeded: GitHub API returned 403 error. Please wait until the limitation resets.'
-        echo "  Time remaining: ${time_diff_secs} seconds (${time_remain})"
+        echo "  Time remaining: ${time_diff_secs} seconds (${time_remain}/h:m:s)"
 
         exit 1
     }
     echo 'OK'
     return 0
+}
+
+# Run a test. It pipes the markdown string to the parser script and compares
+# the result.
+#
+# @param  string $1  Path of the test file (../test_*.sh)
+# @param  string $2  Path of the parser script. (../parser/parser*.php)
+# @return int        Returns 0 if the test passes. 1 if the test failes.
+function runTest() {
+    PATH_FILE_TEST="${1}"
+    PATH_FILE_PARSER="${2}"
+    SOURCE=''
+    EXPECT=''
+    RESULT=''
+    DIFF=''
+
+    # Load test case
+    source $PATH_FILE_TEST
+
+    # Run test (pipe the markdown to the parser script)
+    echo -n "- TESTING: ${PATH_FILE_TEST}  ... "
+    RESULT=$(echo "${SOURCE}" | php $PATH_FILE_PARSER)
+
+    # Assert Equal
+    [ "${RESULT}" = "${EXPECT}" ] && [ $EXPECT_EQUAL -eq $YES ] && {
+        echo "OK (Parser: ${PATH_FILE_PARSER})"
+        return 0
+    }
+
+    # Assert NotEqual
+    [ "${RESULT}" != "${EXPECT}" ] && [ $EXPECT_EQUAL -eq $NO ] && {
+        echo "OK (Parser: ${PATH_FILE_PARSER})"
+        return 0
+    }
+
+    # On error display the logs and diffs
+    echo "NG (Parser: ${PATH_FILE_PARSER})"
+    DIFF=$(diff <(echo "${RESULT}") <(echo "${EXPECT}"))
+    cat <<HEREDOC
+[ERROR LOG]
+- SOURCE:
+${SOURCE}
+
+- RESULT:
+${RESULT}
+
+- EXPECT:
+${EXPECT}
+
+- DIFF:
+${DIFF}
+
+HEREDOC
+
+    return 1
 }
 
 # -----------------------------------------------------------------------------
@@ -132,8 +201,8 @@ url_api_github='https://api.github.com/repos/erusev/parsedown/releases/latest'
 
 [ "$flag_found_parsedown" -eq "$NO" ] && {
     # Get URL to download released archive
-    isAvailableGitHubAPI "${url_api_github}" && \
-    url_download_tarboll=$(getUrlTarbollFromEndpoint "${url_api_github}")
+    isAvailableGitHubAPI "${url_api_github}" &&
+        url_download_tarboll=$(getUrlTarbollFromEndpoint "${url_api_github}")
 
     # Get Name of the archive
     name_file_target='Parsedown.php'
@@ -143,12 +212,12 @@ url_api_github='https://api.github.com/repos/erusev/parsedown/releases/latest'
 
     # Download Latest Parsedown
     echo "- Downloading Parsedown.php from: ${url_download_tarboll}"
-    curl --silent --show-error --location $url_download_tarboll --output $path_file_archive && \
-    tar -xf $path_file_archive && \
-    mv erusev-parsedown* $name_dir_extract && \
-    mv "${name_dir_extract}/${name_file_target}" $path_file_script_parsedown && \
-    rm -rf $name_dir_extract && \
-    rm $path_file_archive
+    curl --silent --show-error --location $url_download_tarboll --output $path_file_archive &&
+        tar -xf $path_file_archive &&
+        mv erusev-parsedown* $name_dir_extract &&
+        mv "${name_dir_extract}/${name_file_target}" $path_file_script_parsedown &&
+        rm -rf $name_dir_extract &&
+        rm $path_file_archive
     [ $? -ne 0 ] && {
         echo 'Failed to download Parsedown'
         exit 1
@@ -162,8 +231,8 @@ url_api_github='https://api.github.com/repos/erusev/parsedown-extra/releases/lat
 
 [ "$flag_found_parsedown_extra" -eq "$NO" ] && {
     # Get URL to download released archive
-    isAvailableGitHubAPI "${url_api_github}" && \
-    url_download_tarboll=$(getUrlTarbollFromEndpoint "${url_api_github}")
+    isAvailableGitHubAPI "${url_api_github}" &&
+        url_download_tarboll=$(getUrlTarbollFromEndpoint "${url_api_github}")
 
     # Get Name of the archive
     name_file_target='ParsedownExtra.php'
@@ -173,63 +242,16 @@ url_api_github='https://api.github.com/repos/erusev/parsedown-extra/releases/lat
 
     # Download Latest Parsedown Extra
     echo "- Downloading ParsedownExtra.php from: ${url_download_tarboll}"
-    curl --silent --show-error --location $url_download_tarboll --output $path_file_archive && \
-    tar -xf $path_file_archive && \
-    mv erusev-parsedown* $name_dir_extract && \
-    mv "${name_dir_extract}/${name_file_target}" $path_file_script_parsedown_extra && \
-    rm -rf $name_dir_extract && \
-    rm $path_file_archive
+    curl --silent --show-error --location $url_download_tarboll --output $path_file_archive &&
+        tar -xf $path_file_archive &&
+        mv erusev-parsedown* $name_dir_extract &&
+        mv "${name_dir_extract}/${name_file_target}" $path_file_script_parsedown_extra &&
+        rm -rf $name_dir_extract &&
+        rm $path_file_archive
     [ $? -ne 0 ] && {
         echo 'Failed to download Parsedown'
         exit 1
     }
-}
-
-function runTest () {
-    PATH_FILE_TEST="${1}"
-    PATH_FILE_PARSER="${2}"
-    SOURCE=''
-    EXPECT=''
-    RESULT=''
-    DIFF=''
-
-    # Load test case
-    source $PATH_FILE_TEST
-
-    echo -n "- TESTING: ${PATH_FILE_TEST}  ... "
-
-    RESULT=$(echo "${SOURCE}" | php $PATH_FILE_PARSER)
-
-    [ "${RESULT}" = "${EXPECT}" ] && [ $EXPECT_EQUAL -eq $YES ] && {
-        echo "OK (Parser: ${PATH_FILE_PARSER})"
-        return 0
-    }
-
-    [ "${RESULT}" != "${EXPECT}" ] && [ $EXPECT_EQUAL -eq $NO ] && {
-        echo "OK (Parser: ${PATH_FILE_PARSER})"
-        return 0
-    }
-    echo "NG (Parser: ${PATH_FILE_PARSER})"
-
-    DIFF=$(diff  <(echo "${RESULT}") <(echo "${EXPECT}"))
-
-cat << HEREDOC
-[ERROR LOG]
-- SOURCE:
-${SOURCE}
-
-- RESULT:
-${RESULT}
-
-- EXPECT:
-${EXPECT}
-
-- DIFF:
-${DIFF}
-
-HEREDOC
-
-    return 1
 }
 
 # -----------------------------------------------------------------------------
@@ -240,12 +262,15 @@ echo ' Running tests'
 echo '================================'
 
 echo 'Parsedown Vanilla'
-for file in $(ls test_*.sh); do
-    runTest "${file}" './parser-vanilla.php'
+for file_test in $(ls test_vanilla*.sh); do
+    runTest "${file_test}" './parser/parser-vanilla.php'
 done
+echo
 
 echo 'Parsedown Extra'
-
-for file in $(ls {test_,test-parsedownextra_}*.sh); do
-    runTest "${file}" './parser-extra.php'
+for file_test in $(ls {test_vanilla,test_extra_}*.sh); do
+    runTest "${file_test}" './parser/parser-extra.php'
 done
+echo
+
+echo 'Test done. All tests passed.'

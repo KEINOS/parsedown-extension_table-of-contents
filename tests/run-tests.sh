@@ -1,6 +1,17 @@
 #!/bin/sh
 # =============================================================================
-#  Test Script to check basic function.
+#  Note: To run the test, see the README.md in this directory.
+#
+#  This test script will:
+#    1. Read the files "test_*.sh" and gets the below 2 strings.
+#      - SOURCE -> Markdown sample
+#      - EXPECT -> Expected result in HTML
+#    2. Pipes the "SOURCE" to the STDIN of the below parser scripts.
+#      - ./parser/parser-vanilla.php
+#      - ./parser/parser-extra.php
+#    3. The parser script receives the markdown from the STDIN and parses to
+#       HTML then echoes/outputs the result to STDOUT. (="ACTUAL")
+#    4. Finally this script compares the "ACTUAL" and "EXPECT".
 # =============================================================================
 
 path_dir_current=$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)
