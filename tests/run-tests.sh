@@ -6,11 +6,11 @@
 #    1. Read the files "test_*.sh" and gets the below 2 strings.
 #      - SOURCE -> Markdown sample
 #      - EXPECT -> Expected result in HTML
-#    2. Pipes the "SOURCE" to the STDIN of the below parser script.
+#    2. Pipes the "SOURCE" to the STDIN of the below parser scripts.
 #      - ./parser/parser-vanilla.php
 #      - ./parser/parser-extra.php
-#    3. The parser script receives the markdown from the STDIN and pases to
-#       HTML and echoes/outputs the result to STDOUT. (="ACTUAL")
+#    3. The parser script receives the markdown from the STDIN and parses to
+#       HTML then echoes/outputs the result to STDOUT. (="ACTUAL")
 #    4. Finally this script compares the "ACTUAL" and "EXPECT".
 # =============================================================================
 

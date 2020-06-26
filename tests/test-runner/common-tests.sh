@@ -20,9 +20,9 @@ cd "$PATH_DIR_PARENT"
 
 # Echoes the URL to download the tarball of the latest release from GitHub.
 #
-# @param  string $1 GitHub API endpoint URL of the target repository.
-# @return string    Echoes the URL of the latest tarball to download.
-# @execption        On error exits the script as 1.
+# @param  string $1  GitHub API endpoint URL of the target repository.
+# @return string     Echoes the URL of the latest tarball to download.
+# @execption         On error exits the script as 1.
 function getUrlTarbollFromEndpoint() {
     url_api_to_request="${1}"
 
@@ -71,9 +71,9 @@ function getUrlTarbollFromEndpoint() {
 
 # Checks if the GitHub API request quota is not exceeded.
 #
-# @param  string $1 GitHub API Endpoint URL of the target repository.
-# @return int       Returns 0 if the request quota is not exceeded.
-# @execption        If exceeded or any error exits the script as 1.
+# @param  string $1  GitHub API Endpoint URL of the target repository.
+# @return int        Returns 0 if the request quota is not exceeded.
+# @execption         If exceeded or any error exits the script as 1.
 function isAvailableGitHubAPI() {
     echo -n '- Checking if GitHub API is available ... '
     url_api_to_request="${1}"
@@ -81,7 +81,7 @@ function isAvailableGitHubAPI() {
     echo "${header_result}" | grep HTTP | grep 403 >/dev/null 2>&1 && {
         # Exit as 1 when GitHub API returns 403 status error.
         #   GitHub API has a quota/limitation rate of access per IP address.
-        #   Once this error is shown, you need a cool down time about an hour.
+        #   Once this error is shown, you need an hour or more of cool down time.
         echo 'ERROR'
         time_reset_ratelimit=$(echo "$header_result" | grep X-Ratelimit-Reset | awk '{print $2}' | sed -e 's/[^0-9]//g')
         time_current=$(date +%s)
@@ -100,9 +100,9 @@ function isAvailableGitHubAPI() {
 # Run a test. It pipes the markdown string to the parser script and compares
 # the result.
 #
-# @param  string $1 Path of the test file (../test_*.sh)
-# @param  string $2 Path of the parser script. (../parser/parser*.php)
-# @return int       Returns 0 if the test passes. 1 if the test failes.
+# @param  string $1  Path of the test file (../test_*.sh)
+# @param  string $2  Path of the parser script. (../parser/parser*.php)
+# @return int        Returns 0 if the test passes. 1 if the test failes.
 function runTest() {
     PATH_FILE_TEST="${1}"
     PATH_FILE_PARSER="${2}"
@@ -262,14 +262,14 @@ echo ' Running tests'
 echo '================================'
 
 echo 'Parsedown Vanilla'
-for file in $(ls test_vanilla*.sh); do
-    runTest "${file}" './parser/parser-vanilla.php'
+for file_test in $(ls test_vanilla*.sh); do
+    runTest "${file_test}" './parser/parser-vanilla.php'
 done
 echo
 
 echo 'Parsedown Extra'
-for file in $(ls {test_vanilla,test_extra_}*.sh); do
-    runTest "${file}" './parser/parser-extra.php'
+for file_test in $(ls {test_vanilla,test_extra_}*.sh); do
+    runTest "${file_test}" './parser/parser-extra.php'
 done
 echo
 
