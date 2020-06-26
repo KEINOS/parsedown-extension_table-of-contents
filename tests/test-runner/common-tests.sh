@@ -106,17 +106,26 @@ function isAvailableGitHubAPI() {
 function runTest() {
     PATH_FILE_TEST="${1}"
     PATH_FILE_PARSER="${2}"
+    USE_METHODS=''
     SOURCE=''
     EXPECT=''
     RESULT=''
     DIFF=''
+    RETURN_VALUE='toc'
 
     # Load test case
     source $PATH_FILE_TEST
 
+    # Escapes JSON string to provide methods to be used in a script via arg
+    use_methods_json=''
+    [ "${USE_METHODS:+defined}" ] && {
+        use_methods_json=$(printf '%q' $(echo "${USE_METHODS}" | jq -r -c .))
+    }
+
     # Run test (pipe the markdown to the parser script)
+    # Also with "-j" arg, provide
     echo -n "- TESTING: ${PATH_FILE_TEST}  ... "
-    RESULT=$(echo "${SOURCE}" | php $PATH_FILE_PARSER)
+    RESULT=$(echo "${SOURCE}" | php "${PATH_FILE_PARSER}" "-j=${use_methods_json}" "-r=${RETURN_VALUE}")
 
     # Assert Equal
     [ "${RESULT}" = "${EXPECT}" ] && [ $EXPECT_EQUAL -eq $YES ] && {
