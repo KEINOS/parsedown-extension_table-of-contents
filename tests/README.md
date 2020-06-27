@@ -18,7 +18,13 @@ In order to run the tests in PHP5 as well, we decided NOT to use PHPUnit and do 
   ```
 
   ```bash
-  $ # For those who want to run the tests in PHP ^5.6 (Alpine)
+  $ # For those who want to run the tests in PHP 5.3.26 (Debian)
+  $ composer test-docker-php5.3
+  ...
+  ```
+
+  ```bash
+  $ # For those who want to run the tests in PHP 5.6.40 (Alpine)
   $ composer test-docker-php5
   ...
   ```
