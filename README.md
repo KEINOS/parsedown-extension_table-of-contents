@@ -85,13 +85,23 @@ echo $body . PHP_EOL; // Main body
 - Main Class: `ParsedownToC()`
   - Arguments: none
   - Methods:
-    - `text(string $text)`: Returns the parsed content and `[toc]` tag(s) parsed as well.
+    - `text(string $text)`:
+      - Returns the parsed content and `[toc]` tag(s) parsed as well.
       - Required argument `$text`: Markdown string to be parsed.
-    - `body(string $text)`: Returns the parsed content without parsing `[toc]` tag.
+    - `body(string $text)`:
+      - Returns the parsed content WITHOUT parsing `[toc]` tag.
       - Required argument `$text`: Markdown string to be parsed.
-    - `toc([string $type_return='string'])`: Returns the ToC, the table of contents, in HTML or JSON.
-      - Option argument `$type_return`: `string` or `json` can be specified. (`string`=HTML(default), `json`=JSON)
+    - `toc([string $type_return='string'])`:
+      - Returns the ToC, the table of contents, in HTML or JSON.
+      - Option argument:
+        - `$type_return`:
+          - `string` or `json` can be specified. `string`=HTML, `json`=JSON.
+          - Default `string`
       - Alias method: `contentsList(string $type_return)`
+    - `setTagToc(string $tag='[tag]')`:
+      - Sets user defined ToC markdown tag. Use this method before `text()` or `body()` method if you want to use the ToC tag rather than the "`[toc]`".
+      - Empty value sets the default ToC tag.
+      - Available since v1.1.2
   - Other Methods:
     - All the public methods of `Parsedown` and/or `Parsedown Extend` are available to use.
   - Note: As of v1.1.0 the old alias class: `Extension()` is deprecated.
