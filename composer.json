@@ -32,7 +32,7 @@
     "scripts": {
         "test": "./tests/run-tests.sh",
         "test-docker": "docker run --rm --user root -v $(pwd):/app php:cli /app/tests/run-tests.sh",
-        "test-docker-php5": "docker run --rm --user root -v $(pwd):/app php:5-cli-alpine /app/tests/run-tests.sh",
+        "test-docker-php5": "docker run --rm --user root -v $(pwd):/app php:5.3.29-cli /app/tests/run-tests.sh",
         "test-docker-php8": "docker run --rm --user root -v $(pwd):/app keinos/php8-jit /app/tests/run-tests.sh"
     }
 }

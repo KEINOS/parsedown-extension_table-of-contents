@@ -77,7 +77,8 @@ function getMarkdownFromStdIn()
 /**
  * Get list of the methods and it's values to be executed. The lists should be
  * in JSON and assigned to "USE_METHODS" variable in each "test_*.sh" script.
- * - For the sample see: ../test_vanilla_user_defined_toc_tag.sh
+ *
+ * - For the sample settings see: ../test_vanilla_user_defined_toc_tag_style1.sh
  *
  * @return array
  */
@@ -85,12 +86,13 @@ function getMethodsToExecute()
 {
     $return_as_assoc_array = true;
 
-    // Get
+    // Get JSON string of methods and it's arg values from the command arg
+    // to be executed as an array.
     $json  = getStringFromArg();
     $array = json_decode($json, $return_as_assoc_array);
 
     if (empty($array)) {
-        return [];
+        return array();
     }
     return $array;
 }

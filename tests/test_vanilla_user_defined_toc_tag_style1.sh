@@ -3,8 +3,10 @@
 #  Test: Basic parsing
 # =============================================================================
 
-EXPECT_EQUAL=$YES # Use $NO or $YES
+# Assert equals. Use $NO or $YES
+EXPECT_EQUAL=$YES
 
+# Source text in markdown
 SOURCE=$(cat << 'HEREDOC'
 [[TOC]]
 
@@ -21,6 +23,7 @@ Sample text of head2-1.
 HEREDOC
 )
 
+# Expected results("body")
 EXPECT=$(cat << 'HEREDOC'
 <div id="toc"><ul>
 <li><a href="#Head1">Head1</a>
@@ -44,6 +47,7 @@ EXPECT=$(cat << 'HEREDOC'
 HEREDOC
 )
 
+# List of method and it's arguments to be executed before "$obj->body()" and "$obj->toc()".
 USE_METHODS=$(cat << 'HEREDOC'
 [
   {
@@ -56,4 +60,6 @@ USE_METHODS=$(cat << 'HEREDOC'
 HEREDOC
 )
 
-RETURN_VALUE='body' # "body" or "toc". Default: "toc"
+# Specify which value to get as a result between "body" and "toc"
+# (Default: "toc")
+RETURN_VALUE='body'
