@@ -298,6 +298,18 @@ class ParsedownToC extends DynamicParent
     protected $firstHeadLevel = 0;
 
     /**
+     * Sets the user defined ToC markdown tag.
+     *
+     * @param  string $tag
+     * @return void
+     */
+    public function setTagToc($tag)
+    {
+        // dummy implementation
+    }
+    protected $tag_toc='';
+
+    /**
      * Parses markdown string to HTML and also the "[toc]" tag as well.
      * It overrides the parent method: \Parsedown::text().
      *
