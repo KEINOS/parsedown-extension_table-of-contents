@@ -3,8 +3,10 @@
 #  Test: Anchor ID of Parsedown Extra (See PR #16)
 # =============================================================================
 
-EXPECT_EQUAL=$YES # Use $NO or $YES
+# Assert equals. Use $NO or $YES
+EXPECT_EQUAL=$YES
 
+# Source text in markdown
 SOURCE=$(cat << 'HEREDOC'
 # Head1
 Sample text of head 1.
@@ -19,6 +21,7 @@ Sample text of head 3
 HEREDOC
 )
 
+# Expected results("toc")
 EXPECT=$(cat << 'HEREDOC'
 <ul>
 <li><a href="#Head1">Head1</a>

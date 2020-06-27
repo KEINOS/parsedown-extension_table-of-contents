@@ -1,11 +1,12 @@
 #!/bin/bash
 # =============================================================================
-#  Test of the tests. ;-p
-#  It checks if the $EXPECT_EQUAL bool is working.
+#  Test of the tests. ;-p  It checks if the $EXPECT_EQUAL bool is working.
 # =============================================================================
 
+# Assert equals. Use $NO or $YES
 EXPECT_EQUAL=$NO
 
+# Source text in markdown
 SOURCE=$(cat << 'HEREDOC'
 # WrongHead 1
 Sample text of head 1.
@@ -18,6 +19,7 @@ Sample text of head2-1.
 HEREDOC
 )
 
+# Expected results("toc")
 EXPECT=$(cat << 'HEREDOC'
 <ul>
 <li><a href="#Head1">Head1</a>
