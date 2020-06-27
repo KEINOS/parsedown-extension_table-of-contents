@@ -124,15 +124,19 @@ class ParsedownToC extends DynamicParent
     }
 
     /**
-     * Parses the given markdown string to an HTML string.
-     * It's an alias of the parent method: \Parsedown::text()
+     * Parses the given markdown string to an HTML string but it leaves the ToC
+     * tag as is. It's an alias of the parent method "\DynamicParent::text()".
      *
      * @param  string $text  Markdown string to be parsed.
      * @return string        Parsed HTML string.
      */
     public function body($text)
     {
-        return DynamicParent::text($text);
+        $text = $this->encodeTagToHash($text);   // Escapes ToC tag temporary
+        $html = DynamicParent::text($text);      // Parses the markdown text
+        $html = $this->decodeTagFromHash($html); // Unescape the ToC tag
+
+        return $html;
     }
 
     /**
@@ -167,7 +171,8 @@ class ParsedownToC extends DynamicParent
     }
 
     /**
-     * Generates link-able anchor from the text.
+     * Generates an anchor text that are link-able even the heading is not in
+     * ASCII.
      *
      * @param  string $text
      * @return string
@@ -175,6 +180,53 @@ class ParsedownToC extends DynamicParent
     protected function createAnchorID($text)
     {
         return  urlencode($this->fetchText($text));
+    }
+
+    /**
+     * Decodes the hashed ToC tag to an original tag and replaces.
+     *
+     * This is used to avoid parsing user defined ToC tag which includes "_" in
+     * their tag such as "[[_toc_]]". Unless it will be parsed as:
+     *   "<p>[[<em>TOC</em>]]</p>"
+     *
+     * @param  string $text
+     * @return string
+     */
+    protected function decodeTagFromHash($text)
+    {
+        $salt = $this->getSalt();
+        $tag_origin = $this->getTagToC();
+        $tag_hashed = hash('sha256', $salt . $tag_origin);
+
+        if (strpos($text, $tag_hashed) === false) {
+            return $text;
+        }
+
+        return str_replace($tag_hashed, $tag_origin, $text);
+    }
+
+    /**
+     * Encodes the ToC tag to a hashed tag and replace.
+     *
+     * This is used to avoid parsing user defined ToC tag which includes "_" in
+     * their tag such as "[[_toc_]]". Unless it will be parsed as:
+     *   "<p>[[<em>TOC</em>]]</p>"
+     *
+     * @param  string $text
+     * @return string
+     */
+    protected function encodeTagToHash($text)
+    {
+        $salt = $this->getSalt();
+        $tag_origin = $this->getTagToC();
+
+        if (strpos($text, $tag_origin) === false) {
+            return $text;
+        }
+
+        $tag_hashed = hash('sha256', $salt . $tag_origin);
+
+        return str_replace($tag_origin, $tag_hashed, $text);
     }
 
     /**
@@ -204,6 +256,22 @@ class ParsedownToC extends DynamicParent
     }
 
     /**
+     * Unique string to use as a salt value.
+     *
+     * @return string
+     */
+    protected function getSalt()
+    {
+        static $salt;
+        if (isset($salt)) {
+            return $salt;
+        }
+
+        $salt = hash('md5', time());
+        return $salt;
+    }
+
+    /**
      * Gets the markdown tag for ToC.
      *
      * @return string
@@ -215,24 +283,6 @@ class ParsedownToC extends DynamicParent
         }
 
         return self::TAG_TOC_DEFAULT;
-    }
-
-    /**
-     * Replaces the "[toc]" tag (by default) to the parsed ToC list.
-     *
-     * @param  string $html Parsed HTML string
-     * @return string       Parsed HTML string with parsed ToC.
-     */
-    protected function replaceTagToC($html)
-    {
-        $toc     = $this->contentsList();
-        $tag_toc = $this->getTagToC();
-        $id_toc  = $this->getIdAttributeToC();
-
-        $needle  = '<p>' . $tag_toc . '</p>';
-        $replace = "<div id=\"${id_toc}\">${toc}</div>";
-
-        return str_replace($needle, $replace, $html);
     }
 
     /**
@@ -305,7 +355,18 @@ class ParsedownToC extends DynamicParent
      */
     public function setTagToc($tag)
     {
-        // dummy implementation
+        $tag = trim($tag);
+        if (self::escape($tag) === $tag) {
+            // Set ToC tag if it's safe
+            $this->tag_toc = $tag;
+        } else {
+            // Do nothing but log
+            error_log(
+                'Malformed ToC user tag given.'
+                . ' At: ' . __FUNCTION__ . '() '
+                . ' in Line:' . __LINE__ . ' (Using default ToC tag)'
+            );
+        }
     }
     protected $tag_toc='';
 
@@ -318,13 +379,22 @@ class ParsedownToC extends DynamicParent
      */
     public function text($text)
     {
-        $body = $this->body($text);
-        $tag  = $this->getTagToC();
+        // Parses the markdown text except the ToC tag. This also searches
+        // the list of contents and available to get from "contentsList()"
+        // method.
+        $html = $this->body($text);
 
-        if (strpos($text, $tag) === false) {
-            return $body;
+        $tag_origin  = $this->getTagToC();
+
+        if (strpos($text, $tag_origin) === false) {
+            return $html;
         }
 
-        return $this->replaceTagToC($body);
+        $toc_data = $this->contentsList();
+        $toc_id   = $this->getIdAttributeToC();
+        $needle  = '<p>' . $tag_origin . '</p>';
+        $replace = "<div id=\"${toc_id}\">${toc_data}</div>";
+
+        return str_replace($needle, $replace, $html);
     }
 }
