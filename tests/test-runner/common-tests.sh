@@ -8,6 +8,8 @@
 # -----------------------------------------------------------------------------
 YES=0
 NO=1
+STATUS_SUCCESS=0
+STATUS_FAILURE=1
 PATH_DIR_CURRENT=$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)
 PATH_DIR_PARENT=$(cd "$(dirname "${PATH_DIR_CURRENT}")" && pwd)
 PATH_DIR_ROOT=$(dirname "${PATH_DIR_PARENT}")
@@ -40,7 +42,7 @@ function getUrlTarbollFromEndpoint() {
             echo ' NG'
             echo '- Max retry exceeded. Plese check your internet connection or the destination URL below.'
             echo "  Target URL: ${url_api_to_request}"
-            exit 1
+            exit $STATUS_FAILURE
         }
 
         # Sleep random seconds before request (Avoid 503 server error)
@@ -91,10 +93,10 @@ function isAvailableGitHubAPI() {
         echo '- Request rate limit exceeded: GitHub API returned 403 error. Please wait until the limitation resets.'
         echo "  Time remaining: ${time_diff_secs} seconds (${time_remain}/h:m:s)"
 
-        exit 1
+        exit $STATUS_FAILURE
     }
     echo 'OK'
-    return 0
+    return $STATUS_SUCCESS
 }
 
 # Run a test. It pipes the markdown string to the parser script and compares
@@ -106,34 +108,44 @@ function isAvailableGitHubAPI() {
 function runTest() {
     PATH_FILE_TEST="${1}"
     PATH_FILE_PARSER="${2}"
+    USE_METHODS=''
     SOURCE=''
     EXPECT=''
     RESULT=''
     DIFF=''
+    RETURN_VALUE='toc'
 
     # Load test case
     source $PATH_FILE_TEST
 
+    # Escapes JSON string to provide methods to be used in a script via arg
+    use_methods_json=''
+    [ "${USE_METHODS:+defined}" ] && {
+        use_methods_json=$(printf '%q' $(echo "${USE_METHODS}" | jq -r -c .))
+    }
+
     # Run test (pipe the markdown to the parser script)
+    # Also with "-j" arg, provide
     echo -n "- TESTING: ${PATH_FILE_TEST}  ... "
-    RESULT=$(echo "${SOURCE}" | php $PATH_FILE_PARSER)
+    RESULT=$(echo "${SOURCE}" | php "${PATH_FILE_PARSER}" "-j=${use_methods_json}" "-r=${RETURN_VALUE}")
 
     # Assert Equal
     [ "${RESULT}" = "${EXPECT}" ] && [ $EXPECT_EQUAL -eq $YES ] && {
         echo "OK (Parser: ${PATH_FILE_PARSER})"
-        return 0
+        return $STATUS_SUCCESS
     }
 
     # Assert NotEqual
     [ "${RESULT}" != "${EXPECT}" ] && [ $EXPECT_EQUAL -eq $NO ] && {
         echo "OK (Parser: ${PATH_FILE_PARSER})"
-        return 0
+        return $STATUS_SUCCESS
     }
 
     # On error display the logs and diffs
     echo "NG (Parser: ${PATH_FILE_PARSER})"
     DIFF=$(diff <(echo "${RESULT}") <(echo "${EXPECT}"))
-    cat <<HEREDOC
+    log=$(
+        cat <<HEREDOC
 [ERROR LOG]
 - SOURCE:
 ${SOURCE}
@@ -148,8 +160,16 @@ ${EXPECT}
 ${DIFF}
 
 HEREDOC
+    )
 
-    return 1
+    # Indent log
+    indent='  |  '
+    echo "$log" | while read line; do
+        echo "${indent}${line}"
+    done
+    echo
+
+    return $STATUS_FAILURE
 }
 
 # -----------------------------------------------------------------------------
@@ -162,7 +182,7 @@ result=$(php -l "${path_file_script_extension}")
 [ $? -ne 0 ] && {
     echo 'NG'
     echo $result
-    exit 1
+    exit $STATUS_FAILURE
 }
 echo 'OK'
 echo "  ${result}"
@@ -220,7 +240,7 @@ url_api_github='https://api.github.com/repos/erusev/parsedown/releases/latest'
         rm $path_file_archive
     [ $? -ne 0 ] && {
         echo 'Failed to download Parsedown'
-        exit 1
+        exit $STATUS_FAILURE
     }
 }
 
@@ -250,7 +270,7 @@ url_api_github='https://api.github.com/repos/erusev/parsedown-extra/releases/lat
         rm $path_file_archive
     [ $? -ne 0 ] && {
         echo 'Failed to download Parsedown'
-        exit 1
+        exit $STATUS_FAILURE
     }
 }
 
@@ -261,16 +281,24 @@ echo '================================'
 echo ' Running tests'
 echo '================================'
 
+failed_tests=0
 echo 'Parsedown Vanilla'
 for file_test in $(ls test_vanilla*.sh); do
     runTest "${file_test}" './parser/parser-vanilla.php'
+    failed_tests=$(( $failed_tests+$? ))
 done
 echo
 
 echo 'Parsedown Extra'
 for file_test in $(ls {test_vanilla,test_extra_}*.sh); do
     runTest "${file_test}" './parser/parser-extra.php'
+    failed_tests=$(( $failed_tests+$? ))
 done
 echo
 
+[ $failed_tests -ne 0 ] && {
+    echo "Test done. ${failed_tests} test(s) failed."
+    exit $STATUS_FAILURE
+}
 echo 'Test done. All tests passed.'
+exit $STATUS_SUCCESS
