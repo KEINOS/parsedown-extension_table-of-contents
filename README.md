@@ -155,7 +155,7 @@ php -r "copy('https://KEINOS.github.io/parsedown-extension_table-of-contents/Ext
 
 As of Parsedown ToC Extension v1.1.1, you can use the [anchor identifiers](https://michelf.ca/projects/php-markdown/extra/#header-id) for [Parsedown Extra](https://github.com/erusev/parsedown-extra).
 
-With this feature, you can specify the anchor name you like. Useful if the headings are in UTF-8 (not in ASCII) and/or placing "go back" links in page.
+With this feature, you can specify the anchor name you like. Useful if the headings are in UTF-8 (not in ASCII) and to make it readable. Such as placing the "go back" links in a page.
 
 ```markdown
 # SampleHead1 {#self-defined-head1}
