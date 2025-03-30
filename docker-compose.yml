@@ -1,0 +1,42 @@
+# =============================================================================
+#  Docker Compose file for testing on different PHP versions.
+#
+#  Usage:
+#    # Doewnload the base images for stability
+#    $ docker compose pull
+#
+#    # Build the images
+#    $ docker compose build
+#
+#    # Run the tests in the container for various PHP versions
+#    $ docker compose run --rm min
+#    $ docker compose run --rm max
+#    $ docker compose run --rm latest
+# =============================================================================
+
+services:
+  # Minimum supported PHP version. Which is equivalent to Parsedown's minimum
+  # supported version.
+  min:
+    build:
+      dockerfile: ./Dockerfile
+      args:
+        PHP_VERSION: 7.1-cli-alpine
+    volumes:
+      - .:/app
+  # Currently supported maximum PHP version.
+  max:
+    build:
+      dockerfile: ./Dockerfile
+      args:
+        PHP_VERSION: 8.3-cli-alpine
+    volumes:
+      - .:/app
+  # Experimental latest PHP version. Currently errors out.
+  latest:
+    build:
+      dockerfile: ./Dockerfile
+      args:
+        PHP_VERSION: cli-alpine
+    volumes:
+      - .:/app

@@ -1,0 +1,76 @@
+name: UnitTests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  PATH_CACHE: /tmp/docker-img-arch
+
+jobs:
+  php:
+    name: Run tests on Go via container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Skip Duplicate Actions
+        uses: fkirc/skip-duplicate-actions@v5
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Create image tag from file hash
+        uses: KEINOS/gh-action-hash-for-cache@main
+        id: imagetag
+        # Udate the hash if any of the below file is changed or the month has changed.
+        with:
+          path: |
+            ./Extension.php
+            ./composer.json
+            ./Dockerfile
+            ./docker-compose.yml
+          variant: $(TZ=UTC-9 date '+%Y%m')
+
+      - name: Enable Cache
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.PATH_CACHE }}
+          key: ${{ steps.imagetag.outputs.hash }}
+
+      - name: Load cached Docker images if any
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: |
+          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_min_1.tar
+          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_max_1.tar
+          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_latest_1.tar
+
+      - name: Pull base images if no-cache
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          : # Pull images for stability.
+          docker compose pull
+
+      - name: Build Docker images if no-cache
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          docker compose build
+
+      - name: Run tests on minimum supported PHP version
+        run: docker compose run --rm min
+
+      - name: Run tests on maximum supported PHP version
+        run: docker compose run --rm max
+
+      - name: Run tests on latest PHP version (currently experimental. Expected to fail)
+        run: docker compose run --rm latest || exit 0
+
+      - name: Save/export built images to cache dir if no-cache
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}
+          docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_min_1.tar github-min:latest
+          docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_max_1.tar github-max:latest
+          docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_latest_1.tar github-latest:latest
