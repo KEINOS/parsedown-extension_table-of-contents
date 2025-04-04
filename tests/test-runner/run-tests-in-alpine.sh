@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # =============================================================================
 #  Basic setup for Alpine Linux before running the tests.
 # =============================================================================
@@ -6,9 +6,10 @@
 # Move working directory to the parrent
 PATH_DIR_CURRENT=$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)
 PATH_DIR_PARENT=$(cd "$(dirname "${PATH_DIR_CURRENT}")" && pwd)
+
 PATH_DIR_ROOT=$(dirname "${PATH_DIR_PARENT}")
 
-cd $PATH_DIR_PARENT
+cd "$PATH_DIR_PARENT"
 
 set -eu
 
@@ -94,6 +95,6 @@ bash --version | head -1
 # -----------------------------------------------------------------------------
 #  Run Actual Tests
 # -----------------------------------------------------------------------------
-/bin/bash $PATH_DIR_CURRENT/common-tests.sh
+/bin/bash "${PATH_DIR_CURRENT}/common-tests.sh"
 
 exit $?
