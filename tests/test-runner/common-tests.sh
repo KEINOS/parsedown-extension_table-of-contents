@@ -284,14 +284,18 @@ echo '================================'
 
 failed_tests=0
 echo 'Parsedown Vanilla'
-for file_test in $(ls test_vanilla*.sh); do
+for file_test in test_vanilla*.sh; do
+    [[ -e "$file_test" ]] || break  # handle the case of no matched files
+
     runTest "${file_test}" './parser/parser-vanilla.php'
     failed_tests=$(( $failed_tests+$? ))
 done
 echo
 
 echo 'Parsedown Extra'
-for file_test in $(ls {test_vanilla,test_extra_}*.sh); do
+for file_test in {test_vanilla,test_extra_}*.sh; do
+    [[ -e "$file_test" ]] || break  # handle the case of no matched test files
+
     runTest "${file_test}" './parser/parser-extra.php'
     failed_tests=$(( $failed_tests+$? ))
 done
