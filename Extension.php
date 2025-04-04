@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ToC Extension/Plugin for Parsedown.
  * ============================================================================
@@ -7,7 +8,7 @@
  * @author      KEINOS (https://github.com/KEINOS/)
  *              Contributors (https://github.com/KEINOS/parsedown-extension_table-of-contents/graphs/contributors)
  * @package     Parsedown ^1.7 (https://github.com/erusev/parsedown)
- * @php         ^5.6.40
+ * @php         >=5.3.0 <=8.3 (Currently fails on PHP 8.4)
  * @see         HowTo: https://github.com/KEINOS/parsedown-extension_table-of-contents/
  * @license     MIT: https://github.com/KEINOS/parsedown-extension_table-of-contents/LICENSE
 */
@@ -47,7 +48,7 @@ class ParsedownToC extends DynamicParent
      *  Constants.
      * ------------------------------------------------------------------------
      */
-    const version = '1.1.2'; // Version is available since v1.1.0
+    const version = '1.2.2'; // Version is available since v1.1.0
     const VERSION_PARSEDOWN_REQUIRED = '1.7';
     const TAG_TOC_DEFAULT = '[toc]';
     const ID_ATTRIBUTE_DEFAULT = 'toc';
