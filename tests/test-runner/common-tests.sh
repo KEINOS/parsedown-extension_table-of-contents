@@ -179,12 +179,11 @@ HEREDOC
 name_file_script_extension='Extension.php'
 path_file_script_extension="${PATH_DIR_ROOT}/${name_file_script_extension}"
 echo -n '- Lint Check: Extension.php ... '
-result=$(php -l "${path_file_script_extension}")
-[ $? -ne 0 ] && {
+if ! result=$(php -l "${path_file_script_extension}"); then
     echo 'NG'
     echo "${result}"
     exit $STATUS_FAILURE
-}
+fi
 echo 'OK'
 echo "  ${result}"
 
@@ -196,24 +195,24 @@ name_file_script_parsedown='Parsedown.php'
 path_file_script_parsedown="${PATH_DIR_ROOT}/${name_file_script_parsedown}"
 flag_found_parsedown=$NO
 echo -n "- Searching Parsedown ... "
-[ -f "$path_file_script_parsedown" ] && {
+if [ -f "$path_file_script_parsedown" ]; then
     flag_found_parsedown=$YES
     echo 'Found'
-} || {
+else
     echo 'Not found'
-}
+fi
 
 # Check Parsedown Extra
 name_file_script_parsedown_extra='ParsedownExtra.php'
 path_file_script_parsedown_extra="${PATH_DIR_ROOT}/${name_file_script_parsedown_extra}"
 flag_found_parsedown_extra=$NO
 echo -n "- Searching Parsedown Extra ... "
-[ -f "$path_file_script_parsedown_extra" ] && {
+if [ -f "$path_file_script_parsedown_extra" ]; then
     flag_found_parsedown_extra=$YES
     echo 'Found'
-} || {
+else
     echo 'Not found'
-}
+fi
 
 # -------------------------------------------------------------------------------
 #  Download Parsedown Vanilla
