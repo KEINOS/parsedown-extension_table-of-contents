@@ -66,7 +66,7 @@ function getUrlTarbollFromEndpoint() {
             continue
         }
 
-        echo $url_download_tarboll
+        echo "$url_download_tarboll"
         break
     done
 }
@@ -116,12 +116,12 @@ function runTest() {
     RETURN_VALUE='toc'
 
     # Load test case
-    source $PATH_FILE_TEST
+    source "$PATH_FILE_TEST"
 
     # Escapes JSON string to provide methods to be used in a script via arg
     use_methods_json=''
     [ "${USE_METHODS:+defined}" ] && {
-        use_methods_json=$(printf '%q' $(echo "${USE_METHODS}" | jq -r -c .))
+        use_methods_json=$(printf '%q' "$(echo "${USE_METHODS}" | jq -r -c .)")
     }
 
     # Run test (pipe the markdown to the parser script)
@@ -130,13 +130,13 @@ function runTest() {
     RESULT=$(echo "${SOURCE}" | php "${PATH_FILE_PARSER}" "-j=${use_methods_json}" "-r=${RETURN_VALUE}")
 
     # Assert Equal
-    [ "${RESULT}" = "${EXPECT}" ] && [ $EXPECT_EQUAL -eq $YES ] && {
+    [ "${RESULT}" = "${EXPECT}" ] && [ "$EXPECT_EQUAL" -eq $YES ] && {
         echo "OK (Parser: ${PATH_FILE_PARSER})"
         return $STATUS_SUCCESS
     }
 
     # Assert NotEqual
-    [ "${RESULT}" != "${EXPECT}" ] && [ $EXPECT_EQUAL -eq $NO ] && {
+    [ "${RESULT}" != "${EXPECT}" ] && [ "$EXPECT_EQUAL" -eq $NO ] && {
         echo "OK (Parser: ${PATH_FILE_PARSER})"
         return $STATUS_SUCCESS
     }
@@ -232,12 +232,12 @@ url_api_github='https://api.github.com/repos/erusev/parsedown/releases/latest'
 
     # Download Latest Parsedown
     echo "- Downloading Parsedown.php from: ${url_download_tarboll}"
-    curl --silent --show-error --location $url_download_tarboll --output $path_file_archive &&
-        tar -xf $path_file_archive &&
+    curl --silent --show-error --location "$url_download_tarboll" --output "$path_file_archive" &&
+        tar -xf "$path_file_archive" &&
         mv erusev-parsedown* $name_dir_extract &&
-        mv "${name_dir_extract}/${name_file_target}" $path_file_script_parsedown &&
+        mv "${name_dir_extract}/${name_file_target}" "$path_file_script_parsedown" &&
         rm -rf $name_dir_extract &&
-        rm $path_file_archive
+        rm "$path_file_archive"
     [ $? -ne 0 ] && {
         echo 'Failed to download Parsedown'
         exit $STATUS_FAILURE
@@ -262,12 +262,12 @@ url_api_github='https://api.github.com/repos/erusev/parsedown-extra/releases/lat
 
     # Download Latest Parsedown Extra
     echo "- Downloading ParsedownExtra.php from: ${url_download_tarboll}"
-    curl --silent --show-error --location $url_download_tarboll --output $path_file_archive &&
-        tar -xf $path_file_archive &&
+    curl --silent --show-error --location "$url_download_tarboll" --output "$path_file_archive" &&
+        tar -xf "$path_file_archive" &&
         mv erusev-parsedown* $name_dir_extract &&
-        mv "${name_dir_extract}/${name_file_target}" $path_file_script_parsedown_extra &&
+        mv "${name_dir_extract}/${name_file_target}" "$path_file_script_parsedown_extra" &&
         rm -rf $name_dir_extract &&
-        rm $path_file_archive
+        rm "$path_file_archive"
     [ $? -ne 0 ] && {
         echo 'Failed to download Parsedown'
         exit $STATUS_FAILURE
