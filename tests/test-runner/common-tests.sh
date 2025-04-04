@@ -165,7 +165,7 @@ HEREDOC
 
     # Indent log
     indent='  |  '
-    echo "$log" | while read line; do
+    echo "$log" | while read -r line; do
         echo "${indent}${line}"
     done
     echo
