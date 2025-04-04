@@ -20,7 +20,7 @@ set -eu
 INDENT='  ' # Indentation depth for multiline output
 
 function indentStdin() {
-    while read line; do
+    while read -r line; do
         echo "${INDENT}${line}"
     done
     echo
