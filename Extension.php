@@ -35,13 +35,6 @@ if (class_exists('ParsedownExtra')) {
     }
 }
 
-// Old version compatibility (Deprecated since v1.1.0 and will be removed in v1.2.0)
-/*
-class Extension extends ParsedownToC
-{
-}
-*/
-
 class ParsedownToC extends DynamicParent
 {
     /**
