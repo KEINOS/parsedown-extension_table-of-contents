@@ -46,7 +46,7 @@ function getUrlTarbollFromEndpoint() {
         }
 
         # Sleep random seconds before request (Avoid 503 server error)
-        time_sleep=$(($RANDOM % 10 + 1))
+        time_sleep=$((RANDOM % 10 + 1))
         sleep "${time_sleep}s"
 
         # Check if HTTP status code is 200
