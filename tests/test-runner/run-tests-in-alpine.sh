@@ -34,7 +34,7 @@ echo ' Env checks before testing'
 echo '================================'
 
 echo '- Info: OS ...'
-cat /etc/os-release | indentStdin
+indentStdin < /etc/os-release
 
 echo '- Checking: php ...'
 which php > /dev/null 2>&1 || {
