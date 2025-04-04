@@ -116,6 +116,7 @@ function runTest() {
     RETURN_VALUE='toc'
 
     # Load test case
+    # shellcheck source=../test_vanilla_basic_usage.sh
     source "$PATH_FILE_TEST"
 
     # Escapes JSON string to provide methods to be used in a script via arg
