@@ -7,8 +7,6 @@
 PATH_DIR_CURRENT=$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)
 PATH_DIR_PARENT=$(cd "$(dirname "${PATH_DIR_CURRENT}")" && pwd)
 
-PATH_DIR_ROOT=$(dirname "${PATH_DIR_PARENT}")
-
 cd "$PATH_DIR_PARENT"
 
 set -eu
