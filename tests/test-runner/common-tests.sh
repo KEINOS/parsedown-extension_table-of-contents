@@ -232,16 +232,17 @@ url_api_github='https://api.github.com/repos/erusev/parsedown/releases/latest'
 
     # Download Latest Parsedown
     echo "- Downloading Parsedown.php from: ${url_download_tarboll}"
-    curl --silent --show-error --location "$url_download_tarboll" --output "$path_file_archive" &&
+    if ! (curl --silent --show-error --location "$url_download_tarboll" --output "$path_file_archive" &&
         tar -xf "$path_file_archive" &&
-        mv erusev-parsedown* $name_dir_extract &&
+        mv erusev-parsedown* "$name_dir_extract" &&
         mv "${name_dir_extract}/${name_file_target}" "$path_file_script_parsedown" &&
-        rm -rf $name_dir_extract &&
-        rm "$path_file_archive"
-    [ $? -ne 0 ] && {
+        rm -rf "$name_dir_extract" &&
+        rm "$path_file_archive")
+    then
         echo 'Failed to download Parsedown'
+
         exit $STATUS_FAILURE
-    }
+    fi
 }
 
 # -------------------------------------------------------------------------------
@@ -262,16 +263,17 @@ url_api_github='https://api.github.com/repos/erusev/parsedown-extra/releases/lat
 
     # Download Latest Parsedown Extra
     echo "- Downloading ParsedownExtra.php from: ${url_download_tarboll}"
-    curl --silent --show-error --location "$url_download_tarboll" --output "$path_file_archive" &&
+    if ! (curl --silent --show-error --location "$url_download_tarboll" --output "$path_file_archive" &&
         tar -xf "$path_file_archive" &&
-        mv erusev-parsedown* $name_dir_extract &&
+        mv erusev-parsedown* "$name_dir_extract" &&
         mv "${name_dir_extract}/${name_file_target}" "$path_file_script_parsedown_extra" &&
-        rm -rf $name_dir_extract &&
-        rm "$path_file_archive"
-    [ $? -ne 0 ] && {
+        rm -rf "$name_dir_extract" &&
+        rm "$path_file_archive")
+    then
         echo 'Failed to download Parsedown'
+
         exit $STATUS_FAILURE
-    }
+    fi
 }
 
 # -----------------------------------------------------------------------------
