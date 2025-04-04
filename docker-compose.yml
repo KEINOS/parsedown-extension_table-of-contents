@@ -2,32 +2,48 @@
 #  Docker Compose file for testing on different PHP versions.
 #
 #  Usage:
-#    # Doewnload the base images for stability
-#    $ docker compose pull
+#    $ # Download and build the images
+#    $ docker compose pull && docker compose build
 #
-#    # Build the images
-#    $ docker compose build
+#    $ # Run the tests in the container for various PHP versions
+#    $ # ----------------------------------------------------------------------
 #
-#    # Run the tests in the container for various PHP versions
+#    $ # PHP 5.6.40 is not officially supported but used to check for backwards
+#    $ # compatibility (still works tho!.)
+#    $ docker compose run --rm oldest
+#
+#    $ # PHP 7.x is the minimum supported version.
 #    $ docker compose run --rm min
+#
+#    $ # PHP 8.3 is the maximum supported version.
 #    $ docker compose run --rm max
+#
+#    $ # PHP 8.4+ (latest) is the experimental version. Currently errors out.
 #    $ docker compose run --rm latest
 # =============================================================================
 
 services:
+  # Unsupported PHP version but used to check for backwards compatibility.
+  oldest:
+    build:
+      dockerfile: ./.github/Dockerfile
+      args:
+        PHP_VERSION: 5.6.40-cli-alpine
+    volumes:
+      - .:/app
   # Minimum supported PHP version. Which is equivalent to Parsedown's minimum
   # supported version.
   min:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./.github/Dockerfile
       args:
-        PHP_VERSION: 7.1-cli-alpine
+        PHP_VERSION: 7-cli-alpine
     volumes:
       - .:/app
   # Currently supported maximum PHP version.
   max:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./.github/Dockerfile
       args:
         PHP_VERSION: 8.3-cli-alpine
     volumes:
@@ -35,7 +51,7 @@ services:
   # Experimental latest PHP version. Currently errors out.
   latest:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./.github/Dockerfile
       args:
         PHP_VERSION: cli-alpine
     volumes:
