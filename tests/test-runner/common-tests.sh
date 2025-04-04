@@ -50,13 +50,13 @@ function getUrlTarbollFromEndpoint() {
         sleep "${time_sleep}s"
 
         # Check if HTTP status code is 200
-        header_result=$(curl --silent --head $url_api_to_request)
+        header_result=$(curl --silent --head "$url_api_to_request")
         echo "${header_result}" | grep HTTP | grep 200 >/dev/null 2>&1 || {
             continue
         }
 
         # Fetch download URL of
-        url_download_tarboll=$(curl -s $url_api_to_request | jq -r '.tarball_url')
+        url_download_tarboll=$(curl -s "$url_api_to_request" | jq -r '.tarball_url')
 
         [ "${url_download_tarboll:+undefined}" ] || {
             continue
@@ -79,7 +79,7 @@ function getUrlTarbollFromEndpoint() {
 function isAvailableGitHubAPI() {
     echo -n '- Checking if GitHub API is available ... '
     url_api_to_request="${1}"
-    header_result=$(curl --silent --head $url_api_to_request)
+    header_result=$(curl --silent --head "$url_api_to_request")
     echo "${header_result}" | grep HTTP | grep 403 >/dev/null 2>&1 && {
         # Exit as 1 when GitHub API returns 403 status error.
         #   GitHub API has a quota/limitation rate of access per IP address.
@@ -182,7 +182,7 @@ echo -n '- Lint Check: Extension.php ... '
 result=$(php -l "${path_file_script_extension}")
 [ $? -ne 0 ] && {
     echo 'NG'
-    echo $result
+    echo "${result}"
     exit $STATUS_FAILURE
 }
 echo 'OK'
