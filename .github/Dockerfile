@@ -40,12 +40,12 @@ RUN /app/installer.sh
 # -----------------------------------------------------------------------------
 #  Final stage
 # -----------------------------------------------------------------------------
-
+#  Note: To run the container, DO NOT forget to mount the current directory
 FROM php:${PHP_VERSION}
 
 ENV PATH="~/.composer/vendor/bin:${PATH}"
 
-# Stay up-to-date and install git
+# Install dependencies for running tests and stay up to date
 RUN apk --no-cache add \
     git \
     jq \
