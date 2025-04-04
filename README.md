@@ -1,6 +1,5 @@
-[![](https://travis-ci.org/KEINOS/parsedown-extension_table-of-contents.svg?branch=master)](https://travis-ci.org/KEINOS/parsedown-extension_table-of-contents "Travis CI Build Status")
-[![](https://img.shields.io/packagist/php-v/keinos/parsedown-toc)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/.travis.yml "Supported PHP Version")
-[![](https://img.shields.io/badge/Parsedown-%3E%3D1.7-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version")
+[![Unit Tests](https://github.com/KEINOS/parsedown-extension_table-of-contents/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/KEINOS/parsedown-extension_table-of-contents/actions/workflows/unit-tests.yml)
+[![](https://img.shields.io/packagist/php-v/keinos/parsedown-toc)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version")
 [![](https://img.shields.io/packagist/v/keinos/parsedown-toc)](https://packagist.org/packages/keinos/parsedown-toc "View in Packagist")
 
 # Parsedown ToC Extension
@@ -8,6 +7,11 @@
 Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
 This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown Vanilla](https://github.com/erusev/parsedown) / [Parsedown Extra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
+
+| Supported Version | SHA256 Hash |
+| :-- | :-- |
+| [![](https://img.shields.io/badge/Parsedown-%3D1.7.4-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version") | `af4a4b29f38b5a00b003a3b7a752282274c969e42dee88e55a427b2b61a2f38f` |
+| [![](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported Parsedown Extra Version") | `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
 
 ```bash
 composer require keinos/parsedown-toc
@@ -175,6 +179,99 @@ With the above markdown the generated ToC will be as below. Note that the anchor
 ```
 
 - Note that you need to require/include the Parsedown Extra as well.
+
+## Testing
+
+Eventhough we are migraing the tests to PHPUnit, currently we use hand-made test scripts to run the unit tests via bash.
+
+### Testing using docker (docker compose)
+
+```shell
+# PHP 5.6.40 is not officially supported but used to check for backwards
+# compatibility (still works tho!.)
+docker compose run --rm oldest
+
+# PHP 7.x is the minimum supported version.
+docker compose run --rm min
+
+# PHP 8.3 is the maximum supported version.
+docker compose run --rm max
+
+# PHP 8.4+ (latest) is the experimental version. Currently errors out.
+docker compose run --rm latest
+```
+
+### Testing locally
+
+To run the tests:
+
+```bash
+./tests/run-tests.sh
+```
+
+> [!IMPORTANT]
+> This test will download/install dependencies such as: `Parsedown.php`, `ParsedownExtra.php`, `git`, `jq`, `curl` and `bash` if not installed. So please run this test in a safe environment (docker for example).
+
+```shellsession
+$ # Test result example
+$ ./tests/run-tests.sh
+--------------------------------
+Running tests in Alpine Linux OS
+--------------------------------
+================================
+ Env checks before testing
+================================
+- Info: OS ...
+  NAME="Alpine Linux"
+  ID=alpine
+  VERSION_ID=3.8.2
+  PRETTY_NAME="Alpine Linux v3.8"
+  HOME_URL="http://alpinelinux.org"
+  BUG_REPORT_URL="http://bugs.alpinelinux.org"
+
+- Checking: php ...
+  php installed:   PHP 5.6.40 (cli) (built: Jan 31 2019 01:25:07)
+  Copyright (c) 1997-2016 The PHP Group
+  Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
+
+- Checkging: apk ...
+  apk installed: apk-tools 2.10.1, compiled for x86_64.
+- Checking: jq ...
+* WARNING: jq command missing
+- INSTALL: Installing jq ... OK
+  jq installed: jq-master-v3.7.0-4757-gc31a4d0fd5
+- Checking: curl ...
+  curl installed: curl 7.61.1 (x86_64-alpine-linux-musl) libcurl/7.61.1 LibreSSL/2.0.0 zlib/1.2.11 libssh2/1.8.0 nghttp2/1.32.0
+- Checking: bash ...
+* WARNING: bash shell missing
+- INSTALL: Installing bash ... OK
+  bash installed: GNU bash, version 4.4.19(1)-release (x86_64-alpine-linux-musl)
+- Lint Check: Extension.php ... OK
+  No syntax errors detected in /app/Extension.php
+- Searching Parsedown ... Found
+- Searching Parsedown Extra ... Found
+================================
+ Running tests
+================================
+Parsedown Vanilla
+- TESTING: test_vanilla_basic_usage.sh  ... OK (Parser: ./parser/parser-vanilla.php)
+- TESTING: test_vanilla_empty_user_defined_toc_tag_style.sh  ... OK (Parser: ./parser/parser-vanilla.php)
+- TESTING: test_vanilla_operation_check.sh  ... OK (Parser: ./parser/parser-vanilla.php)
+- TESTING: test_vanilla_user_defined_toc_tag_style1.sh  ... OK (Parser: ./parser/parser-vanilla.php)
+- TESTING: test_vanilla_user_defined_toc_tag_style2.sh  ... OK (Parser: ./parser/parser-vanilla.php)
+- TESTING: test_vanilla_user_defined_toc_tag_style3.sh  ... OK (Parser: ./parser/parser-vanilla.php)
+
+Parsedown Extra
+- TESTING: test_extra_anchor_id.sh  ... OK (Parser: ./parser/parser-extra.php)
+- TESTING: test_vanilla_basic_usage.sh  ... OK (Parser: ./parser/parser-extra.php)
+- TESTING: test_vanilla_empty_user_defined_toc_tag_style.sh  ... OK (Parser: ./parser/parser-extra.php)
+- TESTING: test_vanilla_operation_check.sh  ... OK (Parser: ./parser/parser-extra.php)
+- TESTING: test_vanilla_user_defined_toc_tag_style1.sh  ... OK (Parser: ./parser/parser-extra.php)
+- TESTING: test_vanilla_user_defined_toc_tag_style2.sh  ... OK (Parser: ./parser/parser-extra.php)
+- TESTING: test_vanilla_user_defined_toc_tag_style3.sh  ... OK (Parser: ./parser/parser-extra.php)
+
+Test done. All tests passed.
+```
 
 ## References
 
