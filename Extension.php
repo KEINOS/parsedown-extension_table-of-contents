@@ -1,5 +1,6 @@
 <?php
 
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace, PSR1.Classes.ClassDeclaration
 /**
  * ToC Extension/Plugin for Parsedown.
  * ============================================================================
@@ -48,10 +49,12 @@ class ParsedownToC extends DynamicParent
      *  Constants.
      * ------------------------------------------------------------------------
      */
-    const version = '1.2.2'; // Version is available since v1.1.0
+    // phpcs:disable PSR12.Properties.ConstantVisibility -- for backward compatibility
+    const VERSION = '1.2.2'; // Version is available since v1.1.0
     const VERSION_PARSEDOWN_REQUIRED = '1.7';
     const TAG_TOC_DEFAULT = '[toc]';
     const ID_ATTRIBUTE_DEFAULT = 'toc';
+    // phpcs:enable
 
     /**
      * Version requirement check.
@@ -322,7 +325,7 @@ class ParsedownToC extends DynamicParent
     {
         $text  = $this->fetchText($Content['text']);
         $id    = $Content['id'];
-        $level = (integer) trim($Content['level'], 'h');
+        $level = (int) trim($Content['level'], 'h');
         $link  = "[{$text}](#{$id})";
 
         if ($this->firstHeadLevel === 0) {
@@ -369,7 +372,7 @@ class ParsedownToC extends DynamicParent
             );
         }
     }
-    protected $tag_toc='';
+    protected $tag_toc = '';
 
     /**
      * Parses markdown string to HTML and also the "[toc]" tag as well.
