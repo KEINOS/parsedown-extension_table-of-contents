@@ -59,6 +59,7 @@ class ParsedownToC extends DynamicParent
             $msg_error .= '  Parsedown ToC Extension requires a later version of Parsedown.' . PHP_EOL;
             $msg_error .= '  - Current version : ' . \Parsedown::version . PHP_EOL;
             $msg_error .= '  - Required version: ' . self::VERSION_PARSEDOWN_REQUIRED . PHP_EOL;
+
             throw new Exception($msg_error);
         }
 
@@ -84,40 +85,41 @@ class ParsedownToC extends DynamicParent
     {
         // Use parent blockHeader method to process the $Line to $Block
         $Block = DynamicParent::blockHeader($Line);
-
-        if (! empty($Block)) {
-            // Get the text of the heading
-            if (isset($Block['element']['handler']['argument'])) {
-                // Compatibility with old Parsedown Version
-                $text = $Block['element']['handler']['argument'];
-            }
-            if (isset($Block['element']['text'])) {
-                // Current Parsedown
-                $text = $Block['element']['text'];
-            }
-
-            // Get the heading level. Levels are h1, h2, ..., h6
-            $level = $Block['element']['name'];
-
-            // Get the anchor of the heading to link from the ToC list
-            $id = isset($Block['element']['attributes']['id']) ?
-                $Block['element']['attributes']['id'] : $this->createAnchorID($text);
-
-            // Set attributes to head tags
-            $Block['element']['attributes'] = array(
-                'id'   => $id,
-                'name' => $id,
-            );
-
-            // Add/stores the heading element info to the ToC list
-            $this->setContentsList(array(
-                'text'  => $text,
-                'id'    => $id,
-                'level' => $level
-            ));
-
-            return $Block;
+        if (empty($Block)) {
+            return;
         }
+
+        // Get the text of the heading
+        if (isset($Block['element']['handler']['argument'])) {
+            // Compatibility with old Parsedown Version
+            $text = $Block['element']['handler']['argument'];
+        }
+        if (isset($Block['element']['text'])) {
+            // Current Parsedown
+            $text = $Block['element']['text'];
+        }
+
+        // Get the heading level. Levels are h1, h2, ..., h6
+        $level = $Block['element']['name'];
+
+        // Get the anchor of the heading to link from the ToC list
+        $id = isset($Block['element']['attributes']['id']) ?
+            $Block['element']['attributes']['id'] : $this->createAnchorID($text);
+
+        // Set attributes to head tags
+        $Block['element']['attributes'] = array(
+            'id'   => $id,
+            'name' => $id,
+        );
+
+        // Add/stores the heading element info to the ToC list
+        $this->setContentsList(array(
+            'text'  => $text,
+            'id'    => $id,
+            'level' => $level
+        ));
+
+        return $Block;
     }
 
     /**
@@ -151,6 +153,7 @@ class ParsedownToC extends DynamicParent
                 // Parses the ToC list in markdown to HTML
                 $result = $this->body($this->contentsListString);
             }
+
             return $result;
         }
 
@@ -158,12 +161,13 @@ class ParsedownToC extends DynamicParent
             return json_encode($this->contentsListArray);
         }
 
-        // Forces to return ToC as "string"
+        // Log the error and forces to return ToC as "string"
         error_log(
             'Unknown return type given while parsing ToC.'
             . ' At: ' . __FUNCTION__ . '() '
             . ' in Line:' . __LINE__ . ' (Using default type)'
         );
+
         return $this->contentsList('string');
     }
 
@@ -265,6 +269,7 @@ class ParsedownToC extends DynamicParent
         }
 
         $salt = hash('md5', time());
+
         return $salt;
     }
 
