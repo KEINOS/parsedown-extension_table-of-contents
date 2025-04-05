@@ -302,9 +302,26 @@ for file_test in {test_vanilla,test_extra_}*.sh; do
 done
 echo
 
+echo 'Issues/Features'
+for file_test in issues/test_*.php; do
+    [[ -e "$file_test" ]] || break  # handle the case of no matched test files
+
+    result=$(php "${file_test}")
+    exit_status=$?
+    echo "- TESTING: ${result}"
+    if [ $exit_status -ne 0 ]; then
+        failed_tests=$(( failed_tests + 1 ))
+    fi
+done
+
+echo
+
+# Test Failure
 [ $failed_tests -ne 0 ] && {
     echo "Test done. ${failed_tests} test(s) failed."
     exit $STATUS_FAILURE
 }
+
+# Test Success
 echo 'Test done. All tests passed.'
 exit $STATUS_SUCCESS
