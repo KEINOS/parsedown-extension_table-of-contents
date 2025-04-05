@@ -28,6 +28,8 @@ HEREDOC;
 
 // Run the test
 $Parsedown = new ParsedownToc();
-$actual = $Parsedown->body($input);
+
+$omitToC = true;
+$actual = $Parsedown->body($input, $omitToC);
 
 assertEqual($description, $actual, $expect) ? exit(0) : exit(1);
