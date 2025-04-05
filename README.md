@@ -6,16 +6,29 @@
 
 Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
-This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown Vanilla](https://github.com/erusev/parsedown) / [Parsedown Extra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
+This [simple and single PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown Vanilla](https://github.com/erusev/parsedown) / [Parsedown Extra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
+
+## Download the extension
+
+- [https://raw.githubusercontent.com/KEINOS/parsedown-extension_table-of-contents/refs/heads/master/Extension.php](https://raw.githubusercontent.com/KEINOS/parsedown-extension_table-of-contents/refs/heads/master/Extension.php)
+
+Place the above file in the same directory as `Parsedown.php` and/or `ParsedownExtra.php` files and include them in your PHP script.
 
 | Supported Version | SHA256 Hash |
 | :-- | :-- |
 | [![](https://img.shields.io/badge/Parsedown-%3D1.7.4-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version") | `af4a4b29f38b5a00b003a3b7a752282274c969e42dee88e55a427b2b61a2f38f` |
 | [![](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported Parsedown Extra Version") | `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
 
+## Use composer
+
 ```bash
 composer require keinos/parsedown-toc
 ```
+
+## Basic Usage
+
+> [!NOTE]
+> If `composer` is not your thing, replace the `require` statement with the path to the `Extension.php` and `Parsedown.php` files.
 
 ```php
 $ cat ./parse_sample.php

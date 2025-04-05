@@ -126,11 +126,23 @@ class ParsedownToC extends DynamicParent
      * Parses the given markdown string to an HTML string but it leaves the ToC
      * tag as is. It's an alias of the parent method "\DynamicParent::text()".
      *
-     * @param  string $text  Markdown string to be parsed.
-     * @return string        Parsed HTML string.
+     * @param  string $text          Markdown string to be parsed.
+     * @param  bool   $omit_toc_tag  (Optional, default is false) If true, the ToC tag will be excluded from
+     * @return string                Parsed HTML string.
      */
-    public function body($text)
+    public function body($text, $omit_toc_tag = false)
     {
+        // Exclude the ToC tag from parsing
+        if ($omit_toc_tag) {
+            $tag_origin  = $this->getTagToC();
+
+            // replace the ToC tag to empty string
+            $text = str_replace($tag_origin, '', $text);
+
+            // Parses the markdown text
+            return DynamicParent::text($text);
+        }
+
         $text = $this->encodeTagToHash($text);   // Escapes ToC tag temporary
         $html = DynamicParent::text($text);      // Parses the markdown text
         $html = $this->decodeTagFromHash($html); // Unescape the ToC tag

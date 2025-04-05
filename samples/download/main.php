@@ -1,4 +1,5 @@
 <?php
+
 require_once('Parsedown-1.7.3.php');
 require_once('Extension-1.0.0.php');
 

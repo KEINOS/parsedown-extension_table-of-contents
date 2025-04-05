@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Simple script that uses Parsedown and the ToC (Table of Contents) extension.
  *
