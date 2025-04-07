@@ -310,7 +310,7 @@ for file_test in issues/test_*.php; do
     exit_status=$?
     echo "- TESTING: ${result}"
     if [ $exit_status -ne 0 ]; then
-        failed_tests=$(( failed_tests + 1 ))
+        failed_tests=$(( failed_tests + exit_status ))
     fi
 done
 
