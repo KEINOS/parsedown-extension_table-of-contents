@@ -12,7 +12,7 @@ This [simple and single PHP file](https://github.com/KEINOS/parsedown-extension_
 
 - [https://raw.githubusercontent.com/KEINOS/parsedown-extension_table-of-contents/refs/heads/master/Extension.php](https://raw.githubusercontent.com/KEINOS/parsedown-extension_table-of-contents/refs/heads/master/Extension.php)
 
-Place the above file in the same directory as `Parsedown.php` and/or `ParsedownExtra.php` files and include them in your PHP script.
+Place the above file in the same directory as the `Parsedown.php` and/or `ParsedownExtra.php` files and include them in your PHP script.
 
 | Supported Version | SHA256 Hash |
 | :-- | :-- |
