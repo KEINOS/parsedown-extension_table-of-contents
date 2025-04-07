@@ -1,4 +1,6 @@
 <?php
+
+// phpcs:disable PSR1.Files.SideEffects -- ignore declaration for new symbols
 /**
  *  Common script.
  * ============================================================================
@@ -71,6 +73,7 @@ function execMethods($obj, $list_methods)
 function getMarkdownFromStdIn()
 {
     $array = array_map('trim', file('php://stdin'));
+
     return implode(PHP_EOL, $array);
 }
 
@@ -94,6 +97,7 @@ function getMethodsToExecute()
     if (empty($array)) {
         return array();
     }
+
     return $array;
 }
 

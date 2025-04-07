@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # =============================================================================
 #  Note: To run the test, see the README.md in this directory.
 #
