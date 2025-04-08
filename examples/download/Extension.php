@@ -43,8 +43,8 @@ class ParsedownToC extends DynamicParent
      * ------------------------------------------------------------------------
      */
     // phpcs:disable PSR12.Properties.ConstantVisibility -- for backward compatibility
-    const VERSION = '1.3.1'; // Version is available since v1.1.0
-    const VERSION_PARSEDOWN_REQUIRED = '1.7.4';
+    const VERSION = '1.2.2'; // Version is available since v1.1.0
+    const VERSION_PARSEDOWN_REQUIRED = '1.7';
     const TAG_TOC_DEFAULT = '[toc]';
     const ID_ATTRIBUTE_DEFAULT = 'toc';
     // phpcs:enable

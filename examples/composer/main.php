@@ -1,4 +1,5 @@
 <?php
+
 /*
 ===============================================================================
  Sample script to use Parsedown ToC Extension.
@@ -6,11 +7,11 @@
  This sample requires composer and keinos/parsedown-toc.
 */
 
-const DIR_SEP=DIRECTORY_SEPARATOR;
+const DIR_SEP = DIRECTORY_SEPARATOR;
 
 require_once __DIR__ . DIR_SEP . 'vendor' . DIR_SEP . 'autoload.php';
 
-$textMarkdown =<<<EOL
+$textMarkdown = <<<EOL
 # Head1
 Sample text of head 1.
 ## Head1-1

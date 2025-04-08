@@ -27,7 +27,7 @@
     "license": "MIT",
     "minimum-stability": "stable",
     "archive": {
-        "exclude": ["/samples", "/tests", "/.travis.yml"]
+        "exclude": ["/examples", "/tests", "/.github", "/.docker-compose.yml"]
     },
     "scripts": {
         "test": "./tests/run-tests.sh",

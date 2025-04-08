@@ -6,20 +6,22 @@
 
 Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
-This [simple and single PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown Vanilla](https://github.com/erusev/parsedown) / [Parsedown Extra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
+This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown Vanilla](https://github.com/erusev/parsedown) / [Parsedown Extra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
 
-## Download the extension
+## Simple Installation
 
-- [https://raw.githubusercontent.com/KEINOS/parsedown-extension_table-of-contents/refs/heads/master/Extension.php](https://raw.githubusercontent.com/KEINOS/parsedown-extension_table-of-contents/refs/heads/master/Extension.php)
+[This extension](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) is a single PHP file. Download and place it in the same directory as the `Parsedown.php` file (optionally place the `ParsedownExtra.php` file if you are using it).
 
-Place the above file in the same directory as the `Parsedown.php` and/or `ParsedownExtra.php` files and include them in your PHP script.
+Then include them in your PHP script. For details and other installation methods, see the [Install](#install) section.
 
 | Supported Version | SHA256 Hash |
 | :-- | :-- |
 | [![](https://img.shields.io/badge/Parsedown-%3D1.7.4-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version") | `af4a4b29f38b5a00b003a3b7a752282274c969e42dee88e55a427b2b61a2f38f` |
 | [![](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported Parsedown Extra Version") | `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
 
-## Use composer
+### Composer support
+
+This extension supports [Composer](https://en.wikipedia.org/wiki/Composer_(software)) for installation and convenience.
 
 ```bash
 composer require keinos/parsedown-toc
@@ -28,7 +30,7 @@ composer require keinos/parsedown-toc
 ## Basic Usage
 
 > [!NOTE]
-> If `composer` is not your thing, replace the `require` statement with the path to the `Extension.php` and `Parsedown.php` files.
+> If `composer` is not your thing, replace the `require` statement with the path to the `Extension.php` and `Parsedown.php` files. See the "download" in the examples directory.
 
 ```php
 $ cat ./parse_sample.php
@@ -103,25 +105,32 @@ echo $body . PHP_EOL; // Main body
   - Arguments: none
   - Methods:
     - `text(string $text)`:
-      - Returns the parsed content and `[toc]` tag(s) parsed as well.
-      - Required argument `$text`: Markdown string to be parsed.
-    - `body(string $text)`:
-      - Returns the parsed content WITHOUT parsing `[toc]` tag.
-      - Required argument `$text`: Markdown string to be parsed.
+      - Returns the parsed content and `[toc]` tag(s) parsed as well
+      - Required argument:
+        - `$text`: Markdown string to be parsed
+    - `body(string $text [, bool $omit_toc_tag=false])`:
+      - Returns the parsed content WITHOUT parsing `[toc]` tag
+      - Required argument:
+        - `$text`: Markdown string to be parsed
+      - Optional argument:
+        - `$omit_toc_tag`: If `true`, the `[toc]` tag will be excluded from the output
+        - Default: `false`
+        - Available since v1.3.0
     - `toc([string $type_return='string'])`:
       - Returns the ToC, the table of contents, in HTML or JSON.
-      - Option argument:
-        - `$type_return`:
+      - Optional argument:
+        - `$type_return`: Specifies the returned format
           - `string` or `json` can be specified. `string`=HTML, `json`=JSON.
           - Default `string`
       - Alias method: `contentsList(string $type_return)`
     - `setTagToc(string $tag='[tag]')`:
-      - Sets user defined ToC markdown tag. Use this method before `text()` or `body()` method if you want to use the ToC tag rather than the "`[toc]`".
-      - Empty value sets the default ToC tag.
+      - Sets user defined ToC markdown tag. Empty value sets the default tag
+      - Default: `"[toc]"`
       - Available since v1.1.2
+      - Note: Use this method before `text()` or `body()` method if you want to use the ToC tag rather than the "`[toc]`"
   - Other Methods:
-    - All the public methods of `Parsedown` and/or `Parsedown Extend` are available to use.
-  - Note: As of v1.1.0 the old alias class: `Extension()` is deprecated.
+    - All the public methods of `Parsedown` and/or `Parsedown Extend` are available to use
+  - Note: As of v1.1.0 the old alias class `Extension()` is deprecated
 
 ## Online Demo
 
@@ -151,9 +160,6 @@ You can download the '[Extension.php](https://github.com/KEINOS/parsedown-extens
 https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php
 ```
 
-- **NOTE:** Since this is an extension of [Parsedown](https://parsedown.org/), you need to download and include `Parsedown.php` as well.
-- Usage: [See sample project](https://github.com/KEINOS/parsedown-extension_table-of-contents/tree/master/samples/download)
-
 ```bash
 # Download via cURL
 curl -O https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php
@@ -164,9 +170,12 @@ curl -O https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension
 php -r "copy('https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php', './Extension.php');"
 ```
 
-## Sample Usage
+> [!NOTE]
+> Since this is an extension of [Parsedown](https://parsedown.org/), you need to download and include `Parsedown.php` as well.
 
-- See: [./samples/](./samples/)
+## Usage Examples
+
+- See: [./examples/](./examples/)
 
 ## Advanced Usage (Using Parsedown Extra)
 
@@ -195,13 +204,13 @@ With the above markdown the generated ToC will be as below. Note that the anchor
 
 ## Testing
 
-Eventhough we are migraing the tests to PHPUnit, currently we use hand-made test scripts to run the unit tests via bash.
+Eventhough we are migraing the tests to PHPUnit, **currently we use hand-made test scripts to run the unit tests** via bash.
 
 ### Testing using docker (docker compose)
 
 ```shell
 # PHP 5.6.40 is not officially supported but used to check for backwards
-# compatibility (still works tho!.)
+# compatibility (still works tho!)
 docker compose run --rm oldest
 
 # PHP 7.x is the minimum supported version.
@@ -226,7 +235,7 @@ To run the tests:
 > This test will download/install dependencies such as: `Parsedown.php`, `ParsedownExtra.php`, `git`, `jq`, `curl` and `bash` if not installed. So please run this test in a safe environment (docker for example).
 
 ```shellsession
-$ # Test result example
+$ # Test result example (w/ oldest supported version)
 $ ./tests/run-tests.sh
 --------------------------------
 Running tests in Alpine Linux OS
@@ -248,16 +257,12 @@ Running tests in Alpine Linux OS
   Zend Engine v2.6.0, Copyright (c) 1998-2016 Zend Technologies
 
 - Checkging: apk ...
-  apk installed: apk-tools 2.10.1, compiled for x86_64.
+  apk installed: apk-tools 2.10.6, compiled for x86_64.
 - Checking: jq ...
-* WARNING: jq command missing
-- INSTALL: Installing jq ... OK
   jq installed: jq-master-v3.7.0-4757-gc31a4d0fd5
 - Checking: curl ...
-  curl installed: curl 7.61.1 (x86_64-alpine-linux-musl) libcurl/7.61.1 LibreSSL/2.0.0 zlib/1.2.11 libssh2/1.8.0 nghttp2/1.32.0
+  curl installed: curl 7.61.1 (x86_64-alpine-linux-musl) libcurl/7.61.1 LibreSSL/2.0.0 zlib/1.2.11 libssh2/1.9.0 nghttp2/1.39.2
 - Checking: bash ...
-* WARNING: bash shell missing
-- INSTALL: Installing bash ... OK
   bash installed: GNU bash, version 4.4.19(1)-release (x86_64-alpine-linux-musl)
 - Lint Check: Extension.php ... OK
   No syntax errors detected in /app/Extension.php
@@ -275,13 +280,18 @@ Parsedown Vanilla
 - TESTING: test_vanilla_user_defined_toc_tag_style3.sh  ... OK (Parser: ./parser/parser-vanilla.php)
 
 Parsedown Extra
-- TESTING: test_extra_anchor_id.sh  ... OK (Parser: ./parser/parser-extra.php)
 - TESTING: test_vanilla_basic_usage.sh  ... OK (Parser: ./parser/parser-extra.php)
 - TESTING: test_vanilla_empty_user_defined_toc_tag_style.sh  ... OK (Parser: ./parser/parser-extra.php)
 - TESTING: test_vanilla_operation_check.sh  ... OK (Parser: ./parser/parser-extra.php)
 - TESTING: test_vanilla_user_defined_toc_tag_style1.sh  ... OK (Parser: ./parser/parser-extra.php)
 - TESTING: test_vanilla_user_defined_toc_tag_style2.sh  ... OK (Parser: ./parser/parser-extra.php)
 - TESTING: test_vanilla_user_defined_toc_tag_style3.sh  ... OK (Parser: ./parser/parser-extra.php)
+- TESTING: test_extra_anchor_id.sh  ... OK (Parser: ./parser/parser-extra.php)
+
+Issues/Features
+- TESTING: feature #22: option arg to exclude ToC tag in `body`
+  - test #1: enable to omit the ToC tag in the body of the document ... OK
+  - test #2: disable to omit the ToC tag in the body of the document (default) ... OK
 
 Test done. All tests passed.
 ```

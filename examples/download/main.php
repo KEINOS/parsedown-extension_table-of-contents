@@ -1,10 +1,10 @@
 <?php
 
-require_once('Parsedown-1.7.3.php');
-require_once('Extension-1.0.0.php');
+require_once('Parsedown-1.7.4.php');
+require_once('Extension.php');
 
 // Sample Markdown Data
-$textMarkdown =<<<EOL
+$textMarkdown = <<<EOL
 # Head1
 Sample text of head 1.
 ## Head1-1
@@ -25,11 +25,11 @@ echo <<< HEREDOC
 
 <div id='toc'>
 <h2>Table of Contents</h2>
-${ToC}
+{$ToC}
 </div>
 <div id='contents'>
 <h2>Contents</h2>
-${body}
+{$body}
 </div>
 
 HEREDOC;
