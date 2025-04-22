@@ -123,6 +123,7 @@ class ParsedownToC extends DynamicParent
         }
 
         // Get the text of the heading
+        $text = '';
         if (isset($Block['element']['handler']['argument'])) {
             // Compatibility with old Parsedown version
             $text = $Block['element']['handler']['argument'];
