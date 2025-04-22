@@ -245,11 +245,11 @@ class ParsedownToC extends DynamicParent
         $tag_origin = $this->getTagToC();
         $tag_hashed = hash('sha256', $salt . $tag_origin);
 
-        if (strpos($text, $tag_hashed) === false) {
+        if (strpos($text, "$tag_hashed") === false) {
             return $text;
         }
 
-        return str_replace($tag_hashed, $tag_origin, $text);
+        return str_replace("$tag_hashed", $tag_origin, $text);
     }
 
     /**
@@ -273,7 +273,7 @@ class ParsedownToC extends DynamicParent
 
         $tag_hashed = hash('sha256', $salt . $tag_origin);
 
-        return str_replace($tag_origin, $tag_hashed, $text);
+        return str_replace($tag_origin, "$tag_hashed", $text);
     }
 
     /**
@@ -316,18 +316,18 @@ class ParsedownToC extends DynamicParent
     /**
      * Unique string to use as a salt value.
      *
-     * @return false|string
+     * @return string
      */
     protected function getSalt()
     {
         static $salt;
-        if (isset($salt)) {
-            return $salt;
+        if (isset($salt) && ! empty($salt)) {
+            return "$salt";
         }
 
         $salt = hash('md5', date('dmYHis', time()));
 
-        return $salt;
+        return "$salt";
     }
 
     /**
