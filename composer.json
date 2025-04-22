@@ -27,13 +27,14 @@
     "license": "MIT",
     "minimum-stability": "stable",
     "archive": {
-        "exclude": ["/examples", "/tests", "/.github", "/.docker-compose.yml"]
+        "exclude": ["/examples", "/tests", "/docs", "/.github", "/.phpdoc", "/.docker-compose.yml"]
     },
     "scripts": {
         "test": "./tests/run-tests.sh",
-        "test-docker": "docker run --rm --user root -v $(pwd):/app php:cli /app/tests/run-tests.sh",
-        "test-docker-php5": "docker run --rm --user root -v $(pwd):/app php:5-cli-alpine /app/tests/run-tests.sh",
-        "test-docker-php5.3": "docker run --rm --user root -v $(pwd):/app php:5.3.29-cli /app/tests/run-tests.sh",
-        "test-docker-php8": "docker run --rm --user root -v $(pwd):/app keinos/php8-jit /app/tests/run-tests.sh"
+        "test-docker": "docker compose run --rm max",
+        "test-docker-oldest": "docker compose run --rm oldest",
+        "test-docker-min": "docker compose run --rm min",
+        "test-docker-latest": "docker compose run --rm latest",
+        "phpdoc": "docker compose run --rm phpdoc"
     }
 }

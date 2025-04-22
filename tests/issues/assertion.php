@@ -4,6 +4,18 @@
 
 class Assertion
 {
+    /**
+     * Properties
+     */
+
+    /** @var string It holds the indentation string. */
+    protected $indent = "";
+
+    /**
+     * Constructor
+     *
+     * @param string $indent  Indentation string.
+     */
     public function __construct($indent)
     {
         $this->indent = $indent;
