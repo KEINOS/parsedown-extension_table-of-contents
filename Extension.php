@@ -306,7 +306,7 @@ class ParsedownToC extends DynamicParent
      */
     protected function getIdAttributeToC()
     {
-        if (isset($this->id_toc) && ! empty($this->id_toc)) {
+        if (! empty($this->id_toc)) {
             return $this->id_toc;
         }
 
