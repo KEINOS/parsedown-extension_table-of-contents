@@ -1,17 +1,21 @@
 <?php
 
 // phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace, PSR1.Classes.ClassDeclaration
+
 /**
  * ToC Extension/Plugin for Parsedown.
- * ============================================================================
+ *
  * It creates a list of contents table from the headings in Markdown text.
  *
+ * @package     library
  * @author      KEINOS (https://github.com/KEINOS/)
  *              Contributors (https://github.com/KEINOS/parsedown-extension_table-of-contents/graphs/contributors)
- * @package     Parsedown ^1.7 (https://github.com/erusev/parsedown)
- * @php         >=5.3.0 <=8.3 (Currently fails on PHP 8.4)
- * @see         HowTo: https://github.com/KEINOS/parsedown-extension_table-of-contents/
- * @license     MIT: https://github.com/KEINOS/parsedown-extension_table-of-contents/LICENSE
+ * @php         >=5.3.0 <8.4 (Currently fails on PHP 8.4)
+ * @see         https://github.com/KEINOS/parsedown-extension_table-of-contents/ ReadMe & Usage
+ * @see         https://keinos.github.io/parsedown-extension_table-of-contents/  PHPDoc
+ * @example     https://github.com/KEINOS/parsedown-extension_table-of-contents/tree/master/examples
+ * @license     https://github.com/KEINOS/parsedown-extension_table-of-contents/LICENSE MIT License
+ * @copyright   2018-2025 KEINOS and the contributors
 */
 
 // Make it compatible with ParsedownExtra
@@ -26,6 +30,7 @@ if (class_exists('ParsedownExtra')) {
         }
     }
 } else {
+    // Extended class for Parsedown
     class DynamicParent extends \Parsedown
     {
         public function __construct()
@@ -38,19 +43,42 @@ if (class_exists('ParsedownExtra')) {
 class ParsedownToC extends DynamicParent
 {
     /**
-     * ------------------------------------------------------------------------
-     *  Constants.
-     * ------------------------------------------------------------------------
+     * ========================================================================
+     *  Constants / Properties
+     * ========================================================================
      */
+
     // phpcs:disable PSR12.Properties.ConstantVisibility -- for backward compatibility
-    const VERSION = '1.3.1'; // Version is available since v1.1.0
+    /** Version of this extension */
+    const VERSION = '1.3.1';
+    /** Version of Parsedown required */
     const VERSION_PARSEDOWN_REQUIRED = '1.7.4';
+    /** Default ToC tag */
     const TAG_TOC_DEFAULT = '[toc]';
+    /** Default ID attribute for ToC (only for ParsedownExtra) */
     const ID_ATTRIBUTE_DEFAULT = 'toc';
     // phpcs:enable
 
+    /** @var array It holds the heading blocks of the content in array form. */
+    protected $contentsListArray = array();
+    /** @var string It holds the headings in markdown format string. */
+    protected $contentsListString = '';
+    /** @var int It holds the initial heading level of the content. */
+    protected $firstHeadLevel = 0;
+    /** @var string It holds the user defined ToC tag. */
+    protected $tag_toc = '';
+
     /**
-     * Version requirement check.
+     * ========================================================================
+     *  Constructor
+     * ========================================================================
+     */
+
+    /**
+     * Version requirement check and parent constructor call.
+     *
+     * @throws Exception
+     * @return void
      */
     public function __construct()
     {
@@ -66,21 +94,26 @@ class ParsedownToC extends DynamicParent
         parent::__construct();
     }
 
+
     /**
-     * ------------------------------------------------------------------------
-     * Methods (in ABC order)
-     * ------------------------------------------------------------------------
+     * ========================================================================
+     *  Methods (in ABC order)
+     * ========================================================================
      */
 
     /**
-     * Heading process.
-     * Creates heading block element and stores to the ToC list. It overrides
-     * the parent method: \Parsedown::blockHeader() and returns $Block array if
-     * the $Line is a heading element.
+     * Heading process. It retruns the heading block element if the given $Line
+     * is a heading element.
      *
-     * @param  array $Line  Array that Parsedown detected as a block type element.
-     * @return void|array   Array of Heading Block.
+     * It extends the parent method: \Parsedown::blockHeader() and creates a
+     * ToC list from the heading blocks and stores them. Use "contentsList()"
+     * to retrieve the ToC list.
+     *
+     * @param  array      $Line  Array that Parsedown detected as a block type element.
+     * @return void|array        Array of Heading Block.
+     * @see                      contentsList()
      */
+    #[\Override]
     protected function blockHeader($Line)
     {
         // Use parent blockHeader method to process the $Line to $Block
@@ -91,7 +124,7 @@ class ParsedownToC extends DynamicParent
 
         // Get the text of the heading
         if (isset($Block['element']['handler']['argument'])) {
-            // Compatibility with old Parsedown Version
+            // Compatibility with old Parsedown version
             $text = $Block['element']['handler']['argument'];
         }
         if (isset($Block['element']['text'])) {
@@ -127,7 +160,7 @@ class ParsedownToC extends DynamicParent
      * tag as is. It's an alias of the parent method "\DynamicParent::text()".
      *
      * @param  string $text          Markdown string to be parsed.
-     * @param  bool   $omit_toc_tag  (Optional, default is false) If true, the ToC tag will be excluded from
+     * @param  bool   $omit_toc_tag  (Optional) If true, the ToC tag will be excluded from the result. Default is false.
      * @return string                Parsed HTML string.
      */
     public function body($text, $omit_toc_tag = false)
@@ -154,8 +187,9 @@ class ParsedownToC extends DynamicParent
      * Returns the parsed ToC.
      * If the arg is "string" then it returns the ToC in HTML string.
      *
-     * @param  string $type_return  Type of the return format. "string" or "json".
-     * @return string               HTML/JSON string of ToC.
+     * @param string $type_return  Type of the return format. "string" or "json".
+     *
+     * @return false|string HTML/JSON string of ToC.
      */
     public function contentsList($type_return = 'string')
     {
@@ -243,18 +277,29 @@ class ParsedownToC extends DynamicParent
     }
 
     /**
-     * Get only the text from a markdown string.
-     * It parses to HTML once then trims the tags to get the text.
+     * [Deprecated] Superseded by "getTextOnly()".
      *
+     * Get only the text from a markdown string. It parses to HTML once then
+     * trims the tags to get the text. It's been replaced by "getTextOnly()".
+     *
+     * @deprecated It will be removed in the near future. Currently it is
+     *             an alias of "getTextOnly()".
+     * @see    getTextOnly()
      * @param  string $text  Markdown text.
      * @return string
      */
     protected function fetchText($text)
     {
-        return trim(strip_tags($this->line($text)));
+        return $this->getTextOnly($text);
     }
 
     /**
+     * ------------------------------------------------------------------------
+     *  Getters
+     * ------------------------------------------------------------------------
+     */
+
+     /**
      * Gets the ID attribute of the ToC for HTML tags.
      *
      * @return string
@@ -271,7 +316,7 @@ class ParsedownToC extends DynamicParent
     /**
      * Unique string to use as a salt value.
      *
-     * @return string
+     * @return false|string
      */
     protected function getSalt()
     {
@@ -280,7 +325,7 @@ class ParsedownToC extends DynamicParent
             return $salt;
         }
 
-        $salt = hash('md5', time());
+        $salt = hash('md5', date('dmYHis', time()));
 
         return $salt;
     }
@@ -292,12 +337,31 @@ class ParsedownToC extends DynamicParent
      */
     protected function getTagToC()
     {
-        if (isset($this->tag_toc) && ! empty($this->tag_toc)) {
+        if (! empty($this->tag_toc)) {
             return $this->tag_toc;
         }
 
         return self::TAG_TOC_DEFAULT;
     }
+
+    /**
+     * Get only the text from a markdown string.
+     *
+     * It parses to HTML once then trims the tags to get the text.
+     *
+     * @param  string $text  Markdown text.
+     * @return string
+     */
+    protected function getTextOnly($text)
+    {
+        return trim(strip_tags($this->line($text)));
+    }
+
+    /**
+     * ------------------------------------------------------------------------
+     *  Setters
+     * ------------------------------------------------------------------------
+     */
 
     /**
      * Set/stores the heading block to ToC list in a string and array format.
@@ -323,7 +387,6 @@ class ParsedownToC extends DynamicParent
     {
         $this->contentsListArray[] = $Content;
     }
-    protected $contentsListArray = array();
 
     /**
      * Sets/stores the heading block info as a list in markdown format.
@@ -333,7 +396,7 @@ class ParsedownToC extends DynamicParent
      */
     protected function setContentsListAsString(array $Content)
     {
-        $text  = $this->fetchText($Content['text']);
+        $text  = $this->getTextOnly($Content['text']);
         $id    = $Content['id'];
         $level = (int) trim($Content['level'], 'h');
         $link  = "[{$text}](#{$id})";
@@ -341,6 +404,7 @@ class ParsedownToC extends DynamicParent
         if ($this->firstHeadLevel === 0) {
             $this->firstHeadLevel = $level;
         }
+
         $cutIndent = $this->firstHeadLevel - 1;
         if ($cutIndent > $level) {
             $level = 1;
@@ -358,8 +422,6 @@ class ParsedownToC extends DynamicParent
         // ...
         $this->contentsListString .= "{$indent}- {$link}" . PHP_EOL;
     }
-    protected $contentsListString = '';
-    protected $firstHeadLevel = 0;
 
     /**
      * Sets the user defined ToC markdown tag.
@@ -382,15 +444,16 @@ class ParsedownToC extends DynamicParent
             );
         }
     }
-    protected $tag_toc = '';
 
     /**
      * Parses markdown string to HTML and also the "[toc]" tag as well.
      * It overrides the parent method: \Parsedown::text().
      *
      * @param  string $text
-     * @return void
+     *
+     * @return string
      */
+    #[\Override]
     public function text($text)
     {
         // Parses the markdown text except the ToC tag. This also searches

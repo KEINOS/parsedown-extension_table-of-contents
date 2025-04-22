@@ -33,6 +33,7 @@ $expect_not_omit = <<<'HEREDOC'
 <p>Do some weird stuff right now.</p>
 HEREDOC;
 
+// Test cases
 $tests = [
     [
         'description' =>  'enable to omit the ToC tag in the body of the document',
@@ -48,6 +49,7 @@ $tests = [
     ]
 ];
 
+// Begin test
 $Parsedown = new ParsedownToc();
 $assert = new Assertion(str_repeat(' ', 2));
 $failed = 0;

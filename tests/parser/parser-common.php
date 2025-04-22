@@ -1,6 +1,7 @@
 <?php
 
 // phpcs:disable PSR1.Files.SideEffects -- ignore declaration for new symbols
+
 /**
  *  Common script.
  * ============================================================================

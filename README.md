@@ -1,6 +1,7 @@
 [![Unit Tests](https://github.com/KEINOS/parsedown-extension_table-of-contents/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/KEINOS/parsedown-extension_table-of-contents/actions/workflows/unit-tests.yml)
 [![](https://img.shields.io/packagist/php-v/keinos/parsedown-toc)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version")
 [![](https://img.shields.io/packagist/v/keinos/parsedown-toc)](https://packagist.org/packages/keinos/parsedown-toc "View in Packagist")
+[![](https://img.shields.io/badge/PHP_Doc-reference-blue?logo=php)](https://keinos.github.io/parsedown-extension_table-of-contents/ "View PHP Doc reference")
 
 # Parsedown ToC Extension
 

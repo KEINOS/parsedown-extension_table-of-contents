@@ -20,6 +20,9 @@
 #
 #    $ # PHP 8.4+ (latest) is the experimental version. Currently errors out.
 #    $ docker compose run --rm latest
+#
+#    $ # Generate PHPDoc documentation.
+#    $ docker compose run --rm phpdoc
 # =============================================================================
 
 services:
@@ -56,3 +59,11 @@ services:
         PHP_VERSION: cli-alpine
     volumes:
       - .:/app
+  # Generate PHPDoc documentation.
+  phpdoc:
+    image: phpdoc/phpdoc:3
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: phpdoc
+    command: --directory . --filename ./Extension.php --target docs/ --title "ParsedownToC" --ignore vendor
