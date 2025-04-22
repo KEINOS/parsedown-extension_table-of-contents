@@ -226,7 +226,7 @@ class ParsedownToC extends DynamicParent
      */
     protected function createAnchorID($text)
     {
-        return  urlencode($this->fetchText($text));
+        return  urlencode($this->getTextOnly($text));
     }
 
     /**
