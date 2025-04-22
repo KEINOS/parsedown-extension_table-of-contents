@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="8"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="true"
+    allFunctionsGlobal="true"
+>
+<projectFiles xmlns="https://getpsalm.org/schema/config">
+        <file name="Parsedown.php" />
+        <file name="Extension.php" />
+        <file name="ParsedownExtra.php" />
+        <directory name="examples" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+</psalm>

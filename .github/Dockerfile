@@ -43,7 +43,7 @@ RUN /app/installer.sh
 #  Note: To run the container, DO NOT forget to mount the current directory
 FROM php:${PHP_VERSION}
 
-ENV PATH="~/.composer/vendor/bin:${PATH}"
+ENV PATH="/root/.composer/vendor/bin:${PATH}"
 
 # Install dependencies for running tests and stay up to date
 RUN apk --no-cache add \
@@ -54,6 +54,10 @@ RUN apk --no-cache add \
     && apk --no-cache upgrade
 
 COPY --from=prepare /app/composer.phar /usr/local/bin/composer
+
+RUN composer global require vimeo/psalm && \
+    # smoke test
+    psalm --version
 
 WORKDIR /app
 
