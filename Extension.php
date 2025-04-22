@@ -24,7 +24,6 @@
 if (class_exists('ParsedownExtra')) {
     class DynamicParent extends \ParsedownExtra
     {
-        #[\Override]
         public function __construct()
         {
             parent::__construct();
