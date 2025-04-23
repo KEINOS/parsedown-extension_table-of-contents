@@ -28,6 +28,8 @@ Any contributions to this project are welcome. If you have suggestions for impro
 ### Regulations
 
 - Code reviews begings only after the CI tests are passed.
+  - Unit tests for basic functionality including bug fixes
+  - Psalm for static analysis
 
 ### Testing
 

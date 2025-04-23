@@ -46,6 +46,7 @@ jobs:
           docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_min_1.tar
           docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_max_1.tar
           docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_latest_1.tar
+          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_psalm_1.tar
 
       - name: Pull base images if no-cache
         if: steps.cache.outputs.cache-hit != 'true'
@@ -67,6 +68,9 @@ jobs:
       - name: Run tests on latest PHP version (currently experimental. Expected to fail)
         run: docker compose run --rm latest || exit 0
 
+      - name: Run psalm on max supported PHP version
+        run: docker compose run --rm psalm || exit 0
+
       - name: Save/export built images to cache dir if no-cache
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
@@ -74,3 +78,4 @@ jobs:
           docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_min_1.tar parsedown-extension_table-of-contents-min:latest
           docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_max_1.tar parsedown-extension_table-of-contents-max:latest
           docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_latest_1.tar parsedown-extension_table-of-contents-latest:latest
+          docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_psalm_1.tar parsedown-extension_table-of-contents-psalm:latest

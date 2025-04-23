@@ -67,3 +67,13 @@ services:
     working_dir: /app
     entrypoint: phpdoc
     command: --directory . --filename ./Extension.php --target docs/ --title "ParsedownToC" --ignore vendor
+  psalm:
+    build:
+      dockerfile: ./.github/Dockerfile
+      args:
+        PHP_VERSION: 8.3-cli-alpine
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: /root/.composer/vendor/bin/psalm
+    command: --show-info=true Extension.php
