@@ -69,7 +69,7 @@ jobs:
         run: docker compose run --rm latest || exit 0
 
       - name: Run psalm on max supported PHP version
-        run: docker compose run --rm psalm || exit 0
+        run: docker compose run --rm psalm
 
       - name: Save/export built images to cache dir if no-cache
         if: steps.cache.outputs.cache-hit != 'true'
