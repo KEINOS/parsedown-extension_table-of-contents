@@ -117,7 +117,27 @@ class ParsedownToC extends DynamicParent
     protected function blockHeader($Line)
     {
         // Use parent blockHeader method to process the $Line to $Block
+
+        /**
+         * @var void|array{
+         *     element: array{
+         *         id: string,
+         *         name: string,
+         *         text: string,
+         *         handler: array{
+         *             function: string,
+         *             argument: string,
+         *             destination: string
+         *         },
+         *         attributes: array{
+         *             id: string,
+         *            name: string
+         *        }
+         *     }
+         * } $Block
+         */
         $Block = (array) DynamicParent::blockHeader($Line);
+
         if (empty($Block)) {
             return;
         }
@@ -138,15 +158,13 @@ class ParsedownToC extends DynamicParent
 
         // Get the anchor of the heading to link from the ToC list
         $id = isset($Block['element']['attributes']['id']) ?
-            (string) $Block['element']['attributes']['id'] : (string) $this->createAnchorID($text);
+            $Block['element']['attributes']['id'] : $this->createAnchorID($text);
 
-        // Set attributes to head tags
-        $Block['element']['attributes'] = array(
-            'id'   => $id,
-            'name' => $id,
-        );
+        // Set/re-set attributes to head tags
+        $Block['element']['attributes']['id'] = $id;
+        $Block['element']['attributes']['name'] = $id;
 
-        // Add/stores the heading element info to the ToC list
+        // Add/store the heading element info to the ToC list
         $this->setContentsList(array(
             'text'  => $text,
             'id'    => $id,
