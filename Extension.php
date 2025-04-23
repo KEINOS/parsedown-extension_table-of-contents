@@ -117,7 +117,7 @@ class ParsedownToC extends DynamicParent
     protected function blockHeader($Line)
     {
         // Use parent blockHeader method to process the $Line to $Block
-        $Block = DynamicParent::blockHeader($Line);
+        $Block = (array) DynamicParent::blockHeader($Line);
         if (empty($Block)) {
             return;
         }
@@ -126,19 +126,19 @@ class ParsedownToC extends DynamicParent
         $text = '';
         if (isset($Block['element']['handler']['argument'])) {
             // Compatibility with old Parsedown version
-            $text = $Block['element']['handler']['argument'];
+            $text = "{$Block['element']['handler']['argument']}";
         }
         if (isset($Block['element']['text'])) {
             // Current Parsedown
-            $text = $Block['element']['text'];
+            $text = "{$Block['element']['text']}";
         }
 
         // Get the heading level. Levels are h1, h2, ..., h6
-        $level = $Block['element']['name'];
+        $level = "{$Block['element']['name']}";
 
         // Get the anchor of the heading to link from the ToC list
         $id = isset($Block['element']['attributes']['id']) ?
-            $Block['element']['attributes']['id'] : $this->createAnchorID($text);
+            (string) $Block['element']['attributes']['id'] : (string) $this->createAnchorID($text);
 
         // Set attributes to head tags
         $Block['element']['attributes'] = array(
@@ -174,12 +174,12 @@ class ParsedownToC extends DynamicParent
             $text = str_replace($tag_origin, '', $text);
 
             // Parses the markdown text
-            return DynamicParent::text($text);
+            return (string) DynamicParent::text($text);
         }
 
-        $text = $this->encodeTagToHash($text);   // Escapes ToC tag temporary
-        $html = DynamicParent::text($text);      // Parses the markdown text
-        $html = $this->decodeTagFromHash($html); // Unescape the ToC tag
+        $text = $this->encodeTagToHash($text);       // Escapes ToC tag temporary
+        $html = (string) DynamicParent::text($text); // Parses the markdown text
+        $html = $this->decodeTagFromHash("{$html}"); // Unescape the ToC tag
 
         return $html;
     }
@@ -308,7 +308,7 @@ class ParsedownToC extends DynamicParent
     protected function getIdAttributeToC()
     {
         if (! empty($this->id_toc)) {
-            return $this->id_toc;
+            return (string) $this->id_toc;
         }
 
         return self::ID_ATTRIBUTE_DEFAULT;
@@ -355,7 +355,7 @@ class ParsedownToC extends DynamicParent
      */
     protected function getTextOnly($text)
     {
-        return trim(strip_tags($this->line($text)));
+        return trim(strip_tags("{$this->line($text)}"));
     }
 
     /**
@@ -397,10 +397,10 @@ class ParsedownToC extends DynamicParent
      */
     protected function setContentsListAsString(array $Content)
     {
-        $text  = $this->getTextOnly($Content['text']);
-        $id    = $Content['id'];
-        $level = (int) trim($Content['level'], 'h');
+        $text  = $this->getTextOnly("{$Content['text']}");
+        $id    = "{$Content['id']}";
         $link  = "[{$text}](#{$id})";
+        $level = (int) trim("{$Content['level']}", 'h');
 
         if ($this->firstHeadLevel === 0) {
             $this->firstHeadLevel = $level;
