@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="1"
+    resolveFromConfigFile="true"
+    xmlns="https://getpsalm.org/schema/config"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="true"
+    allFunctionsGlobal="true"
+>
+    <projectFiles xmlns="https://getpsalm.org/schema/config">
+        <file name="Extension.php" />
+        <directory name="examples" />
+        <ignoreFiles>
+            <directory name="docs" />
+            <directory name="vendor" />
+            <directory name=".github" />
+            <directory name=".phpdoc" />
+        </ignoreFiles>
+    </projectFiles>
+    <stubs>
+        <file name="Parsedown.php" preloadClasses="true" />
+    </stubs>
+</psalm>
