@@ -43,6 +43,7 @@ RUN /app/installer.sh
 #  Note: To run the container, DO NOT forget to mount the current directory
 FROM php:${PHP_VERSION}
 
+ARG PHP_VERSION=${PHP_VERSION}
 ENV PATH="/root/.composer/vendor/bin:${PATH}"
 
 # Install dependencies for running tests and stay up to date
@@ -55,9 +56,13 @@ RUN apk --no-cache add \
 
 COPY --from=prepare /app/composer.phar /usr/local/bin/composer
 
-RUN composer global require vimeo/psalm && \
-    # smoke test
-    psalm --version
+RUN if [ "$PHP_VERSION" != "5.6.40-cli-alpine" ]; then \
+        composer global require vimeo/psalm; \
+        # smoke test
+        psalm --version; \
+    else \
+        echo "Skipping psalm installation for PHP 5.6.40-cli-alpine"; \
+    fi
 
 WORKDIR /app
 

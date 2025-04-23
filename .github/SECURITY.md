@@ -1,10 +1,12 @@
 # Security Policy
 
-As a minimum security measure, we use the following tools
+As a minimum security measure, we use the following tools to be checked in our repository.
+Any PR or push to the main (`master`) branch must pass all the checks.
 
-- Dependabot
-- Snyk
-- Psalm
+- Unit tests
+  - Currently, we do not use PHPUnit, but we use our home-made test scripts to test its basic functionality.
+- [Psalm](https://psalm.dev/)
+  - Static analysis
 
 ## Reporting a Vulnerability
 
