@@ -73,7 +73,12 @@ services:
       args:
         PHP_VERSION: 8.3-cli-alpine
     volumes:
-      - .:/app
+      - ./.git:/app/.git
+      - ./examples:/app/examples
+      - ./Extension.php:/app/Extension.php
+      - ./composer.json:/app/composer.json
+      - ./tests/run-psalm.sh:/app/tests/run-psalm.sh
+      - ./psalm.xml:/app/psalm.xml
     working_dir: /app
-    entrypoint: /root/.composer/vendor/bin/psalm
-    command: --version
+    entrypoint: /app/tests/run-psalm.sh
+    init: true

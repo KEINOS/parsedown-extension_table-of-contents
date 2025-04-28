@@ -5,6 +5,7 @@ Any PR or push to the main (`master`) branch must pass all the checks.
 
 - Unit tests
   - Currently, we do not use PHPUnit, but we use our home-made test scripts to test its basic functionality.
+  - To simplify the test and ease testing is our top priority.
 - [Psalm](https://psalm.dev/)
   - Static analysis
 

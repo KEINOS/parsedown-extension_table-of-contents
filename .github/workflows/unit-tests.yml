@@ -65,7 +65,7 @@ jobs:
       - name: Run tests on maximum supported PHP version
         run: docker compose run --rm max
 
-      - name: Run tests on latest PHP version (currently experimental. Expected to fail)
+      - name: Run tests on latest PHP version (currently expected to fail)
         run: docker compose run --rm latest || exit 0
 
       - name: Run psalm on max supported PHP version
