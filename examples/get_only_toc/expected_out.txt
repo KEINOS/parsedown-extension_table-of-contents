@@ -1,0 +1,14 @@
+* HTML:
+<ul>
+<li><a href="#Head1">Head1</a>
+<ul>
+<li><a href="#Head1-1">Head1-1</a></li>
+</ul></li>
+<li><a href="#Head2">Head2</a>
+<ul>
+<li><a href="#%E8%A6%8B%E5%87%BA%E3%81%972-1">見出し2-1</a></li>
+</ul></li>
+</ul>
+
+* JSON:
+[{"text":"Head1","id":"Head1","level":"h1"},{"text":"Head1-1","id":"Head1-1","level":"h2"},{"text":"Head2","id":"Head2","level":"h1"},{"text":"\u898b\u51fa\u30572-1","id":"%E8%A6%8B%E5%87%BA%E3%81%972-1","level":"h2"}]
