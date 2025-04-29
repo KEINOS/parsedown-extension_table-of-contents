@@ -168,11 +168,11 @@ $ php ./parse_sample.php
 
 ## Requirements
 
-| Script Name | Versions | Note |
-| :-- | :-- | :-- |
-| PHP | [![](https://img.shields.io/packagist/php-v/keinos/parsedown-toc)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") | Currently it supports PHP version upto PHP 8.3.x. **It does not support PHP 8.4** or later. |
-| Parsedown.php | [![](https://img.shields.io/badge/Parsedown-%3D1.7.4-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version") | SHA256 Hash: `af4a4b29f38b5a00b003a3b7a752282274c969e42dee88e55a427b2b61a2f38f` |
-| ParsedownExtra.php | [![](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported Parsedown Extra Version") | SHA256 Hash:  `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
+| Script Name | Versions |
+| :-- | :-- |
+| PHP | [![](https://img.shields.io/packagist/php-v/keinos/parsedown-toc)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") <br />Currently it supports PHP version upto PHP 8.3.x. **It does not support PHP 8.4** or later. |
+| Parsedown.php | [![](https://img.shields.io/badge/Parsedown-%3D1.7.4-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version") <br />SHA256 Hash: `af4a4b29f38b5a00b003a3b7a752282274c969e42dee88e55a427b2b61a2f38f` |
+| ParsedownExtra.php | [![](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported Parsedown Extra Version") <br />SHA256 Hash:  `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
 
 > [!NOTE]
 > We will support PHP 8.4+ and [Parsedown v2](https://github.com/erusev/parsedown/tree/2.0.x) after we finish refactoring the test scripts and upstream (Parsedown) officially releases v2.
