@@ -175,7 +175,7 @@ $ php ./parse_sample.php
 | ParsedownExtra.php | [![](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported Parsedown Extra Version") <br />SHA256 Hash:  `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
 
 > [!NOTE]
-> We will support PHP 8.4+ and [Parsedown v2](https://github.com/erusev/parsedown/tree/2.0.x) after we finish refactoring the test scripts and upstream (Parsedown) officially releases v2.
+> We will support PHP 8.4+ and [Parsedown v2](https://github.com/erusev/parsedown/tree/2.0.x) after we finish refactoring the test scripts and the official release of Parsedown v2.
 
 ## Class Info and Methods
 
