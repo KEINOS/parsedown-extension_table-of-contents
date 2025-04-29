@@ -1,0 +1,8 @@
+<h1 id="Head1" name="Head1">Head1</h1>
+<p>Sample text of head 1.</p>
+<h2 id="Head1-1" name="Head1-1">Head1-1</h2>
+<p>Sample text of head 1-1.</p>
+<h1 id="Head2" name="Head2">Head2</h1>
+<p>Sample text of head 2.</p>
+<h2 id="%E8%A6%8B%E5%87%BA%E3%81%972-1" name="%E8%A6%8B%E5%87%BA%E3%81%972-1">見出し2-1</h2>
+<p>Sample text of head2-1.</p>

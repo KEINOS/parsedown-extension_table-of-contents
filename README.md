@@ -9,29 +9,109 @@ Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
 This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown Vanilla](https://github.com/erusev/parsedown) / [Parsedown Extra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
 
-## Simple Installation
-
-[This extension](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) is a single PHP file. Download and place it in the same directory as the `Parsedown.php` file (optionally place the `ParsedownExtra.php` file if you are using it).
-
-Then include them in your PHP script. For details and other installation methods, see the [Install](#install) section.
-
-| Supported Version | SHA256 Hash |
-| :-- | :-- |
-| [![](https://img.shields.io/badge/Parsedown-%3D1.7.4-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version") | `af4a4b29f38b5a00b003a3b7a752282274c969e42dee88e55a427b2b61a2f38f` |
-| [![](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported Parsedown Extra Version") | `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
-
-### Composer support
-
-This extension supports [Composer](https://en.wikipedia.org/wiki/Composer_(software)) for installation and convenience.
-
-```bash
-composer require keinos/parsedown-toc
-```
-
 ## Basic Usage
 
+```php
+<?php
+
+// Include the Parsedown and the ToC extension
+require_once('Parsedown.php');
+require_once('Extension.php');
+
+// Markdown Data Sample
+$inputMarkdown = <<<EOL
+# Head1
+Sample text of head 1.
+## Head1-1
+Sample text of head 1-1.
+# Head2
+Sample text of head 2.
+## 見出し2-1
+Sample text of head2-1.
+EOL;
+
+// Instanciate the Parsedown with ToC extension
+$Parsedown = new ParsedownToc();
+
+// Get the parsed HTML
+$html = $Parsedown->text($inputMarkdown);
+
+// Get the Table of Contents
+$ToC  = $Parsedown->contentsList();
+
+// Print the parsed HTML and ToC
+echo $html . PHP_EOL;
+echo "---" . PHP_EOL;
+echo $ToC . PHP_EOL;
+```
+
+```shellsession
+$ php ./index.php
+<h1 id="Head1" name="Head1">Head1</h1>
+<p>Sample text of head 1.</p>
+<h2 id="Head1-1" name="Head1-1">Head1-1</h2>
+<p>Sample text of head 1-1.</p>
+<h1 id="Head2" name="Head2">Head2</h1>
+<p>Sample text of head 2.</p>
+<h2 id="%E8%A6%8B%E5%87%BA%E3%81%972-1" name="%E8%A6%8B%E5%87%BA%E3%81%972-1">見出し2-1</h2>
+<p>Sample text of head2-1.</p>
+---
+<ul>
+<li><a href="#Head1">Head1</a>
+<ul>
+<li><a href="#Head1-1">Head1-1</a></li>
+</ul></li>
+<li><a href="#Head2">Head2</a>
+<ul>
+<li><a href="#%E8%A6%8B%E5%87%BA%E3%81%972-1">見出し2-1</a></li>
+</ul></li>
+</ul>
+```
+
+- For more examples see the [examples](https://github.com/KEINOS/parsedown-extension_table-of-contents/tree/master/examples) directory.
+
+## Installation
+
+This extension, **`ParsedownToC`, is a single PHP file.** [Download](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) and place it in the same directory as the `Parsedown.php` file (optionally place the `ParsedownExtra.php` file if you are using it).
+
+<details><summary>Manual Install</summary>
+
+You can download the latest '[Extension.php](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php)' file from the below URL. Place it anywhere you like to include.
+
+```bash
+https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php
+```
+
+```bash
+# Download via cURL
+curl -O https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php
+```
+
+```bash
+# Download via PHP
+php -r "copy('https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php', './Extension.php');"
+```
+
 > [!NOTE]
-> If `composer` is not your thing, replace the `require` statement with the path to the `Extension.php` and `Parsedown.php` files. See the "download" in the examples directory.
+> Since this is an extension of [Parsedown](https://parsedown.org/), you need to download and include `Parsedown.php` as well.
+
+</details>
+
+### Via Composer
+
+**We also support [Composer](https://getcomposer.org/)** for installation and convenience.
+
+```bash
+# Current stable
+composer require keinos/parsedown-toc
+
+# Latest
+composer require keinos/parsedown-toc:dev-master
+```
+
+<details><summary>Basic Usage Using Composer</summary><br />
+
+To use the extension via Composer, include the autoloader (`vendor/autoload.php` file) instead of the `Parsedown.php` and `Extension.php` file.
 
 ```php
 $ cat ./parse_sample.php
@@ -43,7 +123,7 @@ $text_markdown = file_get_contents('SAMPLE.md');
 
 $Parsedown = new \ParsedownToC();
 
-// Parses '[toc]' tag to ToC if exists
+// Parse Markdown and the '[toc]' tag to HTML
 $html = $Parsedown->text($text_markdown);
 
 echo $html . PHP_EOL;
@@ -84,23 +164,22 @@ $ php ./parse_sample.php
 <p>Something about One2</p>
 ```
 
-With the `toc()` method, you can get just the "ToC".
+</details>
 
-```php
-<?php
-// Parse body and ToC separately
+## Requirements
 
-require_once __DIR__ . '/vendor/autoload.php';
+| Script Name | Versions | Note |
+| :-- | :-- | :-- |
+| PHP | [![](https://img.shields.io/packagist/php-v/keinos/parsedown-toc)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") | Currently it supports PHP version upto PHP 8.3.x. **It does not support PHP 8.4** or later. |
+| Parsedown.php | [![](https://img.shields.io/badge/Parsedown-%3D1.7.4-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version") | SHA256 Hash: `af4a4b29f38b5a00b003a3b7a752282274c969e42dee88e55a427b2b61a2f38f` |
+| ParsedownExtra.php | [![](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported Parsedown Extra Version") | SHA256 Hash:  `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
 
-$text_markdown = file_get_contents('SAMPLE.md');
-$Parsedown     = new \ParsedownToC();
+> [!NOTE]
+> We will support PHP 8.4+ and [Parsedown v2](https://github.com/erusev/parsedown/tree/2.0.x) after we finish refactoring the test scripts and upstream (Parsedown) officially releases v2.
 
-$body = $Parsedown->body($text_markdown);
-$toc  = $Parsedown->toc();
+## Class Info and Methods
 
-echo $toc . PHP_EOL;  // Table of Contents in <ul> list
-echo $body . PHP_EOL; // Main body
-```
+For more details, please refer to the [PHP Doc reference](https://keinos.github.io/parsedown-extension_table-of-contents/).
 
 - Main Class: `ParsedownToC()`
   - Arguments: none
@@ -117,13 +196,12 @@ echo $body . PHP_EOL; // Main body
         - `$omit_toc_tag`: If `true`, the `[toc]` tag will be excluded from the output
         - Default: `false`
         - Available since v1.3.0
-    - `toc([string $type_return='string'])`:
+    - `contentsList([string $type_return='string'])`:
       - Returns the ToC, the table of contents, in HTML or JSON.
       - Optional argument:
         - `$type_return`: Specifies the returned format
-          - `string` or `json` can be specified. `string`=HTML, `json`=JSON.
-          - Default `string`
-      - Alias method: `contentsList(string $type_return)`
+          - `"string"` or `"json`" can be specified. `string`=HTML, `json`=JSON.
+          - Default `"string"`
     - `setTagToc(string $tag='[tag]')`:
       - Sets user defined ToC markdown tag. Empty value sets the default tag
       - Default: `"[toc]"`
@@ -131,56 +209,15 @@ echo $body . PHP_EOL; // Main body
       - Note: Use this method before `text()` or `body()` method if you want to use the ToC tag rather than the "`[toc]`"
   - Other Methods:
     - All the public methods of `Parsedown` and/or `Parsedown Extend` are available to use
-  - Note: As of v1.1.0 the old alias class `Extension()` is deprecated
+  - Note: As of `ParsedownToC` v1.1.0 the old alias class `Extension()` is deprecated
 
 ## Online Demo
 
 - [https://paiza.io/projects/0TghplxParLqyrP1tjAg6g?locale=en-us](https://paiza.io/projects/0TghplxParLqyrP1tjAg6g?locale=en-us) @ paiza.IO
 
-## Install
-
-### Via Composer
-
-If you are familiar to [composer](https://en.wikipedia.org/wiki/Composer_(software)), the package manager for PHP, then install it as below:
-
-```bash
-# Current stable
-composer require keinos/parsedown-toc
-
-# Latest
-composer require keinos/parsedown-toc:dev-master
-```
-
-- Usage: [See sample project](https://github.com/KEINOS/parsedown-extension_table-of-contents/tree/master/samples/composer)
-
-### Manual Install (Download the script)
-
-You can download the '[Extension.php](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php)' file from the below URL. Place it anywhere you like to include.
-
-```bash
-https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php
-```
-
-```bash
-# Download via cURL
-curl -O https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php
-```
-
-```bash
-# Download via PHP
-php -r "copy('https://KEINOS.github.io/parsedown-extension_table-of-contents/Extension.php', './Extension.php');"
-```
-
-> [!NOTE]
-> Since this is an extension of [Parsedown](https://parsedown.org/), you need to download and include `Parsedown.php` as well.
-
-## Usage Examples
-
-- See: [./examples/](./examples/)
-
 ## Advanced Usage (Using Parsedown Extra)
 
-As of Parsedown ToC Extension v1.1.1, you can use the [anchor identifiers](https://michelf.ca/projects/php-markdown/extra/#header-id) for [Parsedown Extra](https://github.com/erusev/parsedown-extra).
+As of ParsedownToC [v1.1.1](https://github.com/KEINOS/parsedown-extension_table-of-contents/releases/tag/v1.1.1), you can use the [anchor identifiers](https://michelf.ca/projects/php-markdown/extra/#header-id) for [Parsedown Extra](https://github.com/erusev/parsedown-extra).
 
 With this feature, you can specify the anchor name you like. Useful if the headings are in UTF-8 (not in ASCII) and to make it readable. Such as placing the "go back" links in a page.
 
