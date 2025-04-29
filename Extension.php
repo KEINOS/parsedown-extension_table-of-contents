@@ -7,9 +7,9 @@
  *
  * It creates a list of contents table from the headings in Markdown text.
  *
- * @package     library
+ * @package     keinos/ParsedownToC
  * @author      KEINOS (https://github.com/KEINOS/)
- *              Contributors (https://github.com/KEINOS/parsedown-extension_table-of-contents/graphs/contributors)
+ * @author      Contributors (https://github.com/KEINOS/parsedown-extension_table-of-contents/graphs/contributors)
  * @php         >=5.3.0 <8.4 (Currently fails on PHP 8.4)
  * @see         https://github.com/KEINOS/parsedown-extension_table-of-contents/ ReadMe & Usage
  * @see         https://keinos.github.io/parsedown-extension_table-of-contents/  PHPDoc
