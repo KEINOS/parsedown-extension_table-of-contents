@@ -21,14 +21,25 @@ $Parsedown = new ParsedownToc();
 // Parse the Markdown
 $html = $Parsedown->body($textMarkdown);
 
-// Get the Table of Contents in HTML and JSON format
+// Get the Table of Contents in HTML format
 $tocHTML = $Parsedown->contentsList('string');
-$tocJSON = $Parsedown->contentsList('json');
-
 echo '* HTML:' . PHP_EOL;
 echo $tocHTML . PHP_EOL;
-
 echo PHP_EOL;
 
+// Get the Table of Contents in JSON format
+$tocJSON = $Parsedown->contentsList('json');
 echo '* JSON:' . PHP_EOL;
 echo $tocJSON . PHP_EOL;
+echo PHP_EOL;
+
+// Get the Table of Contents in flat array format
+$flatToC  = $Parsedown->contentsList("flatArray");
+echo '* Flat array:' . PHP_EOL;
+print_r($flatToC);
+echo PHP_EOL;
+
+// Get the Table of Contents in nested array format
+$nestedToC = $Parsedown->contentsList("nestedArray");
+echo '* Nested array:' . PHP_EOL;
+print_r($nestedToC);
