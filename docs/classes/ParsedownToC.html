@@ -225,7 +225,7 @@ tag as is. It&#039;s an alias of the parent method &quot;\DynamicParent::text()&
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/ParsedownToC.html#method_contentsList">contentsList()</a>
     <span>
-                                &nbsp;: false|string    </span>
+                                &nbsp;: false|string|array&lt;string|int, mixed&gt;    </span>
 </dt>
 <dd>Returns the parsed ToC.</dd>
 
@@ -250,6 +250,13 @@ tag as is. It&#039;s an alias of the parent method &quot;\DynamicParent::text()&
 </dt>
 <dd>Heading process. It retruns the heading block element if the given $Line
 is a heading element.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a class="" href="classes/ParsedownToC.html#method_buildNestedToc">buildNestedToc()</a>
+    <span>
+                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Build hierarchical ToC from a flat toc array.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a class="" href="classes/ParsedownToC.html#method_createAnchorID">createAnchorID()</a>
@@ -701,7 +708,7 @@ ASCII.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">185</span>
+    <span class="phpdocumentor-element-found-in__line">244</span>
 
     </aside>
 
@@ -766,7 +773,7 @@ tag as is. It&#039;s an alias of the parent method &quot;\DynamicParent::text()&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">213</span>
+    <span class="phpdocumentor-element-found-in__line">272</span>
 
     </aside>
 
@@ -774,7 +781,7 @@ tag as is. It&#039;s an alias of the parent method &quot;\DynamicParent::text()&
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">contentsList</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type_return</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;string&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">false|string</span></code>
+                    <span class="phpdocumentor-signature__name">contentsList</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$type_return</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">&#039;string&#039;</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">false|string|array&lt;string|int, mixed&gt;</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -789,7 +796,7 @@ tag as is. It&#039;s an alias of the parent method &quot;\DynamicParent::text()&
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">&#039;string&#039;</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Type of the return format. &quot;string&quot; or &quot;json&quot;.</p>
+                    <section class="phpdocumentor-description"><p>Type of the return format. &quot;string&quot;, &quot;json&quot;, &quot;flatarray&quot; and &quot;nestedarray&quot;.</p>
 </section>
 
             </dd>
@@ -801,9 +808,9 @@ tag as is. It&#039;s an alias of the parent method &quot;\DynamicParent::text()&
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">false|string</span>
+        <span class="phpdocumentor-signature__response_type">false|string|array&lt;string|int, mixed&gt;</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>HTML/JSON string of ToC.</p>
+                <section class="phpdocumentor-description"><p>ToC in HTML/JSON format string or array.</p>
 </section>
 
             </section>
@@ -823,7 +830,7 @@ tag as is. It&#039;s an alias of the parent method &quot;\DynamicParent::text()&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">451</span>
+    <span class="phpdocumentor-element-found-in__line">518</span>
 
     </aside>
 
@@ -868,7 +875,7 @@ tag as is. It&#039;s an alias of the parent method &quot;\DynamicParent::text()&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">475</span>
+    <span class="phpdocumentor-element-found-in__line">542</span>
 
     </aside>
 
@@ -930,7 +937,7 @@ tag as is. It&#039;s an alias of the parent method &quot;\DynamicParent::text()&
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">116</span>
+    <span class="phpdocumentor-element-found-in__line">175</span>
 
     </aside>
 
@@ -1008,6 +1015,61 @@ to retrieve the ToC list.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_buildNestedToc">
+        buildNestedToc()
+        <a href="classes/ParsedownToC.html#method_buildNestedToc" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">110</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Build hierarchical ToC from a flat toc array.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">buildNestedToc</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$flatToc</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$flatToc</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Flat list of toc entries.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Hierarchical toc as nested array.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_createAnchorID">
         createAnchorID()
         <a href="classes/ParsedownToC.html#method_createAnchorID" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1016,7 +1078,7 @@ to retrieve the ToC list.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">246</span>
+    <span class="phpdocumentor-element-found-in__line">313</span>
 
     </aside>
 
@@ -1066,7 +1128,7 @@ ASCII.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">261</span>
+    <span class="phpdocumentor-element-found-in__line">328</span>
 
     </aside>
 
@@ -1119,7 +1181,7 @@ their tag such as &quot;[[<em>toc</em>]]&quot;. Unless it will be parsed as:
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">284</span>
+    <span class="phpdocumentor-element-found-in__line">351</span>
 
     </aside>
 
@@ -1172,7 +1234,7 @@ their tag such as &quot;[[<em>toc</em>]]&quot;. Unless it will be parsed as:
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">310</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
@@ -1249,7 +1311,7 @@ trims the tags to get the text. It's been replaced by &quot;getTextOnly()&quot;.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">326</span>
+    <span class="phpdocumentor-element-found-in__line">393</span>
 
     </aside>
 
@@ -1288,7 +1350,7 @@ trims the tags to get the text. It's been replaced by &quot;getTextOnly()&quot;.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">340</span>
+    <span class="phpdocumentor-element-found-in__line">407</span>
 
     </aside>
 
@@ -1327,7 +1389,7 @@ trims the tags to get the text. It's been replaced by &quot;getTextOnly()&quot;.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">357</span>
+    <span class="phpdocumentor-element-found-in__line">424</span>
 
     </aside>
 
@@ -1366,7 +1428,7 @@ trims the tags to get the text. It's been replaced by &quot;getTextOnly()&quot;.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">374</span>
+    <span class="phpdocumentor-element-found-in__line">441</span>
 
     </aside>
 
@@ -1419,7 +1481,7 @@ trims the tags to get the text. It's been replaced by &quot;getTextOnly()&quot;.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">391</span>
+    <span class="phpdocumentor-element-found-in__line">458</span>
 
     </aside>
 
@@ -1466,7 +1528,7 @@ trims the tags to get the text. It's been replaced by &quot;getTextOnly()&quot;.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">405</span>
+    <span class="phpdocumentor-element-found-in__line">472</span>
 
     </aside>
 
@@ -1511,7 +1573,7 @@ trims the tags to get the text. It's been replaced by &quot;getTextOnly()&quot;.
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="Extension.php"><a href="files/extension.html">Extension.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">416</span>
+    <span class="phpdocumentor-element-found-in__line">483</span>
 
     </aside>
 
@@ -1683,6 +1745,7 @@ trims the tags to get the text. It's been replaced by &quot;getTextOnly()&quot;.
                                             <li class=""><a href="classes/ParsedownToC.html#method_setTagToc">setTagToc()</a></li>
                                             <li class=""><a href="classes/ParsedownToC.html#method_text">text()</a></li>
                                             <li class=""><a href="classes/ParsedownToC.html#method_blockHeader">blockHeader()</a></li>
+                                            <li class=""><a href="classes/ParsedownToC.html#method_buildNestedToc">buildNestedToc()</a></li>
                                             <li class=""><a href="classes/ParsedownToC.html#method_createAnchorID">createAnchorID()</a></li>
                                             <li class=""><a href="classes/ParsedownToC.html#method_decodeTagFromHash">decodeTagFromHash()</a></li>
                                             <li class=""><a href="classes/ParsedownToC.html#method_encodeTagToHash">encodeTagToHash()</a></li>

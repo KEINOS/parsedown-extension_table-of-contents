@@ -267,7 +267,7 @@ class ParsedownToC extends DynamicParent
      *
      * @param string $type_return  Type of the return format. "string", "json", "flatarray" and "nestedarray".
      *
-     * @return false|string|array HTML/JSON string of ToC.
+     * @return false|string|array ToC in HTML/JSON format string or array.
      */
     public function contentsList($type_return = 'string')
     {

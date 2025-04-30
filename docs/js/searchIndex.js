@@ -21,6 +21,11 @@ Search.appendIndex(
             "summary": "Version\u0020requirement\u0020check\u0020and\u0020parent\u0020constructor\u0020call.",
             "url": "classes/ParsedownToC.html#method___construct"
         },                {
+            "fqsen": "\\ParsedownToC\u003A\u003AbuildNestedToc\u0028\u0029",
+            "name": "buildNestedToc",
+            "summary": "Build\u0020hierarchical\u0020ToC\u0020from\u0020a\u0020flat\u0020toc\u0020array.",
+            "url": "classes/ParsedownToC.html#method_buildNestedToc"
+        },                {
             "fqsen": "\\ParsedownToC\u003A\u003AblockHeader\u0028\u0029",
             "name": "blockHeader",
             "summary": "Heading\u0020process.\u0020It\u0020retruns\u0020the\u0020heading\u0020block\u0020element\u0020if\u0020the\u0020given\u0020\u0024Line\nis\u0020a\u0020heading\u0020element.",
