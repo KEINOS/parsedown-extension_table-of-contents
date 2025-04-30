@@ -12,3 +12,85 @@
 
 * JSON:
 [{"text":"Head1","id":"Head1","level":"h1"},{"text":"Head1-1","id":"Head1-1","level":"h2"},{"text":"Head2","id":"Head2","level":"h1"},{"text":"\u898b\u51fa\u30572-1","id":"%E8%A6%8B%E5%87%BA%E3%81%972-1","level":"h2"}]
+
+* Flat array:
+Array
+(
+    [0] => Array
+        (
+            [text] => Head1
+            [id] => Head1
+            [level] => h1
+        )
+
+    [1] => Array
+        (
+            [text] => Head1-1
+            [id] => Head1-1
+            [level] => h2
+        )
+
+    [2] => Array
+        (
+            [text] => Head2
+            [id] => Head2
+            [level] => h1
+        )
+
+    [3] => Array
+        (
+            [text] => 見出し2-1
+            [id] => %E8%A6%8B%E5%87%BA%E3%81%972-1
+            [level] => h2
+        )
+
+)
+
+* Nested array:
+Array
+(
+    [0] => Array
+        (
+            [text] => Head1
+            [id] => Head1
+            [level] => h1
+            [children] => Array
+                (
+                    [0] => Array
+                        (
+                            [text] => Head1-1
+                            [id] => Head1-1
+                            [level] => h2
+                            [children] => Array
+                                (
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [1] => Array
+        (
+            [text] => Head2
+            [id] => Head2
+            [level] => h1
+            [children] => Array
+                (
+                    [0] => Array
+                        (
+                            [text] => 見出し2-1
+                            [id] => %E8%A6%8B%E5%87%BA%E3%81%972-1
+                            [level] => h2
+                            [children] => Array
+                                (
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
