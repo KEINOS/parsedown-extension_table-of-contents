@@ -102,6 +102,65 @@ class ParsedownToC extends DynamicParent
      */
 
     /**
+     * Build hierarchical ToC from a flat toc array.
+     *
+     * @param array $flatToc Flat list of toc entries.
+     * @return array Hierarchical toc as nested array.
+     */
+    protected function buildNestedToc(array $flatToc)
+    {
+        $hierarchy = [];
+        $stack = [];
+
+        foreach ($flatToc as $item) {
+            $level = (int) substr($item['level'], 1); // 'h1' -> 1, etc.
+            $entry = [
+                'text'     => $item['text'],
+                'id'       => $item['id'],
+                'level'    => $item['level'], // keep the original level as reference
+                'children' => []
+            ];
+
+            // If no parent exists, add as top-level entry
+            if (empty($stack)) {
+                $hierarchy[] = $entry;
+                $stack[] = ['level' => $level, 'ref' => &$hierarchy[count($hierarchy) - 1]];
+
+                continue;
+            }
+
+            // If deeper than last, add as child
+            if ($level > $stack[count($stack) - 1]['level']) {
+                $parent = &$stack[count($stack) - 1]['ref'];
+                $parent['children'][] = $entry;
+                $stack[] = ['level' => $level, 'ref' => &$parent['children'][count($parent['children']) - 1]];
+
+                continue;
+            }
+
+            // Pop until we find a shallower level
+            while (!empty($stack) && $stack[count($stack) - 1]['level'] >= $level) {
+                array_pop($stack);
+            }
+
+            // If stack empty, add as top-level entry
+            if (empty($stack)) {
+                $hierarchy[] = $entry;
+                $stack[] = ['level' => $level, 'ref' => &$hierarchy[count($hierarchy) - 1]];
+
+                continue;
+            }
+
+            // Else, add as sibling child
+            $parent = &$stack[count($stack) - 1]['ref'];
+            $parent['children'][] = $entry;
+            $stack[] = ['level' => $level, 'ref' => &$parent['children'][count($parent['children']) - 1]];
+        }
+
+        return $hierarchy;
+    }
+
+    /**
      * Heading process. It retruns the heading block element if the given $Line
      * is a heading element.
      *
@@ -206,9 +265,9 @@ class ParsedownToC extends DynamicParent
      * Returns the parsed ToC.
      * If the arg is "string" then it returns the ToC in HTML string.
      *
-     * @param string $type_return  Type of the return format. "string" or "json".
+     * @param string $type_return  Type of the return format. "string", "json", "flatarray" and "nestedarray".
      *
-     * @return false|string HTML/JSON string of ToC.
+     * @return false|string|array HTML/JSON string of ToC.
      */
     public function contentsList($type_return = 'string')
     {
@@ -224,6 +283,14 @@ class ParsedownToC extends DynamicParent
 
         if ('json' === strtolower($type_return)) {
             return json_encode($this->contentsListArray);
+        }
+
+        if ('flatarray' === strtolower($type_return)) {
+            return $this->contentsListArray;
+        }
+
+        if ('nestedarray' === strtolower($type_return)) {
+            return $this->buildNestedToc($this->contentsListArray);
         }
 
         // Log the error and forces to return ToC as "string"
