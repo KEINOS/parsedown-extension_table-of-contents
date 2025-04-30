@@ -411,7 +411,7 @@ class ParsedownToC extends DynamicParent
             return "$salt";
         }
 
-        $salt = hash('md5', date('dmYHis', time()));
+        $salt = hash('md5', time());
 
         return "$salt";
     }
