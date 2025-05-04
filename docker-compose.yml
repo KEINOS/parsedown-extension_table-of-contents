@@ -59,6 +59,17 @@ services:
         PHP_VERSION: cli-alpine
     volumes:
       - .:/app
+  # Run examples in PHP5 to test its functionality.
+  examples:
+    build:
+      dockerfile: ./.github/Dockerfile
+      args:
+        PHP_VERSION: 5.6.40-cli-alpine
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: /usr/local/bin/php
+    command: /app/examples/test-examples.php
   # Generate PHPDoc documentation.
   phpdoc:
     image: phpdoc/phpdoc:3
@@ -66,7 +77,7 @@ services:
       - .:/app
     working_dir: /app
     entrypoint: phpdoc
-    command: --directory . --filename ./Extension.php --target docs/ --title "ParsedownToC" --ignore vendor
+    command: --directory . --filename ./Extension.php --target "docs/" --title "ParsedownToC" --ignore "vendor/" --ignore "examples/" --ignore "tests/"
   psalm:
     build:
       dockerfile: ./.github/Dockerfile
