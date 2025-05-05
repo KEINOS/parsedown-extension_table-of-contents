@@ -21,6 +21,11 @@ Search.appendIndex(
             "summary": "Version\u0020requirement\u0020check\u0020and\u0020parent\u0020constructor\u0020call.",
             "url": "classes/ParsedownToC.html#method___construct"
         },                {
+            "fqsen": "\\ParsedownToC\u003A\u003AcheckRequirements\u0028\u0029",
+            "name": "checkRequirements",
+            "summary": "Check\u0020the\u0020requirements\u0020of\u0020the\u0020extension.",
+            "url": "classes/ParsedownToC.html#method_checkRequirements"
+        },                {
             "fqsen": "\\ParsedownToC\u003A\u003AbuildNestedToc\u0028\u0029",
             "name": "buildNestedToc",
             "summary": "Build\u0020hierarchical\u0020ToC\u0020from\u0020a\u0020flat\u0020toc\u0020array.",
@@ -38,7 +43,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\ParsedownToC\u003A\u003AcontentsList\u0028\u0029",
             "name": "contentsList",
-            "summary": "Returns\u0020the\u0020parsed\u0020ToC.",
+            "summary": "Returns\u0020the\u0020parsed\u0020ToC\u0020in\u0020various\u0020formats.",
             "url": "classes/ParsedownToC.html#method_contentsList"
         },                {
             "fqsen": "\\ParsedownToC\u003A\u003AcreateAnchorID\u0028\u0029",
@@ -115,6 +120,11 @@ Search.appendIndex(
             "name": "VERSION_PARSEDOWN_REQUIRED",
             "summary": "Version\u0020of\u0020Parsedown\u0020required",
             "url": "classes/ParsedownToC.html#constant_VERSION_PARSEDOWN_REQUIRED"
+        },                {
+            "fqsen": "\\ParsedownToC\u003A\u003AVERSION_PARSEDOWN_EXTRA_REQUIRED",
+            "name": "VERSION_PARSEDOWN_EXTRA_REQUIRED",
+            "summary": "Version\u0020of\u0020ParsedownExtra\u0020required",
+            "url": "classes/ParsedownToC.html#constant_VERSION_PARSEDOWN_EXTRA_REQUIRED"
         },                {
             "fqsen": "\\ParsedownToC\u003A\u003ATAG_TOC_DEFAULT",
             "name": "TAG_TOC_DEFAULT",
