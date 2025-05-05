@@ -3,9 +3,9 @@
 require_once('../../_bundle/Parsedown_1.7.4/Parsedown.php');
 require_once('../../Extension.php');
 
-// Markdown Data Sample
+// Markdown data sample with [toc] tag
 $textMarkdown = <<<EOL
-[[table of contents]]
+[toc]
 
 ---
 
@@ -22,9 +22,9 @@ EOL;
 // Instanciate the Parsedown with ToC extension
 $parser = new \ParsedownToc();
 
-// Set user-defined ToC tag.
+// Set the ToC ID attribute to a custom value.
 // Note that you should call this method before calling the text() method.
-$parser->setTagToc('[[table of contents]]');
+$parser->setIdAttributeToC("my-custom-id");
 
 // Get the parsed HTML and the ToC
 $html = $parser->text($textMarkdown);
