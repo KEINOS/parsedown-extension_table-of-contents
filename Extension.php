@@ -65,6 +65,8 @@ class ParsedownToC extends DynamicParent
     protected $contentsListString = '';
     /** @var int It holds the initial heading level of the content. */
     protected $firstHeadLevel = 0;
+    /** @var string It holds the user defined ToC ID attribute. */
+    protected $id_toc = '';
     /** @var string It holds the user defined ToC tag. */
     protected $tag_toc = '';
 
@@ -556,6 +558,32 @@ class ParsedownToC extends DynamicParent
     }
 
     /**
+     * Sets the user defined ID attribute of HTML DIV tag for ToC.
+     *
+     * Special characters are not allowed in the ID attribute.
+     *
+     * @param  string $id Alphanumeric string as ID attribute.
+     * @return void
+     */
+    public function setIdAttributeToC($id)
+    {
+        $id = trim($id);
+        if (self::escape($id) === $id) {
+            // Set ToC ID attribute if it's safe
+            $this->id_toc = $id;
+
+            return;
+        }
+
+        // Do nothing but log
+        error_log(
+            'Malformed ToC user ID attribute given.'
+            . ' At: ' . __FUNCTION__ . '() '
+            . ' in Line:' . __LINE__ . ' (Using default ToC ID attribute)'
+        );
+    }
+
+    /**
      * Sets the user defined ToC markdown tag.
      *
      * @param  string $tag
@@ -567,14 +595,16 @@ class ParsedownToC extends DynamicParent
         if (self::escape($tag) === $tag) {
             // Set ToC tag if it's safe
             $this->tag_toc = $tag;
-        } else {
-            // Do nothing but log
-            error_log(
-                'Malformed ToC user tag given.'
-                . ' At: ' . __FUNCTION__ . '() '
-                . ' in Line:' . __LINE__ . ' (Using default ToC tag)'
-            );
+
+            return;
         }
+
+        // Do nothing but log
+        error_log(
+            'Malformed ToC user tag given.'
+            . ' At: ' . __FUNCTION__ . '() '
+            . ' in Line:' . __LINE__ . ' (Using default ToC tag)'
+        );
     }
 
     /**
