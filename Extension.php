@@ -300,7 +300,7 @@ class ParsedownToC extends DynamicParent
      *
      * @param string $type_return  Type of the return format. Available types: "markdown", "html", "json", "flatarray" and "nestedarray". Default: "html". Aliases: "string" = "html", "md" = "markdown".
      *
-     * @return false|string|array ToC in HTML/JSON format string or PHP array.
+     * @return false|string|array ToC in HTML/JSON/Markdown format string or PHP array.
      */
     public function contentsList($type_return = 'html')
     {
