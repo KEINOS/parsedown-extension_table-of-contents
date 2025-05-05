@@ -37,13 +37,13 @@ $parser = new \ParsedownToc();
 // Get the parsed HTML
 $html = $parser->text($inputMarkdown);
 
-// Get the Table of Contents
-$ToC  = $parser->contentsList();
+// Get the Table of Contents in HTML
+$tocHTML = $parser->contentsList('html');
 
 // Print the parsed HTML and ToC
 echo $html . PHP_EOL;
 echo "---" . PHP_EOL;
-echo $ToC . PHP_EOL;
+echo $tocHTML . PHP_EOL;
 ```
 
 ```shellsession
@@ -121,10 +121,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Sample Markdown with '[toc]' tag included
 $text_markdown = file_get_contents('SAMPLE.md');
 
-$Parsedown = new \ParsedownToC();
+$parser = new \ParsedownToC();
 
 // Parse Markdown and the '[toc]' tag to HTML
-$html = $Parsedown->text($text_markdown);
+$html = $parser->text($text_markdown);
 
 echo $html . PHP_EOL;
 

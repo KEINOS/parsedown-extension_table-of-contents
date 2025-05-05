@@ -294,34 +294,46 @@ class ParsedownToC extends DynamicParent
     }
 
     /**
-     * Returns the parsed ToC.
-     * If the arg is "string" then it returns the ToC in HTML string.
+     * Returns the parsed ToC in various formats.
      *
-     * @param string $type_return  Type of the return format. "string", "json", "flatarray" and "nestedarray".
+     * If the arg is empty or "html" then it returns the ToC in HTML string.
      *
-     * @return false|string|array ToC in HTML/JSON format string or array.
+     * @param string $type_return  Type of the return format. Available types: "markdown", "html", "json", "flatarray" and "nestedarray". Default: "html". Aliases: "string" = "html", "md" = "markdown".
+     *
+     * @return false|string|array ToC in HTML/JSON format string or PHP array.
      */
-    public function contentsList($type_return = 'string')
+    public function contentsList($type_return = 'html')
     {
-        if ('string' === strtolower($type_return)) {
+        $type_return = strtolower($type_return);
+
+        if ('markdown' === $type_return || 'md' === $type_return) {
             $result = '';
             if (! empty($this->contentsListString)) {
-                // Parses the ToC list in markdown to HTML
+                $result = $this->contentsListString;
+            }
+
+            return rtrim($result);
+        }
+
+        if ('html' === $type_return || 'string' === $type_return) {
+            $result = '';
+            if (! empty($this->contentsListString)) {
+                // Parses the markdown ToC list to HTML
                 $result = $this->body($this->contentsListString);
             }
 
             return $result;
         }
 
-        if ('json' === strtolower($type_return)) {
+        if ('json' === $type_return) {
             return json_encode($this->contentsListArray);
         }
 
-        if ('flatarray' === strtolower($type_return)) {
+        if ('flatarray' === $type_return) {
             return $this->contentsListArray;
         }
 
-        if ('nestedarray' === strtolower($type_return)) {
+        if ('nestedarray' === $type_return) {
             return $this->buildNestedToc($this->contentsListArray);
         }
 
@@ -332,7 +344,7 @@ class ParsedownToC extends DynamicParent
             . ' in Line:' . __LINE__ . ' (Using default type)'
         );
 
-        return $this->contentsList('string');
+        return $this->contentsList('html');
     }
 
     /**
@@ -451,6 +463,8 @@ class ParsedownToC extends DynamicParent
     /**
      * Gets the markdown tag for ToC.
      *
+     * It returns the current tag to search for the ToC tag, '[toc]' for example, in the markdown text.
+     *
      * @return string
      */
     protected function getTagToC()
@@ -530,7 +544,7 @@ class ParsedownToC extends DynamicParent
             $level = $level - $cutIndent;
         }
 
-        $indent = str_repeat('  ', $level);
+        $indent = str_repeat('  ', $level-1);
 
         // Stores in markdown list format as below:
         // - [Header1](#Header1)

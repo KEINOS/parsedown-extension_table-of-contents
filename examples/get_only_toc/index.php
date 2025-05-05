@@ -22,9 +22,15 @@ $parser = new \ParsedownToc();
 $html = $parser->body($textMarkdown);
 
 // Get the Table of Contents in HTML format
-$tocHTML = $parser->contentsList('string');
+$tocHTML = $parser->contentsList('html');
 echo '* HTML:' . PHP_EOL;
 echo $tocHTML . PHP_EOL;
+echo PHP_EOL;
+
+// Get the Table of Contents in Markdown format
+$tocMd = $parser->contentsList('markdown');
+echo '* Markdown:' . PHP_EOL;
+echo $tocMd . PHP_EOL;
 echo PHP_EOL;
 
 // Get the Table of Contents in JSON format
