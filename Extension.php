@@ -294,34 +294,36 @@ class ParsedownToC extends DynamicParent
     }
 
     /**
-     * Returns the parsed ToC.
-     * If the arg is "string" then it returns the ToC in HTML string.
+     * Returns the parsed ToC in various formats.
+     * If the arg is empty or "html" then it returns the ToC in HTML string.
      *
-     * @param string $type_return  Type of the return format. "string", "json", "flatarray" and "nestedarray".
+     * @param string $type_return  Type of the return format. "html", "json", "flatarray" and "nestedarray". "string" is an alias of "html" for compatibility.
      *
-     * @return false|string|array ToC in HTML/JSON format string or array.
+     * @return false|string|array ToC in HTML/JSON format string or PHP array.
      */
-    public function contentsList($type_return = 'string')
+    public function contentsList($type_return = 'html')
     {
-        if ('string' === strtolower($type_return)) {
+        $type_return = strtolower($type_return);
+
+        if ('html' === $type_return || 'string' === $type_return) {
             $result = '';
             if (! empty($this->contentsListString)) {
-                // Parses the ToC list in markdown to HTML
+                // Parses the markdown ToC list to HTML
                 $result = $this->body($this->contentsListString);
             }
 
             return $result;
         }
 
-        if ('json' === strtolower($type_return)) {
+        if ('json' === $type_return) {
             return json_encode($this->contentsListArray);
         }
 
-        if ('flatarray' === strtolower($type_return)) {
+        if ('flatarray' === $type_return) {
             return $this->contentsListArray;
         }
 
-        if ('nestedarray' === strtolower($type_return)) {
+        if ('nestedarray' === $type_return) {
             return $this->buildNestedToc($this->contentsListArray);
         }
 
@@ -332,7 +334,7 @@ class ParsedownToC extends DynamicParent
             . ' in Line:' . __LINE__ . ' (Using default type)'
         );
 
-        return $this->contentsList('string');
+        return $this->contentsList('html');
     }
 
     /**

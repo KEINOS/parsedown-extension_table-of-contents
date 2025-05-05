@@ -22,7 +22,7 @@ $parser = new \ParsedownToc();
 $html = $parser->body($textMarkdown);
 
 // Get the Table of Contents in HTML format
-$tocHTML = $parser->contentsList('string');
+$tocHTML = $parser->contentsList('html');
 echo '* HTML:' . PHP_EOL;
 echo $tocHTML . PHP_EOL;
 echo PHP_EOL;
