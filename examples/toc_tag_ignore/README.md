@@ -6,19 +6,19 @@
 
 ```php
 // Instanciate the Parsedown with ToC extension
-$Parsedown = new ParsedownToc();
+$parser = new \ParsedownToc();
 
 // Parse the markdown file to HTML leaving the ToC tag as it is
-$html = $Parsedown->body($textMarkdown);
+$html = $parser->body($textMarkdown);
 ```
 
 In that case, you may want to exclude the ToC tag from the output. This can be done by setting the second parameter of the `body()` method to `true`.
 
 ```php
 // Instanciate the Parsedown with ToC extension
-$Parsedown = new ParsedownToc();
+$parser = new \ParsedownToc();
 
 // Get the parsed HTML and the ToC
 $excludeToC = true;
-$html = $Parsedown->body($textMarkdown, $excludeToC);
+$html = $parser->body($textMarkdown, $excludeToC);
 ```

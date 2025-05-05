@@ -2,6 +2,7 @@
 
 # Exclude the unnecessary files below from composer package.
 #   - See: https://github.com/KEINOS/parsedown-extension_table-of-contents/issues/9
+/_bundle export-ignore
 /docs export-ignore
 /docker-compose.yml export-ignore
 /examples export-ignore

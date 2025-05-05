@@ -1,5 +1,7 @@
 # ToC Tag Basic Usage Example
 
+`ParsedownToC` supports ToC tag in the markdown file. The ToC tag, `[toc]` by default, is a special tag that can be used to insert a table of contents automatically.
+
 By default, `text()` method will replace the `[toc]` tag found in the markdown file with the table of contents. This is useful for generating a table of contents automatically.
 
 ```php
@@ -23,10 +25,10 @@ Sample text of head2-1.
 EOL;
 
 // Instanciate the Parsedown with ToC extension
-$Parsedown = new ParsedownToc();
+$parser = new ParsedownToc();
 
 // Get the parsed HTML and the ToC
-$html = $Parsedown->text($textMarkdown);
+$html = $parser->text($textMarkdown);
 
 echo $html . PHP_EOL;
 ```

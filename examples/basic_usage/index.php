@@ -1,7 +1,7 @@
 <?php
 
 // Include the Parsedown and the extension
-require_once('../../Parsedown.php');
+require_once('../../_bundle/Parsedown_1.7.4/Parsedown.php');
 require_once('../../Extension.php');
 
 // Markdown data sample
@@ -17,13 +17,13 @@ Sample text of head2-1.
 EOL;
 
 // Instanciate the Parsedown with ToC extension
-$Parsedown = new ParsedownToc();
+$parser = new ParsedownToc();
 
 // Get the parsed HTML
-$html = $Parsedown->text($textMarkdown);
+$html = $parser->text($textMarkdown);
 
 // Get the Table of Contents
-$ToC  = $Parsedown->contentsList();
+$ToC  = $parser->contentsList();
 
 echo $html . PHP_EOL;
 echo "---" . PHP_EOL;

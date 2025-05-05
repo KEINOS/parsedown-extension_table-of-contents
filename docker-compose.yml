@@ -69,7 +69,7 @@ services:
       - .:/app
     working_dir: /app
     entrypoint: /usr/local/bin/php
-    command: /app/examples/test-examples.php
+    command: /app/examples/run-integration-test.php
   # Generate PHPDoc documentation.
   phpdoc:
     image: phpdoc/phpdoc:3

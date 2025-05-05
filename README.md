@@ -32,13 +32,13 @@ Sample text of head2-1.
 EOL;
 
 // Instanciate the Parsedown with ToC extension
-$Parsedown = new ParsedownToc();
+$parser = new \ParsedownToc();
 
 // Get the parsed HTML
-$html = $Parsedown->text($inputMarkdown);
+$html = $parser->text($inputMarkdown);
 
 // Get the Table of Contents
-$ToC  = $Parsedown->contentsList();
+$ToC  = $parser->contentsList();
 
 // Print the parsed HTML and ToC
 echo $html . PHP_EOL;

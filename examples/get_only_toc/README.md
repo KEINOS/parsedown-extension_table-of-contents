@@ -14,27 +14,29 @@ The method `contentsList()` accepts a parameter that defines the format of the o
 ## Retrieving the ToC in HTML
 
 ```php
+$parser = new \ParsedownToc();
+
 // Get the Table of Contents in HTML
-$tocHTML = $Parsedown->contentsList('string');
+$tocHTML = $parser->contentsList('string');
 ```
 
 ## Retrieving the ToC in JSON
 
 ```php
 // Get the Table of Contents in JSON
-$tocJSON = $Parsedown->contentsList('json');
+$tocJSON = $parser->contentsList('json');
 ```
 
 ## Retrieving the ToC in Flat Array
 
 ```php
 // Get the Table of Contents in Flat Array
-$tocFlatArray = $Parsedown->contentsList('flatArray');
+$tocFlatArray = $parser->contentsList('flatArray');
 ```
 
 ## Retrieving the ToC in Nested Array
 
 ```php
 // Get the Table of Contents in Nested Array
-$tocNestedArray = $Parsedown->contentsList('nestedArray');
+$tocNestedArray = $parser->contentsList('nestedArray');
 ```

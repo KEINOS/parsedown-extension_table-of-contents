@@ -4,8 +4,8 @@ While using the ToC tag replacement feature, you might want to use a custom tag 
 
 ```php
 // Instanciate the Parsedown with ToC extension
-$Parsedown = new ParsedownToc();
+$parser = new \ParsedownToc();
 
 // Set user-defined ToC tag
-$Parsedown->setTagToc('[[table of contents]]');
+$parser->setTagToc('[[table of contents]]');
 ```

@@ -1,11 +1,9 @@
 <?php
 
-// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace, PSR1.Classes.ClassDeclaration
-
 /**
  * ToC Extension/Plugin for Parsedown.
  *
- * It creates a list of contents table from the headings in Markdown text.
+ * It creates a list of contents table in various format from the headings in Markdown text.
  *
  * @package     keinos/ParsedownToC
  * @author      KEINOS (https://github.com/KEINOS/)
@@ -50,9 +48,11 @@ class ParsedownToC extends DynamicParent
 
     // phpcs:disable PSR12.Properties.ConstantVisibility -- for backward compatibility
     /** Version of this extension */
-    const VERSION = '1.3.1';
+    const VERSION = '1.4.0';
     /** Version of Parsedown required */
     const VERSION_PARSEDOWN_REQUIRED = '1.7.4';
+    /** Version of ParsedownExtra required */
+    const VERSION_PARSEDOWN_EXTRA_REQUIRED = '0.8.0';
     /** Default ToC tag */
     const TAG_TOC_DEFAULT = '[toc]';
     /** Default ID attribute for ToC (only for ParsedownExtra) */
@@ -82,24 +82,56 @@ class ParsedownToC extends DynamicParent
      */
     public function __construct()
     {
-        if (version_compare(\Parsedown::version, self::VERSION_PARSEDOWN_REQUIRED) < 0) {
-            $msg_error  = 'Version Error.' . PHP_EOL;
-            $msg_error .= '  Parsedown ToC Extension requires a later version of Parsedown.' . PHP_EOL;
-            $msg_error .= '  - Current version : ' . \Parsedown::version . PHP_EOL;
-            $msg_error .= '  - Required version: ' . self::VERSION_PARSEDOWN_REQUIRED . PHP_EOL;
-
+        $msg_error = $this->checkRequirements();
+        if (! empty($msg_error)) {
             throw new Exception($msg_error);
         }
 
         parent::__construct();
     }
 
-
     /**
      * ========================================================================
      *  Methods (in ABC order)
      * ========================================================================
      */
+
+    /**
+     * Check the requirements of the extension.
+     *
+     * @return string
+     */
+    protected function checkRequirements()
+    {
+        $msg_error = "";
+
+        if (! class_exists('\Parsedown')) {
+            $msg_error .= 'Requirement Error:' . PHP_EOL;
+            $msg_error .= '  Parsedown class is not found. Make sure Parsedown is installed and loaded.' . PHP_EOL;
+            return $msg_error;
+        }
+
+        if (version_compare(\Parsedown::version, self::VERSION_PARSEDOWN_REQUIRED) < 0) {
+            $msg_error .= 'Version Error:' . PHP_EOL;
+            $msg_error .= '  Parsedown ToC Extension requires a later version of Parsedown.' . PHP_EOL;
+            $msg_error .= '  - Current Parsedown Version : ' . \Parsedown::version . PHP_EOL;
+            $msg_error .= '  - Required Parsedown Version: ' . self::VERSION_PARSEDOWN_REQUIRED . PHP_EOL;
+            return $msg_error;
+        }
+
+        // Check ParsedownExtra if the class exists
+        if (class_exists('\ParsedownExtra')) {
+            if (version_compare(\ParsedownExtra::version, self::VERSION_PARSEDOWN_EXTRA_REQUIRED) < 0) {
+                $msg_error .= 'Version Error:' . PHP_EOL;
+                $msg_error .= '  Parsedown ToC Extension requires a later version of ParsedownExtra.' . PHP_EOL;
+                $msg_error .= '  - Current ParsedownExtra Version : ' . \ParsedownExtra::version . PHP_EOL;
+                $msg_error .= '  - Required ParsedownExtra Version: ' . self::VERSION_PARSEDOWN_EXTRA_REQUIRED . PHP_EOL;
+                return $msg_error;
+            }
+        }
+
+        return $msg_error;
+    }
 
     /**
      * Build hierarchical ToC from a flat toc array.

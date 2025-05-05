@@ -1,10 +1,9 @@
 <?php
 
-// phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
-
 /**
- * Run this script to test all examples in this examples directory.
+ * ParsedownToc Integration Test
  *
+ * Run this script to test all examples in this examples directory.
  * This script runs each example (index.php) in the examples directory and
  * compares the output to the "expected_out.txt" file.
  */
@@ -52,7 +51,7 @@ exitIfFalse(
     "❗️ Test(s) failed: ${test_failure}, success: ${test_suceeds} out of ${test_count} examples."
 );
 
-echo "🎉 Test passed for all $test_count examples." . PHP_EOL;
+echo "🎉 Test passed for all ${test_count} examples." . PHP_EOL;
 
 /**
  * ----------------------------------------------------------------------------
