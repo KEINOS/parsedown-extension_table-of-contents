@@ -295,15 +295,25 @@ class ParsedownToC extends DynamicParent
 
     /**
      * Returns the parsed ToC in various formats.
+     *
      * If the arg is empty or "html" then it returns the ToC in HTML string.
      *
-     * @param string $type_return  Type of the return format. "html", "json", "flatarray" and "nestedarray". "string" is an alias of "html" for compatibility.
+     * @param string $type_return  Type of the return format. Available types: "markdown", "html", "json", "flatarray" and "nestedarray". Default: "html". Aliases: "string" = "html", "md" = "markdown".
      *
      * @return false|string|array ToC in HTML/JSON format string or PHP array.
      */
     public function contentsList($type_return = 'html')
     {
         $type_return = strtolower($type_return);
+
+        if ('markdown' === $type_return || 'md' === $type_return) {
+            $result = '';
+            if (! empty($this->contentsListString)) {
+                $result = $this->contentsListString;
+            }
+
+            return rtrim($result);
+        }
 
         if ('html' === $type_return || 'string' === $type_return) {
             $result = '';
@@ -453,6 +463,8 @@ class ParsedownToC extends DynamicParent
     /**
      * Gets the markdown tag for ToC.
      *
+     * It returns the current tag to search for the ToC tag, '[toc]' for example, in the markdown text.
+     *
      * @return string
      */
     protected function getTagToC()
@@ -532,7 +544,7 @@ class ParsedownToC extends DynamicParent
             $level = $level - $cutIndent;
         }
 
-        $indent = str_repeat('  ', $level);
+        $indent = str_repeat('  ', $level-1);
 
         // Stores in markdown list format as below:
         // - [Header1](#Header1)
