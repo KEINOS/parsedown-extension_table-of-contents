@@ -10,6 +10,8 @@ Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
 This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown Vanilla](https://github.com/erusev/parsedown) / [Parsedown Extra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
 
+- For PHP 8.3+ users: see [supported PHP version](#requirements) for more details.
+
 ## Basic Usage
 
 ```php
@@ -168,14 +170,25 @@ $ php ./parse_sample.php
 
 ## Requirements
 
+`PardesownToC` itself supports PHP 5.5 up-to current latest PHP 8.4.
+
+However, `Parsedown` 1.7.4, the latest stable release, does not fully support PHP 8.4. Which throws a deprecation warning.
+
+In that case, you can use the development version of `Parsedown` from the `master` branch or our [packed version of Parsedown 1.7.4](_bundle/Parsedown_1.7.4-patched/).
+
 | Script Name | Versions |
 | :-- | :-- |
-| PHP | [![PHP Version Badge](https://img.shields.io/packagist/php-v/keinos/parsedown-toc)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") <br />Currently it supports PHP version upto PHP 8.3.x. **It does not support PHP 8.4** or later. |
+| PHP | [![PHP Version Badge](https://img.shields.io/packagist/php-v/keinos/parsedown-toc)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") <br />PHP 8.4 users must use the patched version or develop version of Parsedown |
 | Parsedown.php | [![Parsedown Version Badge](https://img.shields.io/badge/Parsedown-%3D1.7.4-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version") <br />SHA256 Hash: `af4a4b29f38b5a00b003a3b7a752282274c969e42dee88e55a427b2b61a2f38f` |
 | ParsedownExtra.php | [![ParsedownExtra Version Badge](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported Parsedown Extra Version") <br />SHA256 Hash:  `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
 
+| Script Name | Versions |
+| :-- | :-- |
+| Parsedown.php (patched) | [![Parsedown Version Badge](https://img.shields.io/badge/Parsedown-%3D1.7.4%20patched-blue)](./_bundle/Parsedown_1.7.4-patched/ "Supported Parsedown Version") <br />SHA256 Hash: `b81a67cdd55e984bacc5fa5be84a15794de94b71841a18a9028a13ab9a41756a` |
+
+
 > [!NOTE]
-> We will support PHP 8.4+ and [Parsedown v2](https://github.com/erusev/parsedown/tree/2.0.x) after we finish refactoring the test scripts and the official release of Parsedown v2.
+> We are not supporting [Parsedown v2](https://github.com/erusev/parsedown/tree/2.0.x) or above until the official beta release.
 
 ## Class Info and Methods
 

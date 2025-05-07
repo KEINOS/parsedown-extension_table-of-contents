@@ -39,7 +39,7 @@ which apk > /dev/null 2>&1 && {
     echo '--------------------------------'
     echo 'Running tests in Alpine Linux OS'
     echo '--------------------------------'
-    /bin/sh "${path_dir_current}/test-runner/run-tests-in-alpine.sh"
+    /bin/bash "${path_dir_current}/test-runner/run-tests-in-alpine.sh"
     exit $?
 }
 

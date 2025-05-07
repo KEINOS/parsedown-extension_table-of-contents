@@ -48,10 +48,10 @@ $test_count = $test_failure + $test_suceeds;
 
 exitIfFalse(
     $test_failure === 0,
-    "❗️ Test(s) failed: ${test_failure}, success: ${test_suceeds} out of ${test_count} examples."
+    "❗️ Test(s) failed: {$test_failure}, success: {$test_suceeds} out of {$test_count} examples."
 );
 
-echo "🎉 Test passed for all ${test_count} examples." . PHP_EOL;
+echo "🎉 Test passed for all {$test_count} examples." . PHP_EOL;
 
 /**
  * ----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ function runScript($path_file_script, $path_file_expected)
     // Retrieve the expected output from the file
     $expected_output = file_get_contents($path_file_expected);
     if (!$expected_output) {
-        echo "❗️ Failed to read expected output file: ${path_file_expected}" . PHP_EOL;
+        echo "❗️ Failed to read expected output file: {$path_file_expected}" . PHP_EOL;
         return false;
     }
 
@@ -129,13 +129,13 @@ function runScript($path_file_script, $path_file_expected)
 
     // Compare the output with the expected output
     if ($output_normalized === $expected_normalized) {
-        echo "✅ Test passed for script: ${path_file_script}" . PHP_EOL;
+        echo "✅ Test passed for script: {$path_file_script}" . PHP_EOL;
 
         return true;
     }
 
     // Show the error message
-    echo "❗️ Test failed for script: ${path_file_script}" . PHP_EOL;
+    echo "❗️ Test failed for script: {$path_file_script}" . PHP_EOL;
     echo "* Expected:" . PHP_EOL . $expected_normalized . PHP_EOL;
     echo "* Got:" . PHP_EOL . $output_normalized . PHP_EOL;
 
@@ -149,8 +149,8 @@ function runScript($path_file_script, $path_file_expected)
         $oLine = isset($outputLines[$i]) ? $outputLines[$i] : '';
         if ($eLine !== $oLine) {
             echo "  Line " . ($i + 1) . ":\n";
-            echo "    * Expected: $eLine\n";
-            echo "    * Got     : $oLine\n";
+            echo "    * Expected: {$eLine}\n";
+            echo "    * Got     : {$oLine}\n";
         }
     }
 
