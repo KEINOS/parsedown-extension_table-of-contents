@@ -273,10 +273,10 @@ docker compose run --rm oldest
 # PHP 7.x is the minimum supported version.
 docker compose run --rm min
 
-# PHP 8.3 is the maximum supported version.
-docker compose run --rm max
+# PHP 8.3 is the stable supported version.
+docker compose run --rm stable
 
-# PHP 8.4+ (latest) is the experimental version. Currently errors out.
+# PHP 8.4+ (latest) is the experimental version. Currently uses the patched Parsedown 1.7.4.
 docker compose run --rm latest
 ```
 
@@ -289,7 +289,8 @@ To run the tests:
 ```
 
 > [!IMPORTANT]
-> This test will download/install dependencies such as: `Parsedown.php`, `ParsedownExtra.php`, `git`, `jq`, `curl` and `bash` if not installed. So please run this test in a safe environment (docker for example).
+> **This test will download/install dependencies** such as: `Parsedown.php`, `ParsedownExtra.php`, `git`, `jq`, `curl` and `bash` if not installed.
+> So please run this test in a safe Unix-like environment (docker for example).
 
 ```shellsession
 $ # Test result example (w/ oldest supported version)
