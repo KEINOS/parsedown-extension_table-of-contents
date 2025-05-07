@@ -1,0 +1,28 @@
+<h1 id="self-defined-head1" name="self-defined-head1">Head1</h1>
+<p>You can include inline HTML tags<br>in the markdown text.</p>
+<div>
+<p>And use the markdown syntax inside HTML Blocks.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Header1</th>
+<th>Header2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Table syntax</td>
+<td>as well</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-defined-head2-1" name="self-defined-head2-1">見出し2</h2>
+<p>You can customize the anchor IDs of non-ASCII characters, such as Japanese characters, to more readable ones.</p>
+---
+<ul>
+<li><a href="#self-defined-head1">Head1</a>
+<ul>
+<li><a href="#self-defined-head2-1">見出し2</a></li>
+</ul></li>
+</ul>
