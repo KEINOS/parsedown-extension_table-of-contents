@@ -1,6 +1,13 @@
 <?php
 
-require_once('../../_bundle/Parsedown_1.7.4/Parsedown.php');
+// Include the Parsedown. Use the patched version for PHP 8.4+
+if (version_compare(PHP_VERSION, '8.4.0', '>=')) {
+    require_once('../../_bundle/Parsedown_1.7.4-patched/Parsedown.php');
+} else {
+    require_once('../../_bundle/Parsedown_1.7.4/Parsedown.php');
+}
+
+// Include the ParsedownToc extension
 require_once('../../Extension.php');
 
 // Markdown Data Sample

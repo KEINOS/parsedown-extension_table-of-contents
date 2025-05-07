@@ -44,7 +44,7 @@ jobs:
         if: steps.cache.outputs.cache-hit == 'true'
         run: |
           docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_min_1.tar
-          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_max_1.tar
+          docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_stable_1.tar
           docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_latest_1.tar
           docker load --input ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_psalm_1.tar
 
@@ -62,8 +62,8 @@ jobs:
       - name: Run tests on minimum supported PHP version
         run: docker compose run --rm min
 
-      - name: Run tests on maximum supported PHP version
-        run: docker compose run --rm max
+      - name: Run tests on stable supported PHP version
+        run: docker compose run --rm stable
 
       - name: Run tests on latest PHP version (currently expected to fail)
         run: docker compose run --rm latest || exit 0
@@ -71,7 +71,7 @@ jobs:
       - name: Run examples to test its functionality (on PHP5)
         run: docker compose run --rm examples
 
-      - name: Run psalm on max supported PHP version
+      - name: Run psalm on stable supported PHP version
         run: docker compose run --rm psalm
 
       - name: Save/export built images to cache dir if no-cache
@@ -79,6 +79,6 @@ jobs:
         run: |
           mkdir -p ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}
           docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_min_1.tar parsedown-extension_table-of-contents-min:latest
-          docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_max_1.tar parsedown-extension_table-of-contents-max:latest
+          docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_stable_1.tar parsedown-extension_table-of-contents-stable:latest
           docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_latest_1.tar parsedown-extension_table-of-contents-latest:latest
           docker save --output ${{ env.PATH_CACHE }}/${{ steps.imagetag.outputs.hash }}/github_psalm_1.tar parsedown-extension_table-of-contents-psalm:latest
