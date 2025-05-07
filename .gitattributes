@@ -8,6 +8,8 @@
 /examples export-ignore
 /Parsedown.php export-ignore
 /ParsedownExtra.php export-ignore
+/phpcs.xml export-ignore
+/psalm.xml export-ignore
 /tests export-ignore
 
 /.dockerignore export-ignore
