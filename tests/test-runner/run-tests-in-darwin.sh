@@ -8,7 +8,7 @@ PATH_DIR_CURRENT=$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)
 PATH_DIR_PARENT=$(cd "$(dirname "${PATH_DIR_CURRENT}")" && pwd)
 PATH_DIR_ROOT=$(dirname "${PATH_DIR_PARENT}")
 
-cd $PATH_DIR_PARENT
+cd "$PATH_DIR_PARENT"
 
 set -eu
 
@@ -19,7 +19,7 @@ set -eu
 INDENT='  ' # Indentation depth for multiline output
 
 function indentStdin() {
-    while read line; do
+    while read -r line; do
         echo "${INDENT}${line}"
     done
     echo
@@ -73,6 +73,6 @@ tar --version
 # -----------------------------------------------------------------------------
 #  Run Actual Tests
 # -----------------------------------------------------------------------------
-/bin/bash $PATH_DIR_CURRENT/common-tests.sh
+/bin/bash "${PATH_DIR_CURRENT}/common-tests.sh"
 
 exit $?
