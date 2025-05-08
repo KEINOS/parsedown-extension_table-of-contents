@@ -18,6 +18,7 @@ namespace ParsedownTocExamples;
 
 const NAME_FILE_SCRIPT = 'index.php';
 const NAME_FILE_EXPECTED = 'expected_out.txt';
+const DIR_SEP = DIRECTORY_SEPARATOR;
 
 $paths = getExampleDirectories(__DIR__);
 if (empty($paths)) {
@@ -29,8 +30,8 @@ $test_failure = 0;
 $test_suceeds = 0;
 
 foreach ($paths as $path_dir_example) {
-    $path_file_example = $path_dir_example . DIRECTORY_SEPARATOR . NAME_FILE_SCRIPT;
-    $path_file_expected = $path_dir_example . DIRECTORY_SEPARATOR . NAME_FILE_EXPECTED;
+    $path_file_example = $path_dir_example . DIR_SEP . NAME_FILE_SCRIPT;
+    $path_file_expected = $path_dir_example . DIR_SEP . NAME_FILE_EXPECTED;
 
     $originalDir = getcwd();
 
@@ -91,13 +92,18 @@ function getExampleDirectories($baseDir)
         if ($fileInfo->isDir()) {
             $dir = $fileInfo->getPathname();
             if (
-                file_exists($dir . DIRECTORY_SEPARATOR . NAME_FILE_SCRIPT) &&
-                file_exists($dir . DIRECTORY_SEPARATOR . NAME_FILE_EXPECTED)
+                file_exists($dir . DIR_SEP . NAME_FILE_SCRIPT) &&
+                file_exists($dir . DIR_SEP . NAME_FILE_EXPECTED)
             ) {
                 $directories[] = $dir;
             }
         }
     }
+
+    // Sort the directories naturally
+    usort($directories, function ($a, $b) {
+        return strnatcmp($a, $b);
+    });
 
     return $directories;
 }
@@ -148,9 +154,9 @@ function runScript($path_file_script, $path_file_expected)
         $eLine = isset($expectedLines[$i]) ? $expectedLines[$i] : '';
         $oLine = isset($outputLines[$i]) ? $outputLines[$i] : '';
         if ($eLine !== $oLine) {
-            echo "  Line " . ($i + 1) . ":\n";
-            echo "    * Expected: {$eLine}\n";
-            echo "    * Got     : {$oLine}\n";
+            echo "  Line " . ($i + 1) . ":" . PHP_EOL;
+            echo "    * Expected: {$eLine}" . PHP_EOL;
+            echo "    * Got     : {$oLine}" . PHP_EOL;
         }
     }
 
