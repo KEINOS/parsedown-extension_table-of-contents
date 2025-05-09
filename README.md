@@ -172,26 +172,47 @@ $ php ./parse_sample.php
 
 `PardesownToC` itself supports PHP 5.5 up-to current latest PHP 8.4.
 
-However, `Parsedown` 1.7.4, the latest stable release, does not fully support PHP 8.4. Which throws a deprecation warning.
-
-In that case, you can use the development version of `Parsedown` from the `master` branch or our [packed version of Parsedown 1.7.4](_bundle/Parsedown_1.7.4-patched/).
+However, the latest stable release of `Parsedown` 1.7.4 do not fully support PHP 8.4. And `Parsedown Extra` 0.8.1 do not fully support PHP 8.2 or later. Which throws deprecation warnings of PHP.
 
 ### Stable Combination
 
+To use the stable released version of `Parsedown` 1.7.4 and `Parsedown Extra` 0.8.1, you need to use between PHP 5.5 and PHP 8.1.
+
+With later PHP versions you will get several deprecation warnings.
+
 | Script Name | Versions |
 | :-- | :-- |
-| PHP | [![Static Badge](https://img.shields.io/badge/%3E%3D5.5%20%3C%3D8.3-blue?logo=php&label=PHP&color=blue)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") <br />PHP 8.4 users must use the patched version or develop version of Parsedown |
+| PHP | [![Static Badge](https://img.shields.io/badge/%3E%3D5.5%20%3C%3D8.1-blue?logo=php&label=PHP)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") |
 | Parsedown.php | [![Parsedown Version Badge](https://img.shields.io/badge/Parsedown-%3D1.7.4-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version") <br />SHA256 Hash: `af4a4b29f38b5a00b003a3b7a752282274c969e42dee88e55a427b2b61a2f38f` |
 | ParsedownExtra.php | [![ParsedownExtra Version Badge](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported Parsedown Extra Version") <br />SHA256 Hash:  `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
 
+### Last-gasp Effort Combination
+
+We have patched versions of `Parsedown` 1.7.4 and `Parsedown Extra` 0.8.1 to support PHP 8.4, the current latest PHP version.
+
+These patched versions do not have any new features or refactoring made. Only the deprecation warnings from PHP are removed.
+
+Use these combinations if you want to use the **exact same features as the stable version with the latest PHP version**.
+
+| Script Name | Versions |
+| :-- | :-- |
+| PHP | [![Static Badge](https://img.shields.io/badge/8.4.x-blue?logo=php&label=PHP&color=blue)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") |
+| Parsedown.php (patched) | [![Parsedown Version Badge](https://img.shields.io/badge/Parsedown-%3D1.7.4%20patched-blue)](./_bundle/Parsedown_1.7.4-patched/ "Supported Parsedown Version") <br />SHA256 Hash: `b81a67cdd55e984bacc5fa5be84a15794de94b71841a18a9028a13ab9a41756a`<br />(no new feature and refactoring) |
+| ParsedownExtra.php (patched) | [![ParsedownExtra Version Badge](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1%20patched-blue)](./_bundle/Parsedown_1.7.4-patched/ "Supported Parsedown Version") <br /> |
+
+<!--
 ### Front Line Combination
+
+`Parsedown` and `ParsedownExtra` are currently undergoing a major redesign for v2.
+
+Meanwhile, the “master” branch of each is in the process of refactoring and adding new features while exploring the future direction of the project.
 
 | Script Name | Versions |
 | :-- | :-- |
 | PHP | [![Static Badge](https://img.shields.io/badge/8.3.x-blue?logo=php&label=PHP&color=blue)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") |
-| Parsedown.php (patched) | [![Parsedown Version Badge](https://img.shields.io/badge/Parsedown-%3D1.7.4%20patched-blue)](./_bundle/Parsedown_1.7.4-patched/ "Supported Parsedown Version") <br />SHA256 Hash: `b81a67cdd55e984bacc5fa5be84a15794de94b71841a18a9028a13ab9a41756a`<br />(no new feature and refactoring) |
 | Parsedown.php (develop) | [![Parsedown Version Badge](https://img.shields.io/badge/Parsedown-%3D1.8.0-blue)](./_bundle/Parsedown_master-dev/ "Supported Parsedown Version") <br />SHA256 Hash: `e3250c7cd7d25e74346c8075e6b78b484527a7ba6534172a196ff0d8c277ca37`<br />(w/experimental features and refactoring) |
 | ParsedownExtra.php | Not yet tested |
+-->
 
 > [!NOTE]
 > We are not supporting [Parsedown v2](https://github.com/erusev/parsedown/tree/2.0.x) or above until the official beta release.
