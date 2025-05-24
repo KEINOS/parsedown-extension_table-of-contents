@@ -1,4 +1,4 @@
-# Get Only The Table of Contents (ToC) in HTML, JSON and arrays
+# Get Only The Table of Contents (ToC) in various formats
 
 Once parsed by `text()` or `body()` method, you can retrieve only the table of contents (ToC) in various format using `contentsList()` method.
 
