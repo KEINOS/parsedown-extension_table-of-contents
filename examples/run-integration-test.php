@@ -117,6 +117,12 @@ function getExampleDirectories($baseDir)
  */
 function runScript($path_file_script, $path_file_expected)
 {
+    // Script path as relative to the current working directory (with parent directory)
+    $path_file_script = realpath($path_file_script);
+    $parentDirName = basename(dirname($path_file_script));
+    $scriptName = basename($path_file_script);
+    $relativeScriptPath = $parentDirName . DIRECTORY_SEPARATOR . $scriptName;
+
     // Retrieve the expected output from the file
     $expected_output = file_get_contents($path_file_expected);
     if (!$expected_output) {
@@ -135,13 +141,13 @@ function runScript($path_file_script, $path_file_expected)
 
     // Compare the output with the expected output
     if ($output_normalized === $expected_normalized) {
-        echo "✅ Test passed for script: {$path_file_script}" . PHP_EOL;
+        echo "✅ Test passed for script: {$relativeScriptPath}" . PHP_EOL;
 
         return true;
     }
 
     // Show the error message
-    echo "❗️ Test failed for script: {$path_file_script}" . PHP_EOL;
+    echo "❗️ Test failed for script: {$relativeScriptPath}" . PHP_EOL;
     echo "* Expected:" . PHP_EOL . $expected_normalized . PHP_EOL;
     echo "* Got:" . PHP_EOL . $output_normalized . PHP_EOL;
 
