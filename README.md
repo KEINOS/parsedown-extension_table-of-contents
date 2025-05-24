@@ -252,19 +252,19 @@ $ php ./parse_sample.php
 
 ## Requirements
 
-`PardesownToC` itself supports PHP 5.5 up-to current latest PHP 8.4.
+**`PardesownToC` itself supports PHP 5.5 up-to current latest PHP 8.4**.
 
-However, the latest stable release of `Parsedown` 1.7.4 do not fully support PHP 8.4. And `ParsedownExtra` 0.8.1 do not fully support PHP 8.2 or later. Which throws deprecation warnings of PHP.
+However, the latest stable release of `Parsedown` 1.7.4 do not fully support PHP 8.4. And `ParsedownExtra` 0.8.1 do not fully support PHP 7.1 or later. Which throws deprecation warnings of PHP.
 
 ### Stable Combination
 
-To use the stable released version of `Parsedown` 1.7.4 and `ParsedownExtra` 0.8.1, you need to use between PHP 5.5 and PHP 8.1.
+To use both the stable released versions of `Parsedown` 1.7.4 and `ParsedownExtra` 0.8.1, you need to use between PHP 5.5 and PHP 7.0.
 
 With later PHP versions you will get several deprecation warnings.
 
 | Script Name | Versions |
 | :-- | :-- |
-| PHP | [![Static Badge](https://img.shields.io/badge/%3E%3D5.5%20%3C%3D8.1-blue?logo=php&label=PHP)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") |
+| PHP | [![Static Badge](https://img.shields.io/badge/%3E%3D5.5%20%3C%3D7.0-blue?logo=php&label=PHP)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") |
 | Parsedown.php | [![Parsedown Version Badge](https://img.shields.io/badge/Parsedown-%3D1.7.4-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version") <br />SHA256 Hash: `af4a4b29f38b5a00b003a3b7a752282274c969e42dee88e55a427b2b61a2f38f` |
 | ParsedownExtra.php | [![ParsedownExtra Version Badge](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported ParsedownExtra Version") <br />SHA256 Hash:  `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
 
