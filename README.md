@@ -8,11 +8,13 @@
 
 Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
-This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown Vanilla](https://github.com/erusev/parsedown) / [Parsedown Extra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
+This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown Vanilla](https://github.com/erusev/parsedown) / [ParsedownExtra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
 
 - For PHP 8.3+ users: see [supported PHP version](#requirements) for more details.
 
 ## Basic Usage
+
+<details><summary>Parsedown Vanilla</summary><br />
 
 ```php
 <?php
@@ -70,6 +72,86 @@ $ php ./index.php
 </ul></li>
 </ul>
 ```
+
+</details>
+
+<details><summary>Parsedown Extra</summary><br />
+
+```php
+<?php
+
+// Include the Parsedown, ParsedownExtra and ToC extension
+require_once('Parsedown.php');
+require_once('ParsedownExtra.php');
+require_once('Extension.php');
+
+// Extended markdown data sample
+$textMarkdown = <<<EOL
+# Head1 {#self-defined-head1}
+
+You can include inline HTML tags<br>in the markdown text.
+
+<div markdown="1">
+And use the markdown syntax inside HTML Blocks.
+</div>
+
+| Header1 | Header2 |
+| ------- | ------- |
+| Table syntax  | as well  |
+
+## 見出し2 {#self-defined-head2-1}
+
+You can customize the anchor IDs of non-ASCII characters, such as Japanese characters, to more readable ones.
+
+EOL;
+
+// Instanciate the Parsedown with ToC extension
+$parser = new \ParsedownToc();
+
+// Get the parsed HTML
+$html = $parser->text($textMarkdown);
+
+// Get the Table of Contents
+$ToC  = $parser->contentsList();
+
+echo $html . PHP_EOL;
+echo "---" . PHP_EOL;
+echo $ToC . PHP_EOL;
+```
+
+```shellsession
+$ php ./index.php
+<h1 id="self-defined-head1" name="self-defined-head1">Head1</h1>
+<p>You can include inline HTML tags<br>in the markdown text.</p>
+<div>
+<p>And use the markdown syntax inside HTML Blocks.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Header1</th>
+<th>Header2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Table syntax</td>
+<td>as well</td>
+</tr>
+</tbody>
+</table>
+<h2 id="self-defined-head2-1" name="self-defined-head2-1">見出し2</h2>
+<p>You can customize the anchor IDs of non-ASCII characters, such as Japanese characters, to more readable ones.</p>
+---
+<ul>
+<li><a href="#self-defined-head1">Head1</a>
+<ul>
+<li><a href="#self-defined-head2-1">見出し2</a></li>
+</ul></li>
+</ul>
+```
+
+</details>
 
 - For more examples see the [examples](https://github.com/KEINOS/parsedown-extension_table-of-contents/tree/master/examples) directory.
 
@@ -172,11 +254,11 @@ $ php ./parse_sample.php
 
 `PardesownToC` itself supports PHP 5.5 up-to current latest PHP 8.4.
 
-However, the latest stable release of `Parsedown` 1.7.4 do not fully support PHP 8.4. And `Parsedown Extra` 0.8.1 do not fully support PHP 8.2 or later. Which throws deprecation warnings of PHP.
+However, the latest stable release of `Parsedown` 1.7.4 do not fully support PHP 8.4. And `ParsedownExtra` 0.8.1 do not fully support PHP 8.2 or later. Which throws deprecation warnings of PHP.
 
 ### Stable Combination
 
-To use the stable released version of `Parsedown` 1.7.4 and `Parsedown Extra` 0.8.1, you need to use between PHP 5.5 and PHP 8.1.
+To use the stable released version of `Parsedown` 1.7.4 and `ParsedownExtra` 0.8.1, you need to use between PHP 5.5 and PHP 8.1.
 
 With later PHP versions you will get several deprecation warnings.
 
@@ -184,11 +266,11 @@ With later PHP versions you will get several deprecation warnings.
 | :-- | :-- |
 | PHP | [![Static Badge](https://img.shields.io/badge/%3E%3D5.5%20%3C%3D8.1-blue?logo=php&label=PHP)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") |
 | Parsedown.php | [![Parsedown Version Badge](https://img.shields.io/badge/Parsedown-%3D1.7.4-blue)](https://github.com/erusev/parsedown/releases "Supported Parsedown Version") <br />SHA256 Hash: `af4a4b29f38b5a00b003a3b7a752282274c969e42dee88e55a427b2b61a2f38f` |
-| ParsedownExtra.php | [![ParsedownExtra Version Badge](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported Parsedown Extra Version") <br />SHA256 Hash:  `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
+| ParsedownExtra.php | [![ParsedownExtra Version Badge](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1-blue)](https://github.com/erusev/parsedown-extra/releases "Supported ParsedownExtra Version") <br />SHA256 Hash:  `b0c6bd5280fc7dc1caab4f4409efcae9fb493823826f7999c27b859152494be7` |
 
 ### Last-gasp Effort Combination
 
-We have patched versions of `Parsedown` 1.7.4 and `Parsedown Extra` 0.8.1 to support PHP 8.4, the current latest PHP version.
+We have patched versions of `Parsedown` 1.7.4 and `ParsedownExtra` 0.8.1 to support PHP 8.4, the current latest PHP version.
 
 These patched versions do not have any new features or refactoring made. Only the deprecation warnings from PHP are removed.
 
