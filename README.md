@@ -279,8 +279,8 @@ Use these combinations if you want to use the **exact same features as the stabl
 | Script Name | Versions |
 | :-- | :-- |
 | PHP | [![Parsedown Version Badge](https://img.shields.io/badge/8.4.x-blue?logo=php&label=PHP&color=blue)](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/composer.json#L19 "Supported PHP Version") |
-| Parsedown.php (patched) | [![Parsedown Version Badge](https://img.shields.io/badge/Parsedown-%3D1.7.4%20patched-blue)](./_bundle/Parsedown_1.7.4-patched/ "Supported Parsedown Version") <br />SHA256 Hash: `b81a67cdd55e984bacc5fa5be84a15794de94b71841a18a9028a13ab9a41756a`<br />(no new feature and refactoring) |
-| ParsedownExtra.php (patched) | [![ParsedownExtra Version Badge](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1%20patched-blue)](./_bundle/Parsedown_1.7.4-patched/ "Supported Parsedown Version") <br />SHA256 Hash: `2873b8eac69aae9d8422dba1efc53c143ab85b570bfe8429035eeb47014cb5ca`<br />(no new feature and refactoring) |
+| Parsedown.php ([patched](./_bundle/Parsedown_1.7.4-patched/)) | [![Parsedown Version Badge](https://img.shields.io/badge/Parsedown-%3D1.7.4%20patched-blue)](./_bundle/Parsedown_1.7.4-patched/ "Supported Parsedown Version") <br />SHA256 Hash: `b81a67cdd55e984bacc5fa5be84a15794de94b71841a18a9028a13ab9a41756a`<br />(no new feature and refactoring) |
+| ParsedownExtra.php ([patched](./_bundle/ParsedownExtra_0.8.1-patched/)) | [![ParsedownExtra Version Badge](https://img.shields.io/badge/ParsedownExtra-%3D0.8.1%20patched-blue)](./_bundle/ParsedownExtra_0.8.1-patched/ "Supported Parsedown Version") <br />SHA256 Hash: `2873b8eac69aae9d8422dba1efc53c143ab85b570bfe8429035eeb47014cb5ca`<br />(no new feature and refactoring) |
 
 > [!NOTE]
 > We are not supporting [Parsedown v2](https://github.com/erusev/parsedown/tree/2.0.x) or above until the official beta release.
