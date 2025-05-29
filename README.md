@@ -10,7 +10,7 @@ Listing Table of Contents Extension for [Parsedown](http://parsedown.org/).
 
 This [simple PHP file](https://github.com/KEINOS/parsedown-extension_table-of-contents/blob/master/Extension.php) extends [Parsedown Vanilla](https://github.com/erusev/parsedown) / [ParsedownExtra](https://github.com/erusev/parsedown-extra) to generate a list of header index (a.k.a. Table of Contents or ToC), from a markdown text given.
 
-- For PHP 8.3+ users: see [supported PHP version](#requirements) for more details.
+- For PHP 8.4+ users: see [supported PHP version](#requirements) for more details.
 
 ## Basic Usage
 
