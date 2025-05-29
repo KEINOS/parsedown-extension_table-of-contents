@@ -270,7 +270,7 @@ With later PHP versions you will get several deprecation warnings.
 
 ### Last-gasp Effort Combination
 
-We have patched versions of [`Parsedown` 1.7.4](./_bundle/Parsedown_1.7.4-patched/) and [`ParsedownExtra` 0.8.1](./_bundle/ParsedownExtra_0.8.1-patched/) to support PHP 8.4, the current latest PHP version.
+**For PHP 8.4 or higher users:** We have patched versions of `Parsedown` 1.7.4 and `ParsedownExtra` 0.8.1 to support PHP 8.4, the current latest PHP version and above.
 
 These patched versions do not have any new features or refactoring made. Only the deprecation warnings from PHP are removed.
 
